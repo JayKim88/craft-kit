@@ -1,0 +1,34 @@
+{
+  "name": "recruit-kit",
+  "version": "0.1.0",
+  "description": "Cookiecutter-style template for corporate recruitment assignments — boots a 7-document SSOT workflow + Claude tooling in 5 minutes.",
+  "type": "module",
+  "bin": {
+    "recruit-kit": "./bin/init.mjs"
+  },
+  "scripts": {
+    "init": "node bin/init.mjs",
+    "test": "bash tests/smoke.sh"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "template",
+    ".claude",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "recruitment",
+    "assignment",
+    "template",
+    "scaffold",
+    "claude",
+    "cookiecutter"
+  ],
+  "author": "Jay Kim",
+  "license": "MIT"
+}
