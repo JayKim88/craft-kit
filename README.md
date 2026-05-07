@@ -93,4 +93,4 @@ node bin/init.mjs
 
 ## 라이선스
 
-MIT.
+MIT. fork/사용 시 [LICENSE](LICENSE) 의 `Copyright (c) 2026 Jay Kim` 을 본인 이름으로 변경하세요 (재배포 조건).

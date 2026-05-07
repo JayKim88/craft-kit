@@ -6,3 +6,7 @@ node_modules/
 /tmp/
 .idea/
 .vscode/
+
+# Reverse-engineer scaffold output — regenerate locally via `node bin/init.mjs --quiet --target examples/fs-planner-reverse/regenerated`.
+# Only the comparison report (examples/fs-planner-reverse/README.md + comparison.txt) is tracked.
+examples/fs-planner-reverse/regenerated/

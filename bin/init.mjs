@@ -33,6 +33,14 @@ for (let i = 0; i < args.length; i++) {
   else if (!a.startsWith('-')) flags.target = a;
 }
 
+// Auto-fallback to quiet mode when stdin is not a TTY (pipe, CI).
+// readline.question() on a closed pipe rejects mid-interview, leaving
+// the scaffold half-written. Quiet mode preserves placeholders cleanly.
+if (!flags.quiet && !process.stdin.isTTY) {
+  console.log('(stdin is not a TTY — auto-switching to --quiet mode. Run interactively from a terminal for the interview.)');
+  flags.quiet = true;
+}
+
 if (flags.help) {
   console.log(`recruit-kit init — scaffold a recruitment assignment workspace.
 
@@ -120,11 +128,26 @@ async function runInterview() {
   const totalPoints = criteria.reduce((s, c) => s + c.points, 0);
   console.log(`\n총 배점: ${totalPoints}점 (${criteria.length}개 카테고리)`);
 
-  // detect doc/git criterion indices by name keyword
-  const docIdx = criteria.findIndex(c => /문서|문서화|documentation|문서 화/i.test(c.name));
-  const gitIdx = criteria.findIndex(c => /git|작업 흔적|커밋/i.test(c.name));
-  const designIdx = criteria.findIndex(c => /설계|구조|design|architecture/i.test(c.name));
-  const reqIdx = criteria.findIndex(c => /요구|이해|requirement|문제 정의/i.test(c.name));
+  console.log('\n--- 평가 기준 인덱스 매핑 ---');
+  console.log('아래 4개 영역이 §1~§N 중 어디에 해당하는지 알려주세요. (모르면 빈 입력 → 키워드 자동 추론 fallback)');
+  console.log('현재 카테고리:');
+  for (const c of criteria) console.log(`  §${c.index}: ${c.name}`);
+
+  const askIdx = async (label, keywordRegex) => {
+    const auto = criteria.findIndex(c => keywordRegex.test(c.name));
+    const defaultStr = auto >= 0 ? String(auto + 1) : '';
+    const ans = await ask(`${label} 카테고리는 §몇? (1-${n}, 모르면 빈 입력)`, defaultStr);
+    const parsed = parseInt(ans, 10);
+    if (Number.isNaN(parsed) || parsed < 1 || parsed > n) {
+      return auto >= 0 ? String(auto + 1) : 'N';
+    }
+    return String(parsed);
+  };
+
+  const REQ_CRITERION_INDEX = await askIdx('요구사항 이해', /요구|이해|requirement|문제 정의/i);
+  const DESIGN_CRITERION_INDEX = await askIdx('설계·코드 구조', /설계|구조|design|architecture/i);
+  const DOC_CRITERION_INDEX = await askIdx('문서화', /문서|문서화|documentation/i);
+  const GIT_CRITERION_INDEX = await askIdx('Git / 작업 흔적', /git|작업 흔적|커밋/i);
 
   return {
     COMPANY,
@@ -146,13 +169,20 @@ async function runInterview() {
     TEST_COMMAND,
     BUILD_COMMAND,
     EVAL_CRITERIA_TABLE: buildCriteriaTable(criteria),
-    DOC_CRITERION_INDEX: docIdx >= 0 ? String(docIdx + 1) : 'N',
-    GIT_CRITERION_INDEX: gitIdx >= 0 ? String(gitIdx + 1) : 'N',
-    DESIGN_CRITERION_INDEX: designIdx >= 0 ? String(designIdx + 1) : '2',
-    REQ_CRITERION_INDEX: reqIdx >= 0 ? String(reqIdx + 1) : '1',
-    // numeric points P1..P9
+    EVAL_MAPPING_TABLE: buildMappingTable(criteria),
+    DOC_CRITERION_INDEX,
+    GIT_CRITERION_INDEX,
+    DESIGN_CRITERION_INDEX,
+    REQ_CRITERION_INDEX,
+    // numeric points P1..P9 (kept for back-compat with templates that still reference them)
     ...Object.fromEntries(criteria.map((c, i) => [`P${i + 1}`, String(c.points)])),
   };
+}
+
+function buildMappingTable(criteria) {
+  const header = '| 평가 기준 (점수) | 어디서 충족 |\n|---|---|';
+  const rows = criteria.map(c => `| §${c.index} ${c.name} (${c.points}점) | <!-- 채움: SPEC + PLAN + DESIGN + CHECKLIST 의 어느 항목이 이 점수에 기여하는가 --> |`);
+  return [header, ...rows].join('\n');
 }
 
 function buildCriteriaTable(criteria) {
