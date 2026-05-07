@@ -86,10 +86,21 @@ async function runInterview() {
   const ROLE = await ask('역할 (ROLE)', 'Software Engineer');
   const TASK_TYPE = await ask('과제 유형 (TASK_TYPE: FE|BE|FS|ML|Mobile|Other)', 'FE');
   const DEADLINE_DATE = await ask('마감일 (DEADLINE_DATE, YYYY-MM-DD)', todayISO());
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(DEADLINE_DATE)) {
+    console.warn(`⚠ DEADLINE_DATE "${DEADLINE_DATE}" 가 YYYY-MM-DD 형식이 아닙니다. 그대로 진행하지만 일정 계산이 부정확할 수 있습니다.`);
+  }
   const DEADLINE_TIME = await ask('마감 시각 (DEADLINE_TIME)', '23:59');
   const ONELINE_CHALLENGE = await ask('한 줄 핵심 도전 과제 (ONELINE_CHALLENGE)', '핵심 도메인 로직 + 상태 분리');
   const STACK_HINT = await ask('기술 스택 힌트 (STACK_HINT, free-form)', 'TypeScript + React + Vitest');
   const ENV_NOTES = await ask('환경 주의사항 (ENV_NOTES, 없으면 빈 입력)', '특이사항 없음 (표준 환경).');
+
+  console.log('\n--- 실행 명령 (선택, 모르면 빈 입력 → placeholder 유지) ---');
+  const TECH_RUNTIME = await ask('런타임 (TECH_RUNTIME, 예: Node.js / Python / Java)', '');
+  const RUNTIME_VERSION = await ask('런타임 버전 (RUNTIME_VERSION, 예: 22.19 / 3.13 / 21)', '');
+  const INSTALL_COMMAND = await ask('설치 명령 (INSTALL_COMMAND, 예: npm install / poetry install)', '');
+  const DEV_COMMAND = await ask('개발 서버 명령 (DEV_COMMAND, 예: npm run dev)', '');
+  const TEST_COMMAND = await ask('테스트 명령 (TEST_COMMAND, 예: npm test)', '');
+  const BUILD_COMMAND = await ask('빌드 명령 (BUILD_COMMAND, 예: npm run build / 없으면 빈 입력)', '');
 
   console.log('\n--- 평가 기준 입력 ---');
   console.log('회사 명세에서 평가 기준 카테고리를 N개 입력합니다. (보통 5-7개)');
@@ -100,8 +111,14 @@ async function runInterview() {
   for (let i = 1; i <= n; i++) {
     const name = await ask(`§${i} 카테고리명 (예: "요구사항 이해 및 문제 정의")`, `평가 항목 ${i}`);
     const pts = await ask(`§${i} 배점 (숫자만)`, '20');
-    criteria.push({ index: i, name, points: parseInt(pts, 10) || 0 });
+    const parsed = parseInt(pts, 10);
+    if (Number.isNaN(parsed) || parsed < 0) {
+      console.warn(`⚠ §${i} 배점 "${pts}" 가 유효한 숫자가 아닙니다. 0으로 설정.`);
+    }
+    criteria.push({ index: i, name, points: Number.isNaN(parsed) ? 0 : parsed });
   }
+  const totalPoints = criteria.reduce((s, c) => s + c.points, 0);
+  console.log(`\n총 배점: ${totalPoints}점 (${criteria.length}개 카테고리)`);
 
   // detect doc/git criterion indices by name keyword
   const docIdx = criteria.findIndex(c => /문서|문서화|documentation|문서 화/i.test(c.name));
@@ -122,6 +139,12 @@ async function runInterview() {
     ONELINE_CHALLENGE,
     STACK_HINT,
     ENV_NOTES,
+    TECH_RUNTIME,
+    RUNTIME_VERSION,
+    INSTALL_COMMAND,
+    DEV_COMMAND,
+    TEST_COMMAND,
+    BUILD_COMMAND,
     EVAL_CRITERIA_TABLE: buildCriteriaTable(criteria),
     DOC_CRITERION_INDEX: docIdx >= 0 ? String(docIdx + 1) : 'N',
     GIT_CRITERION_INDEX: gitIdx >= 0 ? String(gitIdx + 1) : 'N',
@@ -276,7 +299,10 @@ async function main() {
     try {
       execSync('git init -q', { cwd: target });
       execSync('git add .', { cwd: target });
-      const subject = `chore(init): scaffold recruit-kit for ${vars.COMPANY ?? 'COMPANY'} ${vars.PRODUCT ?? 'PRODUCT'}`;
+      const hasInterview = Boolean(vars.COMPANY && vars.PRODUCT);
+      const subject = hasInterview
+        ? `chore(init): scaffold recruit-kit for ${vars.COMPANY} — ${vars.PRODUCT}`
+        : `chore(init): scaffold recruit-kit (placeholders pending interview)`;
       execSync(`git commit -q -m "${subject.replace(/"/g, '\\"')}"`, { cwd: target });
       console.log(`\ngit: initialized + first commit ("${subject}")`);
     } catch (e) {

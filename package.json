@@ -1,6 +1,6 @@
 {
   "name": "recruit-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cookiecutter-style template for corporate recruitment assignments — boots a 7-document SSOT workflow + Claude tooling in 5 minutes.",
   "type": "module",
   "bin": {

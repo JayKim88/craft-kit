@@ -22,7 +22,7 @@ node "$KIT_ROOT/bin/init.mjs" --quiet --target "$TARGET" > /tmp/recruit-kit-smok
   exit 1
 }
 
-echo "[smoke] checking 9 expected files ..."
+echo "[smoke] checking 10 expected files ..."
 EXPECTED=(
   "CLAUDE.md"
   "AGENTS.md"

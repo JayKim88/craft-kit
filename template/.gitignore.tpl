@@ -29,9 +29,11 @@ dist/
 /tmp/
 .cache/
 
-<!-- HINT: 언어/프레임워크별로 추가. 예:
-# Next.js: .next/
-# Python: .pytest_cache/, .venv/
-# Java: *.class, .gradle/
-# Rust: Cargo.lock (lib only)
--->
+# ----------------------------------------------------------------------
+# 언어/프레임워크별 추가 (사용하는 항목만 주석 해제 또는 추가):
+# Next.js:    .next/
+# Python:     .pytest_cache/, .venv/, *.egg-info/
+# Java:       *.class, .gradle/, target/
+# Rust:       (Cargo.lock는 라이브러리에만 무시)
+# Go:         /vendor/, *.test
+# ----------------------------------------------------------------------
