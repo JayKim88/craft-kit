@@ -36,6 +36,10 @@
 
 ## 사용법
 
+> **처음 사용한다면**: [docs/walkthrough.md](docs/walkthrough.md) — 가상 시나리오(AcmeCo BE 정산 API, 5일)로 D-5 부팅부터 D-0 제출까지 시간순 가이드. 슬래시 커맨드 호출법, recovery 시나리오, fork 사용자 흐름 모두 포함.
+
+아래는 빠른 참조 (3단계).
+
 ### 1. 새 과제 폴더 받기
 
 ```bash
@@ -90,6 +94,10 @@ node bin/init.mjs
 `fs-planner` (FuturSchool FE 과제) 의 7개 문서를 reverse-engineer로 재생성 → 섹션 구조 매칭률 ≥ 95%. 결과는 `examples/fs-planner-reverse/` 참고.
 
 ---
+
+## fork 해서 본인 계정으로 사용하기
+
+JayKim88 외 사용자가 fork 하여 본인 repo 로 운영할 때 변경할 곳 4개 + 절차는 [docs/walkthrough.md "fork 사용자" 섹션](docs/walkthrough.md#fork-사용자-jaykim88-외) 참고.
 
 ## 라이선스
 

@@ -1,6 +1,8 @@
 # Workflow Guide
 
-`recruit-kit`로 부팅한 새 과제 폴더에서 사용하는 워크플로우.
+`recruit-kit`로 부팅한 새 과제 폴더에서 사용하는 워크플로우 — **원칙·철학** 중심.
+
+> **시간순 walkthrough**(D-5 부팅 → D-0 제출, 명령 단위 따라가기)는 [walkthrough.md](walkthrough.md). 이 문서는 그 안에서 매 사이클 반복되는 원칙 (Phase 단위·커밋 컨벤션·AI_USAGE 운영·FAQ) 을 다룹니다.
 
 ---
 
