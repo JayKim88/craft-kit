@@ -1,6 +1,6 @@
 # Customizing for Different Assignment Types
 
-`recruit-kit` is tech-neutral, but here's how to tailor it for different kinds of assignments.
+`takehome-kit` is tech-neutral, but here's how to tailor it for different kinds of assignments.
 
 ---
 

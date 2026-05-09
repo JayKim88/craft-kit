@@ -1,6 +1,6 @@
 # Workflow Guide
 
-The workflow used inside an assignment folder booted with `recruit-kit` — focused on **principles and philosophy**.
+The workflow used inside an assignment folder booted with `takehome-kit` — focused on **principles and philosophy**.
 
 > The **timeline walkthrough** (D-5 boot → D-0 submission, command-by-command) lives in [walkthrough.md](walkthrough.md). This document covers the principles repeated in each cycle (Phase units, commit conventions, AI_USAGE practice, FAQ).
 

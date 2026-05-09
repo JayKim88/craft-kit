@@ -21,11 +21,11 @@ This document follows the timeline of what to enter and what to look at, step by
 
 ```bash
 # degit (recommended — clean history)
-npx degit JayKim88/recruit-kit acmeco-task
+npx degit JayKim88/takehome-kit acmeco-task
 cd acmeco-task
 
 # or git clone + drop .git
-git clone https://github.com/JayKim88/recruit-kit acmeco-task
+git clone https://github.com/JayKim88/takehome-kit acmeco-task
 cd acmeco-task && rm -rf .git
 ```
 
@@ -38,7 +38,7 @@ node bin/init.mjs
 Sample session:
 
 ```
-=== recruit-kit interview ===
+=== takehome-kit interview ===
 
 Answer in English. Press Enter to keep the default.
 
@@ -84,7 +84,7 @@ Which §N is the "Documentation" category? [5]:
 Which §N is the "Git / work trail" category? [6]:
 
 === scaffold complete ===
-git: initialized + first commit ("chore(init): scaffold recruit-kit for AcmeCo — Creator Settlement API")
+git: initialized + first commit ("chore(init): scaffold takehome-kit for AcmeCo — Creator Settlement API")
 ```
 
 Generated layout:
@@ -100,7 +100,7 @@ acmeco-task/
 │   ├── CHECKLIST.md    ← Phase A/B/C skeleton
 │   └── AI_USAGE.md     ← Collaboration log table
 └── .claude/
-    ├── commands/  ← /init-recruit, /dod-check, /spec-sync, /checklist-trace
+    ├── commands/  ← /init-takehome, /dod-check, /spec-sync, /checklist-trace
     └── agents/    ← rubric-reviewer
 ```
 
@@ -114,7 +114,7 @@ Then transcribe the company's "low / high proficiency" criteria into the auto-ge
 
 ```bash
 # Made a typo? Just restart.
-rm -rf acmeco-task && npx degit JayKim88/recruit-kit acmeco-task && cd acmeco-task && node bin/init.mjs
+rm -rf acmeco-task && npx degit JayKim88/takehome-kit acmeco-task && cd acmeco-task && node bin/init.mjs
 
 # Check no leftover placeholders (interview mode expects 0)
 grep -rn "{{" docs/ README.md CLAUDE.md
@@ -347,7 +347,7 @@ gh repo edit --visibility public
 | Tool | Location | Claude Code | Generic environment |
 |---|---|---|---|
 | `init.mjs` | `bin/init.mjs` | (n/a) | `node bin/init.mjs [target] [options]` |
-| `/init-recruit` | `.claude/commands/init-recruit.md` | `/init-recruit` | Paste .md content + "execute this" |
+| `/init-takehome` | `.claude/commands/init-takehome.md` | `/init-takehome` | Paste .md content + "execute this" |
 | `/dod-check` | `.claude/commands/dod-check.md` | `/dod-check` | Paste .md + "verify it" |
 | `/spec-sync` | `.claude/commands/spec-sync.md` | `/spec-sync` | Paste .md + "check this" |
 | `/checklist-trace` | `.claude/commands/checklist-trace.md` | `/checklist-trace` | Paste .md + "analyze this" |
@@ -362,7 +362,7 @@ gh repo edit --visibility public
 # Simplest: nuke and restart
 cd ..
 rm -rf acmeco-task
-npx degit JayKim88/recruit-kit acmeco-task
+npx degit JayKim88/takehome-kit acmeco-task
 cd acmeco-task && node bin/init.mjs
 ```
 
@@ -414,29 +414,29 @@ To run this from your own GitHub account:
 
 1. **Fork on GitHub or create a new repo**
    ```bash
-   gh repo fork JayKim88/recruit-kit --clone
+   gh repo fork JayKim88/takehome-kit --clone
    # or
-   git clone https://github.com/JayKim88/recruit-kit my-recruit-kit
-   cd my-recruit-kit && git remote set-url origin https://github.com/USER/my-recruit-kit
+   git clone https://github.com/JayKim88/takehome-kit my-takehome-kit
+   cd my-takehome-kit && git remote set-url origin https://github.com/USER/my-takehome-kit
    ```
 
 2. **Update authorship**
    - `LICENSE`: `Copyright (c) 2026 Jay Kim` → your name
    - `package.json`: `"author": "Jay Kim"` → your name
-   - The `JayKim88/recruit-kit` example in `bin/init.mjs --help` → your repo
+   - The `JayKim88/takehome-kit` example in `bin/init.mjs --help` → your repo
 
 3. **Update README degit URLs**
    ```bash
-   # Replace JayKim88/recruit-kit → USER/my-recruit-kit across README & walkthrough
-   sed -i '' 's|JayKim88/recruit-kit|USER/my-recruit-kit|g' README.md docs/walkthrough.md
+   # Replace JayKim88/takehome-kit → USER/my-takehome-kit across README & walkthrough
+   sed -i '' 's|JayKim88/takehome-kit|USER/my-takehome-kit|g' README.md docs/walkthrough.md
    ```
 
 4. **Push to your GitHub**
    ```bash
-   gh repo create my-recruit-kit --public --source=. --push
+   gh repo create my-takehome-kit --public --source=. --push
    ```
 
-After this, boot future assignments with `npx degit USER/my-recruit-kit my-task`.
+After this, boot future assignments with `npx degit USER/my-takehome-kit my-task`.
 
 ---
 

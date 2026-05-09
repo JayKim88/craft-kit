@@ -1,10 +1,10 @@
 ---
-description: Bootstrap a corporate recruitment-assignment workspace from an interview (recruit-kit cookiecutter)
+description: Bootstrap a corporate take-home assignment workspace from an interview (takehome-kit cookiecutter)
 ---
 
-# /init-recruit
+# /init-takehome
 
-This slash command runs an interview with the user to collect assignment metadata, then scaffolds the `recruit-kit` template into the current working directory (or a target the user specifies).
+This slash command runs an interview with the user to collect assignment metadata, then scaffolds the `takehome-kit` template into the current working directory (or a target the user specifies).
 
 ## Behavior
 
@@ -21,8 +21,8 @@ This slash command runs an interview with the user to collect assignment metadat
    - **N evaluation criteria** — each with `name`, `points`. Usually 5-7. If absent from the spec, infer from interview questions / scoring guidance.
 
 3. **Scaffold**:
-   - Call `node ${RECRUIT_KIT_ROOT}/bin/init.mjs --target ${PWD}` with the answers (or write files directly).
-   - `${RECRUIT_KIT_ROOT}` defaults to `~/Documents/Projects/recruit-kit/`. If different, confirm with the user.
+   - Call `node ${TAKEHOME_KIT_ROOT}/bin/init.mjs --target ${PWD}` with the answers (or write files directly).
+   - `${TAKEHOME_KIT_ROOT}` defaults to `~/Documents/Projects/takehome-kit/`. If different, confirm with the user.
 
 4. **Next-steps guidance**:
    - Paste original company spec into the `<!-- SPEC PASTE START -->` region of SPEC.md
@@ -33,17 +33,17 @@ This slash command runs an interview with the user to collect assignment metadat
 ## Usage
 
 ```
-/init-recruit
+/init-takehome
 ```
 
 Or with variables prefilled:
 
 ```
-/init-recruit company=AcmeCo product="Widget Builder" role="FE Engineer 3+yrs" deadline=2026-05-15
+/init-takehome company=AcmeCo product="Widget Builder" role="FE Engineer 3+yrs" deadline=2026-05-15
 ```
 
 ## Notes
 
 - Any `{{VAR}}` placeholder remaining in generated files indicates an unanswered interview item. Fill it in manually.
 - The most accurate way to enter evaluation criteria is to copy the company spec's score-allocation table verbatim. Inference is a last resort.
-- The first commit is auto-created with message `chore(init): scaffold recruit-kit for {{COMPANY}} {{PRODUCT}}`.
+- The first commit is auto-created with message `chore(init): scaffold takehome-kit for {{COMPANY}} {{PRODUCT}}`.

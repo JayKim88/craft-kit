@@ -1,10 +1,10 @@
 {
-  "name": "recruit-kit",
-  "version": "0.3.0",
-  "description": "Cookiecutter-style template for corporate recruitment assignments — boots a 7-document SSOT workflow + Claude tooling in 5 minutes.",
+  "name": "takehome-kit",
+  "version": "0.4.0",
+  "description": "Cookiecutter-style template for corporate take-home assignments — boots a 7-document SSOT workflow + Claude tooling in 5 minutes.",
   "type": "module",
   "bin": {
-    "recruit-kit": "./bin/init.mjs"
+    "takehome-kit": "./bin/init.mjs"
   },
   "scripts": {
     "init": "node bin/init.mjs",

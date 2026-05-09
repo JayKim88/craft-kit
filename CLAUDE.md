@@ -1,7 +1,7 @@
-# recruit-kit / Development Context
+# takehome-kit / Development Context
 
-> This repo is a **meta-template** consumed by other recruitment-assignment projects.
-> This document is the ground rules for **developing recruit-kit itself**.
+> This repo is a **meta-template** consumed by other take-home assignment projects.
+> This document is the ground rules for **developing takehome-kit itself**.
 > (Not to be confused with [`template/CLAUDE.md.tpl`](template/CLAUDE.md.tpl) in the generated assignment folder — that one ships to users.)
 
 ---
@@ -22,7 +22,7 @@
 ## Core structure
 
 ```
-recruit-kit/
+takehome-kit/
 ├── bin/init.mjs       # Zero-dependency cookiecutter CLI
 ├── template/          # .tpl files scaffolded into the user project
 ├── .claude/           # Slash commands + subagents copied into the user project

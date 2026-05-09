@@ -1,11 +1,11 @@
 # fs-planner Reverse-Engineer Validation Report
 
-Confirms that the `recruit-kit` template faithfully reproduces a real, validated workflow (fs-planner: FuturSchool 5-day FE assignment).
+Confirms that the `takehome-kit` template faithfully reproduces a real, validated workflow (fs-planner: FuturSchool 5-day FE assignment).
 
 ## Method
 
 1. Extract header structure from the 9 actual fs-planner documents (`CLAUDE.md`, `AGENTS.md`, `README.md`, `docs/SPEC.md`, `docs/PLAN.md`, `docs/DESIGN.md`, `docs/PROCESS.md`, `docs/CHECKLIST.md`, `docs/AI_USAGE.md`).
-2. Extract header structure from the same documents in `recruit-kit` (using quiet-mode scaffold).
+2. Extract header structure from the same documents in `takehome-kit` (using quiet-mode scaffold).
 3. Compare matched / missing / added sections.
 4. Backport sections that are generically valuable to the template.
 

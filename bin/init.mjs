@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// recruit-kit / init.mjs
-// Interview → placeholder substitution → scaffold a recruitment assignment workspace.
+// takehome-kit / init.mjs
+// Interview → placeholder substitution → scaffold a take-home assignment workspace.
 // Zero dependencies. Node >= 18.
 
 import { readFile, writeFile, mkdir, readdir, stat, copyFile, rm } from 'node:fs/promises';
@@ -42,11 +42,11 @@ if (!flags.quiet && !process.stdin.isTTY) {
 }
 
 if (flags.help) {
-  console.log(`recruit-kit init — scaffold a recruitment assignment workspace.
+  console.log(`takehome-kit init — scaffold a take-home assignment workspace.
 
 Usage:
   node bin/init.mjs [target] [options]
-  npx degit JayKim88/recruit-kit my-task && node my-task/bin/init.mjs
+  npx degit JayKim88/takehome-kit my-task && node my-task/bin/init.mjs
 
 Options:
   --target <path>    Target directory (default: current directory)
@@ -86,7 +86,7 @@ function daysBetween(fromISO, toISO) {
 }
 
 async function runInterview() {
-  console.log('\n=== recruit-kit interview ===\n');
+  console.log('\n=== takehome-kit interview ===\n');
   console.log('Answer in English. Press Enter to keep the default.\n');
 
   const COMPANY = await ask('Company name (COMPANY)', 'AcmeCo');
@@ -242,7 +242,7 @@ async function main() {
 
   if (existsSync(target) && (await readdir(target)).filter(f => !['.git', 'node_modules', '.DS_Store'].includes(f)).length > 0) {
     if (relative(target, KIT_ROOT) === '' || target === KIT_ROOT) {
-      console.error(`error: target is recruit-kit itself. Use 'npx degit JayKim88/recruit-kit my-task && cd my-task && node bin/init.mjs' instead.`);
+      console.error(`error: target is takehome-kit itself. Use 'npx degit JayKim88/takehome-kit my-task && cd my-task && node bin/init.mjs' instead.`);
       process.exit(1);
     }
     if (!flags.quiet) {
@@ -331,8 +331,8 @@ async function main() {
       execSync('git add .', { cwd: target });
       const hasInterview = Boolean(vars.COMPANY && vars.PRODUCT);
       const subject = hasInterview
-        ? `chore(init): scaffold recruit-kit for ${vars.COMPANY} — ${vars.PRODUCT}`
-        : `chore(init): scaffold recruit-kit (placeholders pending interview)`;
+        ? `chore(init): scaffold takehome-kit for ${vars.COMPANY} — ${vars.PRODUCT}`
+        : `chore(init): scaffold takehome-kit (placeholders pending interview)`;
       execSync(`git commit -q -m "${subject.replace(/"/g, '\\"')}"`, { cwd: target });
       console.log(`\ngit: initialized + first commit ("${subject}")`);
     } catch (e) {

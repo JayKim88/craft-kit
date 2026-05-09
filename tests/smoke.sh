@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Smoke test for recruit-kit init.mjs
+# Smoke test for takehome-kit init.mjs
 # Verifies: scaffold runs, 9 docs created, .claude/ copied, git init + commit, placeholders preserved (quiet mode).
 
 set -euo pipefail
 
 KIT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TARGET="/tmp/recruit-kit-smoke-$$"
+TARGET="/tmp/takehome-kit-smoke-$$"
 
 cleanup() {
   rm -rf "$TARGET"
@@ -16,9 +16,9 @@ echo "[smoke] target: $TARGET"
 mkdir -p "$TARGET"
 
 echo "[smoke] running init.mjs --quiet ..."
-node "$KIT_ROOT/bin/init.mjs" --quiet --target "$TARGET" > /tmp/recruit-kit-smoke.log 2>&1 || {
+node "$KIT_ROOT/bin/init.mjs" --quiet --target "$TARGET" > /tmp/takehome-kit-smoke.log 2>&1 || {
   echo "[smoke] FAIL: init.mjs exited non-zero"
-  cat /tmp/recruit-kit-smoke.log
+  cat /tmp/takehome-kit-smoke.log
   exit 1
 }
 

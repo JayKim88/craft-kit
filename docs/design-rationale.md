@@ -8,7 +8,7 @@ A record of why the template is shaped this way. Patterns were extracted from th
 
 ### Problem
 
-A recruitment assignment is graded across **multiple axes** in a short window:
+A take-home assignment is graded across **multiple axes** in a short window:
 - Requirements understanding (SPEC vs our interpretation)
 - Design ability (why this structure?)
 - Execution (how systematically did they work?)
@@ -151,7 +151,7 @@ DESIGN.md uses a "Decision Records" format (option / criterion / decision / rati
 |---|---|
 | Boilerplate code (Next.js scaffold, etc.) | Tech neutrality forbids it + `create-next-app` etc. do this better anyway |
 | Auto grading | The company grades. We only simulate (`rubric-reviewer`) |
-| CI/CD setup | Recruitment assignments are usually graded locally. Add when needed |
+| CI/CD setup | Take-home assignments are usually graded locally. Add when needed |
 | Multi-language variants | v2. Currently a single set: English documents/code/commits |
 | Web UI | Unnecessary. CLI is enough |
 

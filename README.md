@@ -1,6 +1,6 @@
-# recruit-kit
+# takehome-kit
 
-A cookiecutter-style template that boots a verified Claude collaboration workflow (7-document SSOT + 8-gate DoD + rubric tagging) for any corporate recruitment assignment in **under 5 minutes**.
+A cookiecutter-style template that boots a verified Claude collaboration workflow (7-document SSOT + 8-gate DoD + rubric tagging) for any corporate take-home assignment in **under 5 minutes**.
 
 > Distilled from a single well-validated workflow (`fs-planner`, FuturSchool 5-day FE assignment). Tech-neutral — works for FE/BE/FS/ML/Mobile assignments alike.
 
@@ -26,7 +26,7 @@ A `.claude/` directory is also installed alongside, containing 4 slash commands 
 
 | Tool | Purpose |
 |---|---|
-| `/init-recruit` | Interview-driven 7-doc scaffold |
+| `/init-takehome` | Interview-driven 7-doc scaffold |
 | `/dod-check` | Automated 8-gate Definition-of-Done check |
 | `/spec-sync` | Detect SPEC drift vs PLAN/DESIGN |
 | `/checklist-trace` | Detect missing commit ↔ §N mappings |
@@ -44,11 +44,11 @@ The quick reference (3 steps):
 
 ```bash
 # degit (recommended — clean, no git history)
-npx degit JayKim88/recruit-kit my-task
+npx degit JayKim88/takehome-kit my-task
 cd my-task
 
 # or git clone
-git clone https://github.com/JayKim88/recruit-kit my-task && rm -rf my-task/.git
+git clone https://github.com/JayKim88/takehome-kit my-task && rm -rf my-task/.git
 ```
 
 ### 2. Run the interview

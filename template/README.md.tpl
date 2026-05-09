@@ -1,6 +1,6 @@
 # {{PRODUCT}}
 
-> Submission for the {{COMPANY}} {{ROLE}} recruitment assignment.
+> Submission for the {{COMPANY}} {{ROLE}} take-home assignment.
 
 <!-- HINT [One-line summary, write in Phase A]: user value + core challenge in one line.
      Example: "An SPA where students visually edit and save their weekly study schedule. Core: time-conflict detection + edit/save state separation." -->
