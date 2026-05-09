@@ -1,216 +1,216 @@
 # {{PRODUCT}}
 
-> {{COMPANY}} {{ROLE}} 채용 과제 제출물.
+> Submission for the {{COMPANY}} {{ROLE}} recruitment assignment.
 
-<!-- HINT [한 줄 요약, Phase A에서 작성]: 사용자 가치 + 핵심 도전 1줄.
-     예: "수강생이 한 주간 학습 스케줄을 시각적으로 편집·저장하는 SPA. 핵심: 시간 충돌 감지 + 편집/저장 상태 분리." -->
+<!-- HINT [One-line summary, write in Phase A]: user value + core challenge in one line.
+     Example: "An SPA where students visually edit and save their weekly study schedule. Core: time-conflict detection + edit/save state separation." -->
 
-핵심 도전: **{{ONELINE_CHALLENGE}}**
-
----
-
-## 프로젝트 개요
-
-<!-- HINT [Phase A]: SPEC 핵심 요구를 우리 말로 1-2단락 요약 + "이 과제에서 우리가 어디에 집중했는가" 명시.
-     평가자가 가장 먼저 읽는 부분 — README의 첫인상이 평가 §{{DOC_CRITERION_INDEX}}에 직결.
-     (PLAN.md §1 "제품 정의" 와 §2 "우리의 기획적 해석" 에서 합성) -->
-
-_작성 영역 — Phase A 종료 시점에 채움._
+Core challenge: **{{ONELINE_CHALLENGE}}**
 
 ---
 
-## 기술 스택 및 선택 이유
+## Project overview
 
-### 핵심 인프라
+<!-- HINT [Phase A]: Summarize SPEC's key requirements in our own words (1-2 paragraphs) + state explicitly "where we focused".
+     This is what reviewers read first — the README's first impression directly affects rubric §{{DOC_CRITERION_INDEX}}.
+     (Synthesized from PLAN.md §1 "Product definition" and §2 "Our planning interpretation") -->
 
-<!-- HINT [Phase B 종료 후 채움]: 언어, 프레임워크, 주요 라이브러리. 각 항목에 1줄 근거. 인터뷰 응답 STACK_HINT="{{STACK_HINT}}" 참고. -->
+_TO FILL — complete at end of Phase A._
 
-| 기술 | 버전 | 이유 |
+---
+
+## Tech stack & rationale
+
+### Core infrastructure
+
+<!-- HINT [Fill after Phase B]: language, framework, key libraries. One-line rationale per item. Reference STACK_HINT="{{STACK_HINT}}" from the interview. -->
+
+| Tech | Version | Reason |
 |---|---|---|
 | ... | ... | ... |
 
-### 자유 선택 영역 — 각 영역에서 가장 검증된 도구
+### Free-choice areas — most-validated tool per area
 
-<!-- HINT: SPEC이 "라이브러리 자유 선택 (선택 이유 README에 기술)" 라면 이 섹션이 평가 핵심.
-     영역별로 "왜 이거 골랐고 왜 직접 구현 안 했는가" 명시. -->
+<!-- HINT: If SPEC says "library choice is free (justify in README)", this section is at the heart of the rubric.
+     For each area, state "why this and not hand-rolled". -->
 
-| 영역 | 선택 | 이유 |
+| Area | Selection | Reason |
 |---|---|---|
 | ... | ... | ... |
 
-### 의도적으로 추가하지 않은 것
+### Intentionally NOT added
 
-<!-- HINT: 추가하지 않은 라이브러리. "선택의 의식적 배제" 시그널. -->
+<!-- HINT: Libraries you deliberately did not add. A "conscious omission" signal. -->
 
-| 영역 | 선택 | 이유 |
+| Area | Selection | Reason |
 |---|---|---|
 | ... | ... | ... |
 
 ---
 
-## 실행 방법
+## How to run
 
-<!-- HINT: SPEC "실행 방법" 필수 섹션. 평가자 환경에서 동작 보장 위해 매우 구체적으로. -->
+<!-- HINT: SPEC's required "How to run" section. Be very concrete to guarantee the reviewer can run it. -->
 
-### 사전 요구사항
+### Prerequisites
 
 - {{TECH_RUNTIME}} {{RUNTIME_VERSION}}
-- (기타: <!-- HINT: DB / 서비스 등 추가 요구사항 -->)
+- (Other: <!-- HINT: DB / services etc. -->)
 
-### 설치 및 실행
+### Install & run
 
 ```bash
-# 1. 의존성 설치
+# 1. Install dependencies
 {{INSTALL_COMMAND}}
 
-# 2. 개발 서버 실행
+# 2. Start dev server
 {{DEV_COMMAND}}
 
-# 3. 빌드 (선택)
+# 3. Build (optional)
 {{BUILD_COMMAND}}
 ```
 
-### 테스트
+### Test
 
 ```bash
 {{TEST_COMMAND}}
 ```
 
-<!-- HINT [Phase B 후]: 위 명령들이 init 인터뷰에서 비어있다면 직접 채운다.
-     아래 표는 Phase 4 마무리 시점에 갱신:
-     | Tier | 대상 | 카운트 |
+<!-- HINT [After Phase B]: If the commands above were left blank in init, fill them in directly.
+     Update the table below at end of Phase 4:
+     | Tier | Target | Count |
      |---|---|---|
-     | 1. 순수 함수 | lib/<domain>.ts | N |
-     | 2. 컴포넌트/엔드포인트 | ... | N |
-     | 3. 통합 | ... | N |
+     | 1. Pure functions | lib/<domain>.ts | N |
+     | 2. Components / endpoints | ... | N |
+     | 3. Integration | ... | N |
 -->
 
 
-<!-- HINT: 테스트 카운트와 분류. 평가자가 한눈에 보도록.
-     예시:
-     | Tier | 대상 | 카운트 |
+<!-- HINT: Test count + classification, at-a-glance for the reviewer.
+     Example:
+     | Tier | Target | Count |
      |---|---|---|
-     | 1. 순수 함수 | lib/time.ts | 69 |
-     | 2. 컴포넌트 | components/* | 11 |
-     | 3. 통합 | integration | 2 |
-     | **합계** | | **82** |
+     | 1. Pure functions | lib/time.ts | 69 |
+     | 2. Components | components/* | 11 |
+     | 3. Integration | integration | 2 |
+     | **Total** | | **82** |
 -->
 
-### Mock API 구성 (FE 과제만)
+### Mock-API setup (FE assignment only)
 
-<!-- HINT [FE 전용, Phase B-C]: BE라면 이 섹션 삭제.
-     FE: MSW / json-server / 정적 JSON 등 어떤 방식으로 mock 했는지 + SW detach 시 폴백 등 운영 고려. -->
+<!-- HINT [FE only, Phase B-C]: Delete this section for BE assignments.
+     FE: state how you mocked (MSW / json-server / static JSON) + operational considerations (e.g. SW detach fallback). -->
 
-_작성 영역_
+_TO FILL_
 
-### 개발 시나리오 URL 플래그 (선택)
+### Dev-scenario URL flags (optional)
 
-<!-- HINT: 평가자가 에러/엣지 케이스를 쉽게 재현하도록 URL 플래그 제공.
-     예시:
-     - `?_seed=empty` — 빈 주차 시드
-     - `?_seed=stress` — 100+ 블록 스트레스 테스트
-     - `?_simulate=TIME_CONFLICT` — 충돌 에러 응답 트리거
-     - `?_slow=2000` — 응답 2초 지연
+<!-- HINT: Provide URL flags so reviewers can reproduce error/edge cases easily.
+     Examples:
+     - `?_seed=empty` — empty week seed
+     - `?_seed=stress` — 100+ blocks stress test
+     - `?_simulate=TIME_CONFLICT` — trigger conflict response
+     - `?_slow=2000` — 2-second response delay
 -->
 
 ---
 
-## 프로젝트 구조 설명
+## Project structure
 
-<!-- HINT: 폴더 트리 + 각 폴더 책임 1줄.
+<!-- HINT: Folder tree + one-line responsibility per folder.
 ```
 src/
 ├── app/         # ...
 ├── components/  # ...
 ├── hooks/       # ...
-├── lib/         # 도메인 로직 (격리 모듈)
+├── lib/         # Domain logic (isolated modules)
 ├── store/       # ...
 └── types/       # ...
 ```
-또는 BE: `src/{controllers,services,repositories,domain,middleware}` 등.
+Or BE: `src/{controllers,services,repositories,domain,middleware}` etc.
 -->
 
 ```
-<!-- HINT [Phase 0-1]: src/ (또는 동등) 구조를 트리로. 각 폴더 책임 1줄.
+<!-- HINT [Phase 0-1]: tree of src/ (or equivalent), one-line responsibility per folder.
 src/
 ├── ...
 └── ...
 -->
-_작성 영역_
+_TO FILL_
 ```
 
-| 폴더/파일 | 책임 |
+| Folder/file | Responsibility |
 |---|---|
 | ... | ... |
 
 ---
 
-## 요구사항 해석 및 가정
+## Requirements interpretation & assumptions
 
-<!-- HINT [Phase A]: PLAN.md §2 "우리의 기획적 해석" 표를 평가자 친화적으로 옮긴다.
-     SPEC에서 모호했던 부분과 우리 결정 + 근거. -->
+<!-- HINT [Phase A]: Move PLAN.md §2 "Our planning interpretation" table into a reviewer-friendly form here.
+     What was ambiguous in SPEC + our decision + rationale. -->
 
-_작성 영역 — PLAN.md §2 표를 발췌_
+_TO FILL — extract from PLAN.md §2 table_
 
-### 선택 구현 (가산점)
+### Optional implementations (bonus)
 
-<!-- HINT: 어떤 가산점 항목을 구현했고 어떤 것을 빼고 어떤 근거로 그랬는지. -->
+<!-- HINT: Which bonus items did we ship, which did we drop, with what rationale. -->
 
-_작성 영역_
+_TO FILL_
 
 ---
 
-## 설계 결정과 이유
+## Design decisions & rationale
 
-<!-- HINT [Phase 4 마무리, 가장 중요]: SPEC의 README 템플릿 "설계 결정과 이유" 섹션은 평가 §{{DOC_CRITERION_INDEX}}의 핵심.
-     DESIGN.md의 ADR을 평가자 친화적으로 5-8개 발췌. SPEC의 평가 §{{DOC_CRITERION_INDEX}} 항목을 모두 커버하도록.
+<!-- HINT [Phase 4 wrap-up, most important]: SPEC's README "Design decisions" section is at the heart of rubric §{{DOC_CRITERION_INDEX}}.
+     Extract 5-8 reviewer-friendly ADRs from DESIGN.md. Cover every sub-item under SPEC's §{{DOC_CRITERION_INDEX}}.
 
-     아래는 ADR 1개의 형식 예시. 본인 과제에서는 5-8개로 늘려 작성.
+     Below is the format for one ADR. In your assignment, scale to 5-8.
 -->
 
-### 1. <!-- 결정 제목 1 -->
+### 1. <!-- Decision title 1 -->
 
-_작성 영역 — 컨텍스트 → 옵션 → 결정 → 근거 → 트레이드오프_
+_TO FILL — context → options → decision → rationale → trade-offs_
 
-### 2. <!-- 결정 제목 2 -->
+### 2. <!-- Decision title 2 -->
 
-_작성 영역_
+_TO FILL_
 
-<!-- 3-8 추가 -->
-
----
-
-## 미구현 / 제약사항
-
-<!-- HINT [Phase 4]: 솔직 기재. 평가 §{{DOC_CRITERION_INDEX}}는 "구현하지 못한 부분이 있다면 이유와 대안 명시"를 명시적으로 봄.
-     숨기지 말고 "X는 시간 부족으로 미구현, 대안은 Y" 식으로. -->
-
-- _작성 영역 1_
-- _작성 영역 2_
+<!-- 3-8 to add -->
 
 ---
 
-## AI 활용 범위
+## Unimplemented / constraints
 
-<!-- HINT: AI_USAGE.md 요약 + 링크.
-     "AI 사용 자체는 감점 요소가 아닙니다. AI를 사용한 후 결과물을 얼마나 자기 것으로 만들었는지를 봅니다." (SPEC)
-     → "내가 무엇을 결정·검증했는가"를 강조. -->
+<!-- HINT [Phase 4]: Be honest. Rubric §{{DOC_CRITERION_INDEX}} explicitly looks for "if anything is missing, state the reason and an alternative."
+     Don't hide. Format: "X was not implemented due to time, alternative is Y." -->
 
-상세 내역은 [docs/AI_USAGE.md](docs/AI_USAGE.md) 참조.
-
-**요약**:
-- 1차 구현 대부분은 AI 협업으로 진행
-- 의사결정 (라이브러리 선택, 알고리즘 경계값, 상태 분리 패턴) 은 본인이 옵션 비교 후 결정
-- 발견된 이슈 (예: ...) 는 본인이 수정 방향 결정
+- _TO FILL 1_
+- _TO FILL 2_
 
 ---
 
-## 참고 문서
+## AI usage scope
 
-- [docs/SPEC.md](docs/SPEC.md) — 회사 원본 명세 (불변)
-- [docs/PLAN.md](docs/PLAN.md) — 우리의 기획·스코프·일정
-- [docs/DESIGN.md](docs/DESIGN.md) — 아키텍처 결정 기록 (ADR)
-- [docs/PROCESS.md](docs/PROCESS.md) — 구현 순서
-- [docs/CHECKLIST.md](docs/CHECKLIST.md) — 진행 추적 + 평가 §N 매핑
-- [docs/AI_USAGE.md](docs/AI_USAGE.md) — AI 협업 내역
-- [CLAUDE.md](CLAUDE.md) — AI 협업 규칙·DoD·금기
+<!-- HINT: Summary + link to AI_USAGE.md.
+     "AI usage itself is not penalized. We evaluate how much you made the result your own after using AI." (SPEC)
+     → Emphasize "what I decided / verified". -->
+
+See [docs/AI_USAGE.md](docs/AI_USAGE.md) for details.
+
+**Summary**:
+- Most first-pass implementation was done in collaboration with AI
+- Decisions (library selection, algorithm boundary cases, state-separation pattern) were made by me after option comparison
+- Discovered issues (e.g. ...) were diagnosed and fixed under my direction
+
+---
+
+## Reference docs
+
+- [docs/SPEC.md](docs/SPEC.md) — original company spec (immutable)
+- [docs/PLAN.md](docs/PLAN.md) — our planning · scope · schedule
+- [docs/DESIGN.md](docs/DESIGN.md) — Architecture Decision Records (ADRs)
+- [docs/PROCESS.md](docs/PROCESS.md) — implementation order
+- [docs/CHECKLIST.md](docs/CHECKLIST.md) — progress tracking + §N rubric mapping
+- [docs/AI_USAGE.md](docs/AI_USAGE.md) — AI collaboration log
+- [CLAUDE.md](CLAUDE.md) — AI rules · DoD · prohibitions

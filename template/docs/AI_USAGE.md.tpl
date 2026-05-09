@@ -1,46 +1,46 @@
-# AI 활용 내역
+# AI Usage Log
 
-> 과제 제출 필수 항목. 구현하면서 계속 업데이트한다.
-
----
-
-## 사용 도구
-
-- <!-- HINT: 사용한 AI 도구 (Claude / ChatGPT / Cursor / GitHub Copilot 등) -->
-- 활용 범위: 아래 표 참조
+> Required for submission. Update continuously while implementing.
 
 ---
 
-## 활용 내역 (대표 항목)
+## Tools used
 
-> 모든 작업의 1차 구현은 AI 가 진행했고 의사결정·검증·수정은 사람이 진행했다. 아래는 의사결정이 두드러진 항목 중심.
+- <!-- HINT: which AI tools (Claude / ChatGPT / Cursor / GitHub Copilot, ...) -->
+- Scope of use: see table below
 
-| 항목 | AI 활용 방식 | 본인 검증/수정 내용 |
-|------|-------------|--------------------|
-| <!-- HINT: 첫 행은 예시. 작업할 때마다 1행 추가. --> | | |
-| 프로젝트 초기 설정 | 보일러플레이트 구성 제안 | 폴더 구조 직접 설계, 런타임 버전 결정 |
-| 문서 구조 설계 | 문서 책임 분리 패턴(SSOT) 제안 | 옵션 직접 선택 |
-| 타입/모델 정의 | 인터페이스 초안 생성 | SPEC API 명세 대조, 추가 필드 결정 |
+---
+
+## Usage log (representative items)
+
+> First-pass implementation for all work was AI-driven; decision-making, verification, and corrections were human-driven. The rows below highlight cases where decision-making was prominent.
+
+| Item | How AI was used | What I verified / corrected |
+|------|-----------------|------------------------------|
+| <!-- HINT: First row is an example. Add a row whenever you do work. --> | | |
+| Initial project setup | Suggested boilerplate | Designed folder structure, picked runtime version |
+| Document structure design | Proposed SSOT pattern for splitting docs | Picked the option directly |
+| Type / model definitions | Generated interface drafts | Cross-checked against SPEC API, decided extra fields |
 | ... | ... | ... |
 
 ---
 
-## 검증을 통해 발견한 이슈 — 사람 판단으로 수정한 대표 사례
+## Issues found via verification — representative cases the human decided
 
-> 단위 테스트, lint/타입 체커, 수동 스모크 테스트, 문서 자체 리뷰 등에서 발견된 이슈 중 **의사결정이 두드러진 케이스**를 정리. 사소한 코드 정리·네이밍 수정은 git 커밋 로그(`git log --oneline`)에서 확인 가능.
+> Issues found through unit tests, lint / type checker, manual smoke, doc self-review, etc. — list **cases where decision-making was prominent**. Trivial cleanup / renames are visible in `git log --oneline`.
 
-| 이슈 | 발견 경로 | 조치 |
-|------|----------|------|
-| <!-- HINT: AI가 처음 짠 것에서 인간이 수정 결정한 케이스. 이게 평가자에게 가장 가치 있는 부분. --> | | |
+| Issue | Discovery path | Action |
+|-------|----------------|--------|
+| <!-- HINT: A case where human caught/corrected something AI initially produced. This is the most valuable signal for the reviewer. --> | | |
 | ... | ... | ... |
 
 ---
 
-<!-- HINT: 작성 팁
-1. 1행 = 1줄 (간결).
-2. "AI가 코드 짰음"으로 끝내지 말고, **인간이 무엇을 결정·수정했는지** 명시.
-3. 30-50행이면 충분. 너무 자세할 필요 없음.
-4. 매 커밋 직후 1행씩 추가하는 습관 → 마지막에 몰아서 쓰지 말 것.
-5. 좋은 예: "AI가 알고리즘 초안 작성. 인간이 boundary case 검토 후 strict inequality로 수정 (touching ≠ overlap)."
-   나쁜 예: "AI가 알고리즘 구현."
+<!-- HINT: Writing tips
+1. One row = one line (concise).
+2. Don't stop at "AI wrote it" — state **what the human decided / corrected**.
+3. 30-50 rows is enough. No need to over-detail.
+4. Build the habit of adding one row right after every commit; never bulk-write at the end.
+5. Good example: "AI drafted the algorithm. Human reviewed boundary cases and switched to strict inequality (touching ≠ overlap)."
+   Bad example: "AI implemented the algorithm."
 -->

@@ -30,10 +30,10 @@ dist/
 .cache/
 
 # ----------------------------------------------------------------------
-# 언어/프레임워크별 추가 (사용하는 항목만 주석 해제 또는 추가):
+# Per language/framework — uncomment or extend the lines you need:
 # Next.js:    .next/
 # Python:     .pytest_cache/, .venv/, *.egg-info/
 # Java:       *.class, .gradle/, target/
-# Rust:       (Cargo.lock는 라이브러리에만 무시)
+# Rust:       (Cargo.lock should only be ignored for libraries)
 # Go:         /vendor/, *.test
 # ----------------------------------------------------------------------

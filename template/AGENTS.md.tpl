@@ -1,15 +1,15 @@
 <!-- BEGIN:env-agent-rules -->
-# 환경 주의사항
+# Environment Notes
 
-<!-- HINT: 사용 프레임워크/런타임이 학습 데이터(2024-2025)와 다른 점이 있다면 여기에 명시.
-     이 문서는 AI가 코드 작성 전 반드시 확인해야 하는 환경 정보.
+<!-- HINT: If your framework/runtime differs from common training data (2024-2025), record it here.
+     This document is what AI must read before writing code, to avoid stale assumptions.
 
-     예시:
+     Examples:
      - This is NOT the Next.js you know — Next 16 has breaking changes (async params, Turbopack default)
      - Python 3.13 — typing changes, deprecated `imp` removed
      - Java 21 — record patterns, sequenced collections
 
-     해당 사항 없으면 "특이사항 없음 (표준 환경)" 한 줄만 기재.
+     If nothing applies, leave a single line: "No special concerns (standard environment)."
 -->
 
 {{ENV_NOTES}}

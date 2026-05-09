@@ -1,57 +1,56 @@
-# 과제 명세 — 원본 (불변)
+# Assignment Spec — Original (immutable)
 
-> 평가자가 제시한 원본 명세를 그대로 보존한다. **이 문서는 수정하지 않는다.**
-> 우리의 해석/결정은 [PLAN.md](PLAN.md), [DESIGN.md](DESIGN.md) 에 별도로 기록한다.
+> Preserves the original spec the company provided as-is. **Do not edit this document.**
+> Our interpretations and decisions go in [PLAN.md](PLAN.md) and [DESIGN.md](DESIGN.md).
 
 ---
 
 <!-- SPEC PASTE START -->
 <!--
-이 영역에 회사가 제공한 원본 명세를 그대로 paste 하세요.
-형식 보존 우선: 회사가 마크다운으로 줬으면 마크다운, 워드면 텍스트로 옮기되 절대 의역하지 않습니다.
+Paste the original company spec here verbatim.
+Preserve formatting first: if the company gave you markdown, keep markdown; if Word, transcribe to text — never paraphrase.
 -->
 
-[[ 회사 원본 명세 paste ]]
+[[ paste original company spec here ]]
 
 <!-- SPEC PASTE END -->
 
 ---
 
-## 평가 기준 (세부)
+## Rubric (detail)
 
-<!-- HINT: 회사 명세에 평가 기준이 명시돼 있으면 그대로 1:1 옮긴다.
-     없으면 "## 면접 연계 질문" 등에서 역으로 추론하여 5-7개 카테고리로 만든다.
-     각 카테고리에 §1, §2, ... 번호 부여 — 이 번호가 CHECKLIST.md, 커밋 메시지의 [§N] 태그와 1:1 매핑된다.
+<!-- HINT: If the company spec defines an explicit rubric, transcribe it 1:1.
+     Otherwise, infer 5-7 categories from sections like "Interview questions" and assign §1, §2, ... — these numbers map 1:1 to CHECKLIST.md and the [§N] tags in commit messages.
 -->
 
 {{EVAL_CRITERIA_TABLE}}
 
-<!-- HINT 예시 형식 (init.mjs 가 인터뷰 N개 응답으로 위 EVAL_CRITERIA_TABLE 을 채움):
+<!-- HINT example format (init.mjs fills EVAL_CRITERIA_TABLE above from N interview answers):
 
-### N) <카테고리명> (<배점>점)
+### N) <Category name> (<points> pts)
 
-**특히 봐야 할 애매한 지점들:**
+**Particularly ambiguous things to look for:**
 - [ambiguity 1]
 - [ambiguity 2]
 
-| 체크포인트 | 낮은 숙련도 | 높은 숙련도 |
+| Checkpoint | Low proficiency | High proficiency |
 |---|---|---|
 | ... | ... | ... |
 -->
 
 ---
 
-## 면접 연계 질문 (이 과제 전용)
+## Interview questions (assignment-specific)
 
-<!-- HINT: 회사가 면접 질문을 사전에 줬다면 그대로 옮기고, 없다면 이 섹션 자체를 삭제. -->
+<!-- HINT: If the company shared interview questions in advance, paste them. If not, delete this section. -->
 
 {{INTERVIEW_QUESTIONS}}
 
 ---
 
-## 판단 근거 — 평가자가 이 과제를 선정한 이유 (선택)
+## Rationale — why the company picked this assignment (optional)
 
-<!-- HINT: 회사가 과제 선정 의도를 적었다면 옮긴다. 없으면 삭제.
-     이 섹션이 있으면 "어디에 점수를 주는가"를 역으로 추론할 수 있어 가치 큼. -->
+<!-- HINT: If the company stated their intent for this assignment, transcribe it here. Delete if absent.
+     This section is high-value when present — it lets you reverse-engineer "where do they award points?". -->
 
 {{SELECTION_RATIONALE}}

@@ -1,26 +1,26 @@
-# PLAN — 프로젝트 기획서
+# PLAN — Project plan
 
-> 무엇을, 누구를 위해, 어디까지, 언제까지 만드는가.
-> SPEC.md(외부 명세)에 대한 우리의 해석과 결정을 담는다.
+> What we're building, for whom, how far, and by when.
+> Holds our interpretation of and decisions about SPEC.md (the external spec).
 
 ---
 
-## 1. 제품 정의
+## 1. Product definition
 
-**한 줄 정의**: <!-- HINT: SPEC을 우리 말로 1줄 요약. 예: "수강생이 한 주간의 학습 스케줄을 시각적으로 편집·저장하는 시간 기반 플래너" -->
+**One-line definition**: <!-- HINT: One-line summary of SPEC in our words. Example: "A time-based planner where students visually edit and save their weekly study schedule." -->
 
-**대상 사용자**: <!-- HINT: 누가 이걸 쓰는가. SPEC에 명시 없으면 합리적 추론. -->
+**Target user**: <!-- HINT: Who uses it? Reasonable inference if SPEC is silent. -->
 
-**핵심 가치 (User Value)**:
-<!-- HINT: 이 제품이 사용자에게 주는 핵심 효용 3-5개. -->
+**User value**:
+<!-- HINT: 3-5 core benefits this product gives the user. -->
 - ...
 - ...
 - ...
 
-### 핵심 사용자 시나리오
+### Core user scenarios
 
-<!-- HINT: SPEC의 "배경 시나리오" 또는 "사용 흐름"을 우리 말로 5-8단계 정리.
-     평가자는 우리가 SPEC을 정확히 이해했는지 여기서 본다. -->
+<!-- HINT: Translate SPEC's "background scenario" or "usage flow" into 5-8 steps in our words.
+     The reviewer reads this to verify we accurately understood the spec. -->
 
 1. ...
 2. ...
@@ -28,122 +28,122 @@
 
 ---
 
-## 2. 우리의 기획적 해석 (SPEC 외 결정)
+## 2. Our planning interpretation (decisions outside SPEC)
 
-SPEC.md는 외부 입력이고, 다음은 그 해석에서 우리가 내린 결정이다.
+SPEC.md is external input; what follows are decisions we made when interpreting it.
 
-| SPEC 모호 지점 | 우리 결정 | 근거 |
+| SPEC ambiguity | Our decision | Rationale |
 |---|---|---|
-| <!-- HINT: SPEC에 모호한 부분 (경계값 처리, 빈 상태, 타임존 등) --> | <!-- 우리가 어떻게 해석했는가 --> | <!-- 그 근거 --> |
+| <!-- HINT: ambiguous parts of SPEC (boundary cases, empty states, timezones, ...) --> | <!-- how we interpreted it --> | <!-- why --> |
 
-→ 위 결정들은 [DESIGN.md](DESIGN.md) 에 설계 근거로, [README.md](../README.md) "요구사항 해석 및 가정" 섹션에 평가자용으로 옮겨 적힌다.
+→ These decisions feed [DESIGN.md](DESIGN.md) as design rationale and the [README.md](../README.md) "Requirements interpretation & assumptions" section as reviewer-facing copy.
 
 ---
 
-## 3. 스코프
+## 3. Scope
 
-### 필수 (반드시 구현)
+### Required (must implement)
 
-<!-- HINT: SPEC "필수 구현" 그대로 + 추론 가능한 암묵적 요구사항. -->
+<!-- HINT: SPEC "Required implementation" verbatim + reasonable implicit requirements. -->
 
 - ...
 - ...
 
-### 선택 (가산점)
+### Optional (bonus)
 
-<!-- HINT: SPEC "선택 구현"이 명시돼 있으면 그대로. 우선순위는 비용·자연스러움 기준 결정.
-     기본 계획은 "전부 구현 또는 명시적 드롭" — 모호한 회피 금지. -->
+<!-- HINT: SPEC "Optional" verbatim if listed. Set priority by cost · naturalness.
+     Default plan = "implement all OR explicit drop". No vague avoidance. -->
 
-| 항목 | 비용 | 자연스러움 (이미 깔린 인프라) | 마지막까지 유지 우선순위 |
+| Item | Cost | Naturalness (already-built infra) | Priority for keeping until the end |
 |---|---|---|---|
 | ... | ... | ... | ... |
 
-**원칙**: 모두 구현이 **기본 계획**. 위 우선순위는 "필수가 위협받는 비상 상황" 에서만 발동되는 컷 라인.
+**Principle**: implementing all is the **default plan**. The priority above only triggers in "the required scope is at risk" emergencies as a cut line.
 
-### 비스코프 (이번 과제에서 안 함)
+### Out of scope (not in this assignment)
 
-<!-- HINT: SPEC에서 명시적으로 빠진 것 + 우리가 명시적으로 빼는 것. -->
+<!-- HINT: explicitly excluded by SPEC + things we explicitly drop. -->
 
 - ...
 
-### 외부 의존성 / 환경 결정 (SPEC "자유 선택" 영역 응답)
+### External dependencies / environment decisions (response to SPEC's "free choice" areas)
 
-<!-- HINT: SPEC이 "Mock API 환경 자유 선택", "DB 자유 선택", "배포 환경 자유" 등 자유 영역을 줬다면 여기에 결정 + 근거 + 한계.
-     fs-planner 사례: "MSW v2 선택 — 실무 환경 근접 / 테스트 재사용 / 메모리 영속". 한계: "새로고침 시 시드 재시작".
-     BE 사례: "PostgreSQL + Docker Compose 선택 — 실제 트랜잭션 검증 가능". 한계: "분산 트랜잭션 미지원".
-     해당 사항 없으면 이 섹션 삭제. -->
+<!-- HINT: If SPEC offered free choice for "Mock API environment", "DB", "deployment", etc., document the decision + rationale + limitations.
+     fs-planner case: "MSW v2 chosen — close to production / test reusability / in-memory persistence". Limitation: "Seeds reset on refresh".
+     BE case: "PostgreSQL + Docker Compose — verifiable real transactions". Limitation: "No distributed transactions".
+     Delete this section if not applicable. -->
 
-**선택**: ...
+**Selection**: ...
 
-**근거**:
+**Rationale**:
 - ...
 - ...
 
-**한계 (README 제약사항에 기재)**:
+**Limitations (record in README constraints)**:
 - ...
 
 ---
 
-## 4. 마감 / 일정
+## 4. Deadline / schedule
 
-| 항목 | 일자 |
+| Item | Date |
 |---|---|
-| **과제 마감** | {{DEADLINE_DATE}} ({{DEADLINE_TIME}}) |
-| **현재** (작성일) | {{TODAY}} |
-| **남은 시간** | 약 {{DEADLINE_DAYS}}일 |
+| **Assignment deadline** | {{DEADLINE_DATE}} ({{DEADLINE_TIME}}) |
+| **Today** (writing date) | {{TODAY}} |
+| **Time remaining** | ~{{DEADLINE_DAYS}} days |
 
-**일정 계획 (러프)**:
+**Schedule plan (rough)**:
 
-<!-- HINT: D-N 부터 D-0까지 일별 milestone. 보통:
-     D-N    : 문서 정합성 + 도구체인 검증
-     D-N+1  : 코어 인프라 (types, lib, mocks, providers)
-     D-N+2  : 필수 화면/엔드포인트 1차
-     D-N+3  : 필수 화면/엔드포인트 2차 + 가산점 시작
+<!-- HINT: Daily milestones from D-N to D-0. Common pattern:
+     D-N    : Doc alignment + toolchain check
+     D-N+1  : Core infra (types, lib, mocks, providers)
+     D-N+2  : Required screens / endpoints — first pass
+     D-N+3  : Required — second pass + start bonus
      D-1    : Polish + manual smoke
-     D-0    : README 마무리 + repo public + 제출
+     D-0    : README polish + repo public + submit
 -->
 
-- D-{{DEADLINE_DAYS}} ({{TODAY}}): ... ← **현재**
+- D-{{DEADLINE_DAYS}} ({{TODAY}}): ... ← **today**
 - D-{{DAY_BEFORE_LAST}}: ...
 - D-1: Polish + manual smoke
-- D-0 ({{DEADLINE_DATE}}): README 마무리 + repo public + 제출
+- D-0 ({{DEADLINE_DATE}}): README polish + repo public + submit
 
 ---
 
-## 5. 평가 대응 매핑
+## 5. Rubric mapping
 
-평가 기준 점수가 어디서 채워지는지 매핑. (init이 인터뷰 응답 기반으로 행을 동적 생성)
+Mapping where each rubric score gets earned. (init dynamically generates rows from interview answers)
 
 {{EVAL_MAPPING_TABLE}}
 
-<!-- HINT: 위 표에 각 §N 카테고리에 대해 "어디서 충족하는가" 를 채운다.
-     예시 (FE 5일 과제):
-     | §1 요구사항 이해 (20점) | SPEC = 입력 / PLAN §2 해석 / CHECKLIST 엣지 케이스 |
-     | §2 설계·코드 구조 (25점) | DESIGN ADR + 실제 코드 |
-     | §3 안정성·예외 (20점) | DESIGN 에러 패턴 / CHECKLIST 안정성 / DoD 게이트 |
-     | §4 UI/UX (15점) | DESIGN UX 패턴 + CHECKLIST 가독성 |
-     | §5 문서화 (10점) | SPEC + PLAN + DESIGN + PROCESS + CLAUDE + AI_USAGE + README |
-     | §6 Git history (10점) | CLAUDE.md Git 정책 + PROCESS 단계별 커밋 + refactor/test 별도 커밋 |
+<!-- HINT: For each §N category in the table above, fill "where it's satisfied".
+     Example (FE 5-day assignment):
+     | §1 Requirements understanding (20) | SPEC = input / PLAN §2 interpretation / CHECKLIST edge cases |
+     | §2 Design & code structure (25)    | DESIGN ADRs + actual code |
+     | §3 Stability & exceptions (20)     | DESIGN error patterns / CHECKLIST stability / DoD gates |
+     | §4 UI/UX (15)                      | DESIGN UX pattern + CHECKLIST readability |
+     | §5 Documentation (10)              | SPEC + PLAN + DESIGN + PROCESS + CLAUDE + AI_USAGE + README |
+     | §6 Git history (10)                | CLAUDE.md git policy + per-Phase commits + separate refactor/test commits |
 -->
 
 ---
 
-## 6. 위험 요소 (Risk)
+## 6. Risks
 
-| 위험 | 가능성 | 영향 | 완화책 |
+| Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
-| <!-- HINT: 기술 스택 신규 API 호환 이슈, 시간 부족, 가산점 욕심으로 필수 미완 등 --> | 중 | 중 | ... |
+| <!-- HINT: stack incompatibility with new APIs, time pressure, dropping required scope to chase bonus, ... --> | Med | Med | ... |
 
 ---
 
-## 7. 제출 시 충족해야 할 것 (요약)
+## 7. What we must satisfy at submission (summary)
 
-<!-- HINT: SPEC "필수 제출물" 그대로 + 평가 기준 §5(문서화) 충족 항목. -->
+<!-- HINT: SPEC "Required deliverables" verbatim + rubric §5 (documentation) items. -->
 
-- Repository (Public, 커밋 히스토리 포함)
-- README.md — SPEC.md 템플릿 섹션 모두 충족 + 평가 §{{DOC_CRITERION_INDEX}} 항목
-- 모든 필수 구현 동작 (수동 스모크 테스트 통과)
-- AI_USAGE.md 최종 정리
-- 미구현/제약사항 솔직 기재
+- Repository (public, with full commit history)
+- README.md — covers every section in SPEC's README template + rubric §{{DOC_CRITERION_INDEX}} items
+- Every required implementation works (manual smoke passes)
+- AI_USAGE.md finalized
+- Honest "Unimplemented / constraints" section
 
-→ 추적 체크박스는 [CHECKLIST.md "4. 마무리"](CHECKLIST.md) 단일 진실.
+→ The single source of truth for tracking is [CHECKLIST.md "4. Wrap-up"](CHECKLIST.md).

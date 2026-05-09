@@ -1,104 +1,104 @@
 # recruit-kit
 
-기업 채용 과제마다 **5분 안에** 검증된 Claude 협업 워크플로우(7-document SSOT + 8-gate DoD + rubric tagging)를 부팅하는 cookiecutter 스타일 템플릿.
+A cookiecutter-style template that boots a verified Claude collaboration workflow (7-document SSOT + 8-gate DoD + rubric tagging) for any corporate recruitment assignment in **under 5 minutes**.
 
-> 한 번 잘 검증된 워크플로우(`fs-planner`, FuturSchool FE 5일 과제)에서 추출. 기술-중립이라 FE/BE/FS/ML/Mobile 어떤 도메인에도 적용 가능.
+> Distilled from a single well-validated workflow (`fs-planner`, FuturSchool 5-day FE assignment). Tech-neutral — works for FE/BE/FS/ML/Mobile assignments alike.
 
 ---
 
-## 무엇이 들어 있나
+## What's inside
 
 ```
-새 과제 폴더/
-├── CLAUDE.md            # AI 협업 그라운드 룰 (DoD, 커밋 컨벤션, 금지사항)
-├── AGENTS.md            # 환경/세팅 메모
-├── README.md            # 평가 제출용 README 골격
+new-assignment/
+├── CLAUDE.md            # AI collaboration ground rules (DoD, commit convention, prohibitions)
+├── AGENTS.md            # Environment / setup notes
+├── README.md            # Submission-ready README skeleton
 └── docs/
-    ├── SPEC.md          # 회사 명세 (외부 계약 — 절대 수정 금지)
-    ├── PLAN.md          # 우리 해석·스코프·타임라인·리스크
-    ├── DESIGN.md        # 아키텍처 결정·트레이드오프 (Decision Records)
-    ├── PROCESS.md       # 구현 순서 + 의존성 그래프
-    ├── CHECKLIST.md     # 평가기준 §N별 체크박스
-    └── AI_USAGE.md      # AI 협업 로그 (감사 추적)
+    ├── SPEC.md          # Company spec (external contract — never edit)
+    ├── PLAN.md          # Our interpretation, scope, timeline, risks
+    ├── DESIGN.md        # Architecture decisions & trade-offs (Decision Records)
+    ├── PROCESS.md       # Implementation order + dependency graph
+    ├── CHECKLIST.md     # Per-criterion (§N) checkboxes
+    └── AI_USAGE.md      # AI collaboration log (audit trail)
 ```
 
-추가로 `.claude/` 안에 슬래시 커맨드 4종 + subagent 1종이 함께 설치됨:
+A `.claude/` directory is also installed alongside, containing 4 slash commands + 1 subagent:
 
-| 도구 | 용도 |
+| Tool | Purpose |
 |---|---|
-| `/init-recruit` | 인터뷰 기반 7-doc scaffold |
-| `/dod-check` | 8-gate Definition of Done 자동 검증 |
-| `/spec-sync` | SPEC 변경 vs PLAN/DESIGN drift 감지 |
-| `/checklist-trace` | 커밋 ↔ §N 매핑 누락 감지 |
-| `rubric-reviewer` (subagent) | 평가자 시뮬레이션 |
+| `/init-recruit` | Interview-driven 7-doc scaffold |
+| `/dod-check` | Automated 8-gate Definition-of-Done check |
+| `/spec-sync` | Detect SPEC drift vs PLAN/DESIGN |
+| `/checklist-trace` | Detect missing commit ↔ §N mappings |
+| `rubric-reviewer` (subagent) | Reviewer simulation |
 
 ---
 
-## 사용법
+## How to use
 
-> **처음 사용한다면**: [docs/walkthrough.md](docs/walkthrough.md) — 가상 시나리오(AcmeCo BE 정산 API, 5일)로 D-5 부팅부터 D-0 제출까지 시간순 가이드. 슬래시 커맨드 호출법, recovery 시나리오, fork 사용자 흐름 모두 포함.
+> **First time?** See [docs/walkthrough.md](docs/walkthrough.md) — a hypothetical scenario (AcmeCo BE settlement API, 5 days) walking through every step from D-5 boot to D-0 submission. Includes slash command invocation, recovery scenarios, and the fork-user flow.
 
-아래는 빠른 참조 (3단계).
+The quick reference (3 steps):
 
-### 1. 새 과제 폴더 받기
+### 1. Get a fresh assignment folder
 
 ```bash
-# degit 사용 (권장 — git 히스토리 없이 깨끗하게)
+# degit (recommended — clean, no git history)
 npx degit JayKim88/recruit-kit my-task
 cd my-task
 
-# 혹은 git clone
+# or git clone
 git clone https://github.com/JayKim88/recruit-kit my-task && rm -rf my-task/.git
 ```
 
-### 2. 인터뷰 실행
+### 2. Run the interview
 
 ```bash
 node bin/init.mjs
 ```
 
-물어볼 항목:
-- 회사명 (`COMPANY`)
-- 제품/과제 이름 (`PRODUCT`)
-- 역할 (`ROLE`, 예: "Frontend Engineer 3+ years")
-- 마감일 (`DEADLINE_DATE`, ISO 8601)
-- 후보 기술 스택 (`STACK_HINT`, free-form)
-- 평가 기준 N개 + 배점 (예: "요구사항 이해 20, 코드 품질 25, ...")
-- 한 줄 핵심 도전 과제
+You'll be asked for:
+- Company name (`COMPANY`)
+- Product / assignment name (`PRODUCT`)
+- Role (`ROLE`, e.g. "Frontend Engineer 3+ years")
+- Deadline (`DEADLINE_DATE`, ISO 8601)
+- Stack hint (`STACK_HINT`, free-form)
+- N evaluation criteria with point allocations (e.g. "Requirements 20, Code Quality 25, ...")
+- One-line core challenge
 
-→ 7개 문서 placeholder 치환 + `.claude/` 복사 + `git init` + 첫 커밋 자동.
+→ Placeholders in 7 documents are substituted, `.claude/` is copied in, `git init` runs, and a first commit is made — automatically.
 
-### 3. SPEC 채우기
+### 3. Fill in SPEC
 
-`docs/SPEC.md`의 `<!-- SPEC PASTE START -->` 영역에 회사 원본 명세 붙여넣기. **이후 절대 수정 금지** (외부 계약).
+Paste the company's original spec into the `<!-- SPEC PASTE START -->` region of `docs/SPEC.md`. **Never edit it after that** (external contract).
 
-### 4. PLAN/DESIGN 채우기, 작업 시작
+### 4. Fill PLAN/DESIGN, start working
 
-`CLAUDE.md`에 정의된 8-gate DoD가 모든 커밋의 게이트. `/dod-check`로 자가 점검 가능.
-
----
-
-## 왜 이 워크플로우?
-
-`docs/design-rationale.md` 참고. 요약:
-
-- **7문서 분리**: 한 사실은 한 문서에만. SPEC ≠ PLAN ≠ DESIGN ≠ 진행상황 — 평가자도 리뷰가 빨라짐.
-- **8-gate DoD**: 자동 검증 가능한 5게이트(lint/test/build/no-any/no-console) + 수동 3게이트(체크리스트/AI_USAGE/커밋포맷)로 "다 됐다고 착각하기" 방지.
-- **`[§N]` rubric tagging**: 모든 작업이 평가 기준 어느 항목에 기여하는지 명시. 누락 시 평가자가 "이 점은 어디서 평가하지?"가 안 됨.
-- **Commit-by-commit user approval**: 한 기능 = 한 커밋, 매번 사용자 승인 — git history가 곧 평가 자료(fs-planner는 git history 자체가 10점 항목).
+The 8-gate DoD defined in `CLAUDE.md` is the gate for every commit. Use `/dod-check` for self-verification.
 
 ---
 
-## 검증
+## Why this workflow?
 
-`fs-planner` (FuturSchool FE 과제) 의 7개 문서를 reverse-engineer로 재생성 → 섹션 구조 매칭률 ≥ 95%. 결과는 `examples/fs-planner-reverse/` 참고.
+See `docs/design-rationale.md` for the full reasoning. Summary:
+
+- **7-document separation**: One fact lives in one document. SPEC ≠ PLAN ≠ DESIGN ≠ progress — reviewers read faster too.
+- **8-gate DoD**: 5 auto-verifiable gates (lint/test/build/no-any/no-console) + 3 manual gates (checklist/AI_USAGE/commit format) prevent the "looks done but isn't" trap.
+- **`[§N]` rubric tagging**: Every piece of work explicitly cites which evaluation criterion it contributes to. Prevents the reviewer asking "where do I score this?".
+- **Commit-by-commit user approval**: One feature = one commit, each requiring explicit approval — git history becomes evaluation material in itself (in fs-planner, git history was a 10-point criterion).
 
 ---
 
-## fork 해서 본인 계정으로 사용하기
+## Validation
 
-JayKim88 외 사용자가 fork 하여 본인 repo 로 운영할 때 변경할 곳 4개 + 절차는 [docs/walkthrough.md "fork 사용자" 섹션](docs/walkthrough.md#fork-사용자-jaykim88-외) 참고.
+Reverse-engineering the 7 documents of `fs-planner` (FuturSchool FE assignment) regenerated them with ≥ 95% section-structure match. See `examples/fs-planner-reverse/`.
 
-## 라이선스
+---
 
-MIT. fork/사용 시 [LICENSE](LICENSE) 의 `Copyright (c) 2026 Jay Kim` 을 본인 이름으로 변경하세요 (재배포 조건).
+## Forking under your own GitHub account
+
+If you want to operate this from your own repo (not JayKim88's), see the 4-spot change list and procedure in [docs/walkthrough.md "Forking" section](docs/walkthrough.md#forking-non-jaykim88-users).
+
+## License
+
+MIT. When forking, change `Copyright (c) 2026 Jay Kim` in [LICENSE](LICENSE) to your own name (a redistribution requirement).

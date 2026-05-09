@@ -87,56 +87,56 @@ function daysBetween(fromISO, toISO) {
 
 async function runInterview() {
   console.log('\n=== recruit-kit interview ===\n');
-  console.log('답변은 한국어/영어 자유. 빈 값이면 기본값 사용.\n');
+  console.log('Answer in English. Press Enter to keep the default.\n');
 
-  const COMPANY = await ask('회사명 (COMPANY)', 'AcmeCo');
-  const PRODUCT = await ask('제품/과제 이름 (PRODUCT)', 'Take-Home Assignment');
-  const ROLE = await ask('역할 (ROLE)', 'Software Engineer');
-  const TASK_TYPE = await ask('과제 유형 (TASK_TYPE: FE|BE|FS|ML|Mobile|Other)', 'FE');
-  const DEADLINE_DATE = await ask('마감일 (DEADLINE_DATE, YYYY-MM-DD)', todayISO());
+  const COMPANY = await ask('Company name (COMPANY)', 'AcmeCo');
+  const PRODUCT = await ask('Product / assignment name (PRODUCT)', 'Take-Home Assignment');
+  const ROLE = await ask('Role (ROLE)', 'Software Engineer');
+  const TASK_TYPE = await ask('Assignment type (TASK_TYPE: FE|BE|FS|ML|Mobile|Other)', 'FE');
+  const DEADLINE_DATE = await ask('Deadline (DEADLINE_DATE, YYYY-MM-DD)', todayISO());
   if (!/^\d{4}-\d{2}-\d{2}$/.test(DEADLINE_DATE)) {
-    console.warn(`⚠ DEADLINE_DATE "${DEADLINE_DATE}" 가 YYYY-MM-DD 형식이 아닙니다. 그대로 진행하지만 일정 계산이 부정확할 수 있습니다.`);
+    console.warn(`⚠ DEADLINE_DATE "${DEADLINE_DATE}" is not in YYYY-MM-DD format. Continuing, but schedule math may be off.`);
   }
-  const DEADLINE_TIME = await ask('마감 시각 (DEADLINE_TIME)', '23:59');
-  const ONELINE_CHALLENGE = await ask('한 줄 핵심 도전 과제 (ONELINE_CHALLENGE)', '핵심 도메인 로직 + 상태 분리');
-  const STACK_HINT = await ask('기술 스택 힌트 (STACK_HINT, free-form)', 'TypeScript + React + Vitest');
-  const ENV_NOTES = await ask('환경 주의사항 (ENV_NOTES, 없으면 빈 입력)', '특이사항 없음 (표준 환경).');
+  const DEADLINE_TIME = await ask('Deadline time (DEADLINE_TIME)', '23:59');
+  const ONELINE_CHALLENGE = await ask('One-line core challenge (ONELINE_CHALLENGE)', 'Core domain logic + state separation');
+  const STACK_HINT = await ask('Stack hint (STACK_HINT, free-form)', 'TypeScript + React + Vitest');
+  const ENV_NOTES = await ask('Environment notes (ENV_NOTES, leave blank if none)', 'No special concerns (standard environment).');
 
-  console.log('\n--- 실행 명령 (선택, 모르면 빈 입력 → placeholder 유지) ---');
-  const TECH_RUNTIME = await ask('런타임 (TECH_RUNTIME, 예: Node.js / Python / Java)', '');
-  const RUNTIME_VERSION = await ask('런타임 버전 (RUNTIME_VERSION, 예: 22.19 / 3.13 / 21)', '');
-  const INSTALL_COMMAND = await ask('설치 명령 (INSTALL_COMMAND, 예: npm install / poetry install)', '');
-  const DEV_COMMAND = await ask('개발 서버 명령 (DEV_COMMAND, 예: npm run dev)', '');
-  const TEST_COMMAND = await ask('테스트 명령 (TEST_COMMAND, 예: npm test)', '');
-  const BUILD_COMMAND = await ask('빌드 명령 (BUILD_COMMAND, 예: npm run build / 없으면 빈 입력)', '');
+  console.log('\n--- Run commands (optional — leave blank to keep placeholder) ---');
+  const TECH_RUNTIME = await ask('Runtime (TECH_RUNTIME, e.g. Node.js / Python / Java)', '');
+  const RUNTIME_VERSION = await ask('Runtime version (RUNTIME_VERSION, e.g. 22.19 / 3.13 / 21)', '');
+  const INSTALL_COMMAND = await ask('Install command (INSTALL_COMMAND, e.g. npm install / poetry install)', '');
+  const DEV_COMMAND = await ask('Dev server command (DEV_COMMAND, e.g. npm run dev)', '');
+  const TEST_COMMAND = await ask('Test command (TEST_COMMAND, e.g. npm test)', '');
+  const BUILD_COMMAND = await ask('Build command (BUILD_COMMAND, e.g. npm run build / leave blank if none)', '');
 
-  console.log('\n--- 평가 기준 입력 ---');
-  console.log('회사 명세에서 평가 기준 카테고리를 N개 입력합니다. (보통 5-7개)');
-  const nStr = await ask('평가 기준 개수 (CRITERIA_COUNT)', '6');
+  console.log('\n--- Evaluation criteria ---');
+  console.log('Enter N rubric categories from the company spec. (Usually 5-7.)');
+  const nStr = await ask('Number of criteria (CRITERIA_COUNT)', '6');
   const n = Math.max(1, parseInt(nStr, 10) || 6);
 
   const criteria = [];
   for (let i = 1; i <= n; i++) {
-    const name = await ask(`§${i} 카테고리명 (예: "요구사항 이해 및 문제 정의")`, `평가 항목 ${i}`);
-    const pts = await ask(`§${i} 배점 (숫자만)`, '20');
+    const name = await ask(`§${i} category name (e.g. "Requirements understanding & problem definition")`, `Criterion ${i}`);
+    const pts = await ask(`§${i} points (number)`, '20');
     const parsed = parseInt(pts, 10);
     if (Number.isNaN(parsed) || parsed < 0) {
-      console.warn(`⚠ §${i} 배점 "${pts}" 가 유효한 숫자가 아닙니다. 0으로 설정.`);
+      console.warn(`⚠ §${i} points "${pts}" is not a valid number. Setting to 0.`);
     }
     criteria.push({ index: i, name, points: Number.isNaN(parsed) ? 0 : parsed });
   }
   const totalPoints = criteria.reduce((s, c) => s + c.points, 0);
-  console.log(`\n총 배점: ${totalPoints}점 (${criteria.length}개 카테고리)`);
+  console.log(`\nTotal: ${totalPoints} pts (${criteria.length} categories)`);
 
-  console.log('\n--- 평가 기준 인덱스 매핑 ---');
-  console.log('아래 4개 영역이 §1~§N 중 어디에 해당하는지 알려주세요. (모르면 빈 입력 → 키워드 자동 추론 fallback)');
-  console.log('현재 카테고리:');
+  console.log('\n--- Criterion-index mapping ---');
+  console.log('Tell us which §N each of the four areas below maps to. (Leave blank to fall back to keyword auto-inference.)');
+  console.log('Current categories:');
   for (const c of criteria) console.log(`  §${c.index}: ${c.name}`);
 
   const askIdx = async (label, keywordRegex) => {
     const auto = criteria.findIndex(c => keywordRegex.test(c.name));
     const defaultStr = auto >= 0 ? String(auto + 1) : '';
-    const ans = await ask(`${label} 카테고리는 §몇? (1-${n}, 모르면 빈 입력)`, defaultStr);
+    const ans = await ask(`Which §N is the "${label}" category? (1-${n}, blank if unsure)`, defaultStr);
     const parsed = parseInt(ans, 10);
     if (Number.isNaN(parsed) || parsed < 1 || parsed > n) {
       return auto >= 0 ? String(auto + 1) : 'N';
@@ -144,10 +144,10 @@ async function runInterview() {
     return String(parsed);
   };
 
-  const REQ_CRITERION_INDEX = await askIdx('요구사항 이해', /요구|이해|requirement|문제 정의/i);
-  const DESIGN_CRITERION_INDEX = await askIdx('설계·코드 구조', /설계|구조|design|architecture/i);
-  const DOC_CRITERION_INDEX = await askIdx('문서화', /문서|문서화|documentation/i);
-  const GIT_CRITERION_INDEX = await askIdx('Git / 작업 흔적', /git|작업 흔적|커밋/i);
+  const REQ_CRITERION_INDEX = await askIdx('Requirements understanding', /requirement|understanding|problem/i);
+  const DESIGN_CRITERION_INDEX = await askIdx('Design / code structure', /design|structure|architecture|code/i);
+  const DOC_CRITERION_INDEX = await askIdx('Documentation', /doc|documentation|writing/i);
+  const GIT_CRITERION_INDEX = await askIdx('Git / work trail', /git|commit|work trail|history/i);
 
   return {
     COMPANY,
@@ -180,18 +180,18 @@ async function runInterview() {
 }
 
 function buildMappingTable(criteria) {
-  const header = '| 평가 기준 (점수) | 어디서 충족 |\n|---|---|';
-  const rows = criteria.map(c => `| §${c.index} ${c.name} (${c.points}점) | <!-- 채움: SPEC + PLAN + DESIGN + CHECKLIST 의 어느 항목이 이 점수에 기여하는가 --> |`);
+  const header = '| Criterion (points) | Where it is satisfied |\n|---|---|';
+  const rows = criteria.map(c => `| §${c.index} ${c.name} (${c.points} pts) | <!-- Fill in: which sections of SPEC + PLAN + DESIGN + CHECKLIST contribute to this score --> |`);
   return [header, ...rows].join('\n');
 }
 
 function buildCriteriaTable(criteria) {
   return criteria.map(c => {
-    return `### ${c.index}) ${c.name} (${c.points}점)
+    return `### ${c.index}) ${c.name} (${c.points} pts)
 
-<!-- HINT: 이 카테고리에서 봐야 할 애매한 지점 / 체크포인트를 회사 명세 그대로 옮긴다. -->
+<!-- HINT: Transcribe the ambiguities / checkpoints for this category from the company spec verbatim. -->
 
-| 체크포인트 | 낮은 숙련도 | 높은 숙련도 |
+| Checkpoint | Low proficiency | High proficiency |
 |---|---|---|
 | ... | ... | ... |`;
   }).join('\n\n');
@@ -246,9 +246,9 @@ async function main() {
       process.exit(1);
     }
     if (!flags.quiet) {
-      const proceed = await ask(`target ${target} 가 비어있지 않습니다. 진행? (y/N)`, 'N');
+      const proceed = await ask(`target ${target} is not empty. Proceed? (y/N)`, 'N');
       if (proceed.toLowerCase() !== 'y') {
-        console.log('취소.');
+        console.log('Aborted.');
         process.exit(0);
       }
     }
@@ -341,11 +341,11 @@ async function main() {
   }
 
   console.log('\n=== next steps ===');
-  console.log('1. docs/SPEC.md 의 <!-- SPEC PASTE START --> 영역에 회사 원본 명세 paste');
-  console.log('2. docs/PLAN.md 의 §2 "우리의 기획적 해석" 채우기');
-  console.log('3. docs/DESIGN.md 의 ADR 5-10개 작성');
-  console.log('4. /dod-check 슬래시 커맨드로 게이트 점검');
-  console.log('5. 작업 시작 — 매 커밋 시 [§N] 태그 + 사용자 승인\n');
+  console.log('1. Paste the company spec into the <!-- SPEC PASTE START --> region of docs/SPEC.md');
+  console.log('2. Fill docs/PLAN.md §2 "Our planning interpretation"');
+  console.log('3. Write 5-10 ADRs in docs/DESIGN.md');
+  console.log('4. Run the /dod-check slash command for gate verification');
+  console.log('5. Start work — every commit gets a [§N] tag + user approval\n');
 }
 
 main().catch(err => {

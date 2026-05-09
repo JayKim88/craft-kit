@@ -1,29 +1,29 @@
-# 설계 결정 문서
+# Design Decision Document
 
-> 아키텍처 결정 기록(ADR). README "설계 결정과 이유" 섹션의 기반이 된다.
-> 형식: 옵션 비교 → 결정 → 근거 → 트레이드오프.
+> Architecture Decision Records (ADRs). The basis for the README "Design decisions & rationale" section.
+> Format: option comparison → decision → rationale → trade-off.
 
 ---
 
-## 1. 아키텍처 개요
+## 1. Architecture overview
 
-<!-- HINT: 시스템 전체 구조를 1-2개 다이어그램(ASCII OK)으로. 예시:
+<!-- HINT: One or two diagrams (ASCII OK) covering the entire system. Example:
 
 ```
 ┌─────────────────────────────────────┐
-│  서버 상태 (TanStack Query / API)     │
+│  Server state (TanStack Query/API)   │
 └──────────────┬──────────────────────┘
-               │ 초기화 시 1회 복사
+               │ initial copy on mount
 ┌──────────────▼──────────────────────┐
-│  편집 상태 (Zustand / Redux / etc)    │
+│  Edit state (Zustand / Redux / etc.)  │
 └──────────────┬──────────────────────┘
-               │ 저장 성공 시 동기화
+               │ sync on save success
 ┌──────────────▼──────────────────────┐
-│  UI 상태 (local)                     │
+│  UI state (local)                    │
 └─────────────────────────────────────┘
 ```
 
-또는 BE 과제라면:
+Or for a BE assignment:
 ```
 [Client] → [API Gateway] → [Service Layer] → [DB]
                                 ↓
@@ -35,10 +35,10 @@
 
 ---
 
-## 2. 핵심 흐름 다이어그램
+## 2. Key flow diagram
 
-<!-- HINT: 가장 중요한 사용자 플로우 1-2개를 sequence diagram (또는 step list)로.
-     예: "저장 흐름", "주문 처리 흐름", "권한 검증 흐름". -->
+<!-- HINT: 1-2 most-important user flows as a sequence diagram (or step list).
+     E.g. "save flow", "order processing flow", "permission check flow". -->
 
 {{KEY_FLOW_DIAGRAM}}
 
@@ -46,143 +46,143 @@
 
 ## 3. Decision Records (ADR)
 
-핵심 결정마다 **컨텍스트 → 옵션 → 결정 → 근거 → 트레이드오프** 5단계로 기록.
+For each key decision, follow the 5-step format: **context → options → decision → rationale → trade-off**.
 
-> **운영 가이드**:
-> - 5-10개 ADR 작성. **사소한 것은 빼고** "정말 다른 선택이 가능했던 것" 만.
-> - 각 ADR은 아래 ADR-001 형식 그대로 복사해 ADR-002, ADR-003... 으로 추가.
-> - ADR 제목은 "결정 대상 + 결정 결과" — 예: `ADR-002: 시간 충돌 경계값 처리 방식 (인접 비충돌)`
-> - **"왜 이걸 안 골랐나" 명시** — 평가자가 가장 점수 주는 부분.
-> - SPEC 평가 §{{DESIGN_CRITERION_INDEX}} (설계·코드 구조) 의 세부 체크포인트마다 1개 ADR 매핑 권장.
+> **Operating guide**:
+> - Write 5-10 ADRs. **Skip the trivial.** Only "things that genuinely could have gone differently".
+> - Copy the ADR-001 format below for ADR-002, ADR-003, ...
+> - Title format: "Subject + result" — e.g. `ADR-002: Time-conflict boundary policy (touching is not overlap)`
+> - **Spell out "why we did NOT pick the rejected options"** — this is where reviewers award the most credit.
+> - Recommend mapping one ADR to each sub-checkpoint of SPEC rubric §{{DESIGN_CRITERION_INDEX}} (Design & code structure).
 
 ---
 
-### ADR-001: <!-- 결정 제목 1: 결정 결과 한 줄 요약 -->
+### ADR-001: <!-- Decision title 1: one-line summary of result -->
 
-**컨텍스트**: <!-- 풀어야 할 문제 1-2 문장. 어떤 강제(constraint)에서 이 결정이 발생했나. -->
+**Context**: <!-- 1-2 sentences on the problem to solve. Which constraint forced this decision? -->
 
-**옵션**:
+**Options**:
 
-| 옵션 | 장점 | 단점 |
+| Option | Pros | Cons |
 |---|---|---|
 | A. ... | ... | ... |
 | B. ... | ... | ... |
 | C. ... | ... | ... |
 
-**결정**: <!-- 어떤 옵션을 골랐나. 한 줄. -->
+**Decision**: <!-- Which option we picked. One line. -->
 
-**근거**: <!-- 왜 이 옵션이 다른 것보다 나은가. 측정 가능한 기준 (성능·복잡도·실패 영향 등) 으로. -->
+**Rationale**: <!-- Why this option beats the rest, expressed in measurable criteria (perf, complexity, blast radius, ...). -->
 
-**트레이드오프 (수용한 단점)**: <!-- 이 선택의 명시적 단점. "내가 이 단점을 인지하고 있다" 는 시그널. -->
+**Trade-off (downside accepted)**: <!-- Explicit downsides of this choice. Demonstrates "I am aware of this drawback". -->
 
 ---
 
-### ADR-002: <!-- 결정 제목 2 -->
+### ADR-002: <!-- Decision title 2 -->
 
-**컨텍스트**: ...
+**Context**: ...
 
-**옵션**:
+**Options**:
 
-| 옵션 | 장점 | 단점 |
+| Option | Pros | Cons |
 |---|---|---|
 | A. ... | ... | ... |
 | B. ... | ... | ... |
 
-**결정**: ...
+**Decision**: ...
 
-**근거**: ...
+**Rationale**: ...
 
-**트레이드오프**: ...
-
----
-
-<!-- ADR-003, ADR-004, ... ADR-N 까지 위 형식으로 복사하여 추가. 5-10개 권장. -->
+**Trade-off**: ...
 
 ---
 
-## 4. 기술 선택 이유
+<!-- Copy ADR-003, ADR-004, ... ADR-N below using the format above. 5-10 recommended. -->
 
-### 핵심 인프라
+---
 
-| 기술 | 이유 |
-|------|------|
-| <!-- HINT: 언어/프레임워크/주요 라이브러리. SPEC "권장"을 따르되 자유 선택 영역은 명시적 근거 --> | ... |
+## 4. Tech-selection rationale
 
-### 외부 라이브러리 결정 (자유 선택 영역)
+### Core infrastructure
 
-<!-- HINT: SPEC이 "라이브러리 자유 선택 (선택 이유를 README에 기술)" 라면 이 섹션이 평가 §{{DESIGN_CRITERION_INDEX}}에서 비중 큼.
-     영역별로 "직접 구현 vs 라이브러리"를 비교하고, 직접 구현이 더 위험한 영역만 라이브러리 채택. -->
+| Tech | Reason |
+|------|--------|
+| <!-- HINT: language / framework / key libraries. Follow SPEC's "recommended" but justify free-choice areas explicitly --> | ... |
 
-| 영역 | 선택 | 근거 | 직접 구현 안 한 이유 |
+### External library choices (free-choice areas)
+
+<!-- HINT: If SPEC says "library choice is free, justify in README", this section is heavyweight in rubric §{{DESIGN_CRITERION_INDEX}}.
+     For each area, compare "build vs library", and only adopt a library where building is riskier. -->
+
+| Area | Selection | Rationale | Why we did not build it ourselves |
 |---|---|---|---|
 | ... | ... | ... | ... |
 
-### 의도적으로 추가하지 않은 것
+### Intentionally NOT added
 
-<!-- HINT: 추가하지 않은 라이브러리/도구를 명시. 이게 평가자에게 "선택의 의식적 배제"를 보여줌. -->
+<!-- HINT: List libraries / tools we deliberately did not add. This shows the reviewer "conscious omission". -->
 
-| 영역 | 선택 | 이유 |
+| Area | Selection | Reason |
 |---|---|---|
 | ... | ... | ... |
 
 ---
 
-## 5. 도메인 로직 격리 원칙
+## 5. Domain-logic isolation principle
 
-<!-- HINT: SPEC에서 "X 로직은 분리되어 있는가" 가 평가 항목이면 이 섹션 핵심.
-     예시: 시간 계산 (lib/time.ts), 권한 계산 (lib/auth.ts), 정산 계산 (lib/billing.ts), 알고리즘 (lib/<domain>.ts) -->
+<!-- HINT: Critical when SPEC explicitly checks "is X logic isolated?".
+     Examples: time math (lib/time.ts), permissions (lib/auth.ts), settlement (lib/billing.ts), algorithms (lib/<domain>.ts) -->
 
-**격리 모듈**: `{{DOMAIN_MODULE_PATH}}`
+**Isolated module**: `{{DOMAIN_MODULE_PATH}}`
 
-**규칙**:
-- 컴포넌트/엔드포인트에서 직접 계산 금지
-- 순수 함수만 (외부 상태/시간/I/O 의존 ❌)
-- 단위 테스트로 모든 경계값 커버
+**Rules**:
+- No direct computation in components / endpoints
+- Pure functions only (no external state / time / I/O dependencies)
+- Unit tests cover every boundary case
 
 ---
 
-## 6. 에러 처리 전략
+## 6. Error-handling strategy
 
-<!-- HINT: SPEC에 에러 코드가 명시돼 있으면 표로. UI/응답 흐름 + 원칙 명시. -->
+<!-- HINT: If SPEC defines error codes, use a table. State the UI / response flow + the invariant principle. -->
 
-| 에러 케이스 | 상황 | 처리 방식 | 사용자/호출자가 받는 것 | 재시도 가능? |
+| Error case | Situation | Handling | What user / caller receives | Retryable? |
 |---|---|---|---|---|
 | ... | ... | ... | ... | ... |
 
-**원칙**: <!-- HINT: "어떤 실패에서도 X는 보호된다" 같은 invariant 명시. 예: "어떤 실패에서도 editBlocks 는 절대 변경되지 않는다". -->
+**Principle**: <!-- HINT: Spell out the invariant, like "Under any failure mode, X is protected". E.g. "Under any failure mode, editBlocks is never mutated." -->
 
 ---
 
-## 7. UI/UX 참고 자료 (FE 과제만)
+## 7. UI/UX references (FE assignment only)
 
-<!-- HINT: BE/ML 과제라면 이 섹션 삭제.
-     FE 과제는 영역별로 참고 서비스를 명시적으로 선언 — 평가자에게 "의식적 UX 결정" 시그널.
-     원칙: 시각적 영감만, 구현은 SPEC을 따름. -->
+<!-- HINT: Delete this section for BE/ML assignments.
+     For FE: explicitly declare reference services per area — sends a "deliberate UX choice" signal to the reviewer.
+     Principle: visual inspiration only; implementation follows SPEC. -->
 
-| 영역 | 참고 서비스 | 가져올 것 |
+| Area | Reference service | What we take from it |
 |---|---|---|
 | ... | ... | ... |
 
 ---
 
-## 8. 테스트 전략
+## 8. Test strategy
 
-<!-- HINT: 3-tier로 정리. 각 tier별 카운트와 책임:
-     Tier 1: 순수 함수 (도메인 로직, 알고리즘)
-     Tier 2: 컴포넌트 / 엔드포인트
-     Tier 3: 통합 (E2E 또는 API 시나리오)
+<!-- HINT: Organize as 3 tiers. Per-tier count and responsibility:
+     Tier 1: pure functions (domain logic, algorithms)
+     Tier 2: components / endpoints
+     Tier 3: integration (E2E or API scenarios)
 -->
 
-| Tier | 대상 | 카운트 (예상) | 도구 |
+| Tier | Target | Count (estimate) | Tooling |
 |---|---|---|---|
-| 1. 순수 함수 | {{DOMAIN_MODULE_PATH}} | ~30 | ... |
-| 2. 컴포넌트/엔드포인트 | ... | ~10 | ... |
-| 3. 통합 | ... | ~5 | ... |
+| 1. Pure functions | {{DOMAIN_MODULE_PATH}} | ~30 | ... |
+| 2. Components / endpoints | ... | ~10 | ... |
+| 3. Integration | ... | ~5 | ... |
 
-**회귀 방지**: 발견된 버그는 회귀 테스트로 박제. describe block에 `(regression: <짧은 설명>)` 표기.
+**Regression prevention**: When a bug is found, freeze it as a regression test. Mark the describe block with `(regression: <short note>)`.
 
 ---
 
-## 9. 미구현 / 제약사항
+## 9. Unimplemented / constraints
 
-> 평가자 대면 출력 영역은 [README.md](../README.md) "미구현 / 제약사항" 섹션이 단일 진실. 본 문서에서는 다루지 않는다.
+> The reviewer-facing single source of truth lives in [README.md](../README.md) "Unimplemented / constraints". Not duplicated here.

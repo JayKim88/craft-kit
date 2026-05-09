@@ -1,24 +1,24 @@
 ---
-description: 커밋 메시지의 [§N] 태그와 CHECKLIST.md 매핑 검증
+description: Verify [§N] tag mapping between commit messages and CHECKLIST.md
 ---
 
 # /checklist-trace
 
-이 커맨드는 `git log` 의 모든 커밋이 `[§N]` 태그를 가지고 있는지, 그리고 CHECKLIST.md 의 `[§N]` 항목과 정합하는지 검증합니다.
+This command verifies that every commit in `git log` carries a `[§N]` tag, and that those tags align with the `[§N]` items in CHECKLIST.md.
 
-평가 기준 §N (예: 코드 구조 25점, Git 작업 10점) 별로 어떤 작업이 기여했는지를 평가자가 즉시 확인할 수 있도록 하는 시스템.
+The system makes it possible for the reviewer to instantly see which work contributed to each rubric §N (e.g. Code Structure 25 pts, Git Trail 10 pts).
 
-## 동작
+## Behavior
 
-1. **커밋 스캔**: `git log --pretty=%H|%s` 로 모든 커밋 메시지 수집.
-2. **태그 추출**: 각 메시지에서 `[§N]` 또는 `[§N,§M]` 패턴 추출. 없으면 untagged.
-3. **CHECKLIST 스캔**: `docs/CHECKLIST.md` 에서 `[§N]` 표기가 있는 항목 추출.
-4. **매핑 검증**:
-   - 각 §N 별 커밋 카운트 + 체크리스트 항목 카운트
-   - **untagged 커밋** 보고 (인프라/chore 가 아닌데 태그 없으면 경고)
-   - 평가 카테고리에 커밋 0개인 §N 보고 (점수 누락 위험)
+1. **Commit scan**: collect every commit message with `git log --pretty=%H|%s`.
+2. **Tag extraction**: extract `[§N]` or `[§N,§M]` patterns from each message. No tag → untagged.
+3. **CHECKLIST scan**: extract `[§N]`-tagged items from `docs/CHECKLIST.md`.
+4. **Mapping verification**:
+   - Per §N: count commits + count checklist items
+   - Report **untagged commits** (warn if not infrastructure/chore)
+   - Report any §N with 0 commits (point-leakage risk)
 
-## 출력 예시
+## Sample output
 
 ```
 === Checklist Trace ===
@@ -32,35 +32,35 @@ Untagged commits: 3
 
 Per-criterion mapping:
 
-| §N | Category                  | Points | Commits | Checklist items | Status |
-|----|---------------------------|--------|---------|-----------------|--------|
-| §1 | 요구사항 이해              | 20     | 8       | 12              | ✅ healthy |
-| §2 | 코드 구조 + 설계           | 25     | 24      | 35              | ✅ healthy |
-| §3 | 안정성 + 예외 처리         | 20     | 11      | 18              | ✅ healthy |
-| §4 | UI/UX                     | 15     | 9       | 14              | ✅ healthy |
-| §5 | 문서화                    | 10     | 4       | 8               | ⚠ low coverage |
-| §6 | Git history               | 10     | 0       | 0               | (자동 평가) |
+| §N | Category                    | Points | Commits | Checklist items | Status |
+|----|-----------------------------|--------|---------|-----------------|--------|
+| §1 | Requirements understanding  | 20     | 8       | 12              | ✅ healthy |
+| §2 | Code structure + design     | 25     | 24      | 35              | ✅ healthy |
+| §3 | Stability + exceptions      | 20     | 11      | 18              | ✅ healthy |
+| §4 | UI/UX                       | 15     | 9       | 14              | ✅ healthy |
+| §5 | Documentation               | 10     | 4       | 8               | ⚠ low coverage |
+| §6 | Git history                 | 10     | 0       | 0               | (auto-evaluated) |
 
 Untagged risk:
   - 3 untagged commits: 2 acceptable (chore/init), 1 concerning (a3b2c1d)
-  - Recommendation: amend a3b2c1d with [§5] tag if not yet pushed, else add tag in next commit body
+  - Recommendation: amend a3b2c1d with [§5] tag if not yet pushed; otherwise add the tag in the next commit body
 
 Coverage gap:
-  - §5 (문서화) commits 부족 — README/docs 갱신 커밋이 적음. 별도 docs: 커밋으로 보강 권장.
+  - §5 (Documentation) has few commits — consider isolating README/docs updates into their own `docs:` commits.
 ```
 
-## 사용법
+## Usage
 
 ```
 /checklist-trace
 ```
 
-옵션:
-- `--strict` — untagged 커밋이 있으면 exit 1
-- `--criterion <N>` — 특정 §N 의 커밋만 나열
+Options:
+- `--strict` — exit 1 if any untagged commits exist
+- `--criterion <N>` — list only the commits for a given §N
 
-## 주의
+## Notes
 
-- `[§-]` 는 "평가에 직접 기여 안 함" 을 의도적으로 표시 (예: `chore(deps)`, `chore(format)`).
-- 한 커밋이 여러 §N에 기여하면 `[§2,§3]` 식으로 다중 표기.
-- Git history 자체가 평가 항목 (§Git) 인 경우, 의미 단위 커밋 분리 + refactor/test 별도 커밋이 가산점.
+- `[§-]` deliberately marks "does not directly contribute to the rubric" (e.g. `chore(deps)`, `chore(format)`).
+- A commit contributing to multiple §N uses `[§2,§3]`, etc.
+- When git history itself is a rubric item (§Git), splitting refactor/test into separate commits earns extra credit.
