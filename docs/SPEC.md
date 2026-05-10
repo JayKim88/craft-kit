@@ -21,22 +21,49 @@ Preserve formatting first: if the company gave you markdown, keep markdown; if W
 
 <!-- HINT: If the company spec defines an explicit rubric, transcribe it 1:1.
      Otherwise, infer 5-7 categories from sections like "Interview questions" and assign §1, §2, ... — these numbers map 1:1 to CHECKLIST.md and the [§N] tags in commit messages.
+
+     The 6-category template below is the most common shape. Adjust the count and names to match the company's spec.
 -->
 
-{{EVAL_CRITERIA_TABLE}}
+### 1) Requirements understanding & problem definition (`<points>` pts)
 
-<!-- HINT example format (init.mjs fills EVAL_CRITERIA_TABLE above from N interview answers):
-
-### N) <Category name> (<points> pts)
-
-**Particularly ambiguous things to look for:**
-- [ambiguity 1]
-- [ambiguity 2]
+<!-- HINT: Transcribe the ambiguities / checkpoints for this category from the company spec verbatim. -->
 
 | Checkpoint | Low proficiency | High proficiency |
 |---|---|---|
 | ... | ... | ... |
--->
+
+### 2) Design & code structure (`<points>` pts)
+
+| Checkpoint | Low proficiency | High proficiency |
+|---|---|---|
+| ... | ... | ... |
+
+### 3) Stability & exception handling (`<points>` pts)
+
+| Checkpoint | Low proficiency | High proficiency |
+|---|---|---|
+| ... | ... | ... |
+
+### 4) `<Domain-specific category — UI/UX or data correctness or ...>` (`<points>` pts)
+
+| Checkpoint | Low proficiency | High proficiency |
+|---|---|---|
+| ... | ... | ... |
+
+### 5) Documentation & explainability (`<points>` pts)
+
+| Checkpoint | Low proficiency | High proficiency |
+|---|---|---|
+| ... | ... | ... |
+
+### 6) Git / work trail (`<points>` pts)
+
+| Checkpoint | Low proficiency | High proficiency |
+|---|---|---|
+| ... | ... | ... |
+
+<!-- HINT: Add §7, §8 if the company has more categories. Remove §6 if Git history isn't a separate criterion. -->
 
 ---
 
@@ -44,7 +71,7 @@ Preserve formatting first: if the company gave you markdown, keep markdown; if W
 
 <!-- HINT: If the company shared interview questions in advance, paste them. If not, delete this section. -->
 
-{{INTERVIEW_QUESTIONS}}
+_TO FILL or DELETE_
 
 ---
 
@@ -53,4 +80,4 @@ Preserve formatting first: if the company gave you markdown, keep markdown; if W
 <!-- HINT: If the company stated their intent for this assignment, transcribe it here. Delete if absent.
      This section is high-value when present — it lets you reverse-engineer "where do they award points?". -->
 
-{{SELECTION_RATIONALE}}
+_TO FILL or DELETE_

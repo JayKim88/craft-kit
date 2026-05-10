@@ -16,7 +16,7 @@
 - [ ] PLAN.md (scope · schedule · risk matrix · rubric mapping)
 - [ ] DESIGN.md (5-10 Decision Records)
 - [ ] SPEC.md (original company paste, rubric §1~§N)
-- [ ] README.md skeleton (SPEC template sections + rubric §{{DOC_CRITERION_INDEX}} items)
+- [ ] README.md skeleton (SPEC template sections + Documentation rubric items)
 - [ ] Free-library decisions (DESIGN.md §4)
 - [ ] UI/UX reference decisions (FE only, DESIGN.md §7)
 
@@ -24,7 +24,7 @@
 
 <!-- HINT: Before writing the first line of code, verify the toolchain works. -->
 
-- [ ] Lock runtime / language version (.nvmrc / .python-version / Dockerfile etc.)
+- [ ] Lock runtime / language version (`.nvmrc` / `.python-version` / Dockerfile etc.)
 - [ ] `<lint command>` clean
 - [ ] `<test command>` passing
 - [ ] `<build command>` passing
@@ -40,8 +40,8 @@
 
 ### Environment
 
-- [ ] {{TECH_RUNTIME}} setup
-- [ ] {{TECH_FRAMEWORK}} setup
+- [ ] `<runtime>` setup
+- [ ] `<framework>` setup
 - [ ] Folder structure
 
 ### Additional library installs (free-choice areas, DESIGN.md §4)
@@ -52,12 +52,12 @@
 
 - [ ] ...
 
-### Domain logic + unit tests `[§{{DESIGN_CRITERION_INDEX}} domain logic isolation]`
+### Domain logic + unit tests `[§<Design> domain logic isolation]`
 
 - [ ] ...
 - [ ] ...
 
-### Domain unit tests `[§{{REQ_CRITERION_INDEX}} explicit boundary cases]`
+### Domain unit tests `[§<Requirements> explicit boundary cases]`
 
 - [ ] Normal cases
 - [ ] Boundary cases
@@ -73,14 +73,14 @@
 
 ---
 
-## 1. {{REQUIRED_FEATURE_1_NAME}} (SPEC required #1)
+## 1. _Required feature #1 name_ (SPEC required #1)
 
-<!-- HINT: Sub-tasks + [§N] mapping. Per fs-planner pattern, 5-15 items. -->
+<!-- HINT: Sub-tasks + [§N] mapping. 5-15 items per feature is typical. -->
 
 - [ ] ... `[§N]`
 - [ ] ... `[§N]`
 
-### Edge cases `[§{{REQ_CRITERION_INDEX}} edge-case awareness]`
+### Edge cases `[§<Requirements> edge-case awareness]`
 
 - [ ] Long data / large input
 - [ ] Empty state
@@ -90,7 +90,7 @@
 
 ---
 
-## 2. {{REQUIRED_FEATURE_2_NAME}} (SPEC required #2)
+## 2. _Required feature #2 name_ (SPEC required #2)
 
 - [ ] ...
 
@@ -100,8 +100,8 @@
 
 > Normal completion = every item below [x]. Allow partial only if the emergency cut line activates (required scope at risk).
 
-- [ ] {{BONUS_FEATURE_1}}
-- [ ] {{BONUS_FEATURE_2}}
+- [ ] _Bonus item 1_
+- [ ] _Bonus item 2_
 - [ ] ...
 
 ---
@@ -127,7 +127,7 @@
 
 - [ ] README "Project overview / Tech stack / How to run / Structure"
 - [ ] README "Requirements interpretation & assumptions"
-- [ ] README "Design decisions & rationale" — covers every rubric §{{DOC_CRITERION_INDEX}} item
+- [ ] README "Design decisions & rationale" — covers every Documentation rubric item
 - [ ] README "Unimplemented / constraints"
 - [ ] README "AI usage scope" — links to AI_USAGE.md
 - [ ] Finalize AI_USAGE.md

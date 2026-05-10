@@ -1,12 +1,41 @@
-node_modules/
+# OS
 .DS_Store
-*.log
-.env*
-!.env.example
-/tmp/
+Thumbs.db
+
+# Editor
 .idea/
 .vscode/
+*.swp
 
-# Reverse-engineer scaffold output — regenerate locally via `node bin/init.mjs --quiet --target examples/fs-planner-reverse/regenerated`.
-# Only the comparison report (examples/fs-planner-reverse/README.md + comparison.txt) is tracked.
-examples/fs-planner-reverse/regenerated/
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+__pycache__/
+target/
+build/
+dist/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Local
+/tmp/
+.cache/
+
+# Claude Code per-user state (permissions etc.) — never commit
+.claude/settings.json
+.claude/settings.local.json
+
+# Per language/framework — uncomment or extend the lines you need:
+# Next.js:    .next/
+# Python:     .pytest_cache/, .venv/, *.egg-info/
+# Java:       *.class, .gradle/, target/
+# Rust:       (Cargo.lock should only be ignored for libraries)
+# Go:         /vendor/, *.test

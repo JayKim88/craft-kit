@@ -7,31 +7,32 @@
 
 ## 1. Architecture overview
 
-<!-- HINT: One or two diagrams (ASCII OK) covering the entire system. Example:
+<!-- HINT: One or two diagrams (ASCII OK) covering the entire system. Examples:
 
-```
-┌─────────────────────────────────────┐
-│  Server state (TanStack Query/API)   │
-└──────────────┬──────────────────────┘
-               │ initial copy on mount
-┌──────────────▼──────────────────────┐
-│  Edit state (Zustand / Redux / etc.)  │
-└──────────────┬──────────────────────┘
-               │ sync on save success
-┌──────────────▼──────────────────────┐
-│  UI state (local)                    │
-└─────────────────────────────────────┘
-```
+   FE:
+   ```
+   ┌─────────────────────────────────────┐
+   │  Server state (TanStack Query/API)   │
+   └──────────────┬──────────────────────┘
+                  │ initial copy on mount
+   ┌──────────────▼──────────────────────┐
+   │  Edit state (Zustand / Redux / etc.)  │
+   └──────────────┬──────────────────────┘
+                  │ sync on save success
+   ┌──────────────▼──────────────────────┐
+   │  UI state (local)                    │
+   └─────────────────────────────────────┘
+   ```
 
-Or for a BE assignment:
-```
-[Client] → [API Gateway] → [Service Layer] → [DB]
-                                ↓
-                          [Background Job]
-```
+   BE:
+   ```
+   [Client] → [API Gateway] → [Service Layer] → [DB]
+                                   ↓
+                             [Background Job]
+   ```
 -->
 
-{{ARCHITECTURE_DIAGRAM}}
+_TO FILL — replace with your system diagram_
 
 ---
 
@@ -40,7 +41,7 @@ Or for a BE assignment:
 <!-- HINT: 1-2 most-important user flows as a sequence diagram (or step list).
      E.g. "save flow", "order processing flow", "permission check flow". -->
 
-{{KEY_FLOW_DIAGRAM}}
+_TO FILL_
 
 ---
 
@@ -53,11 +54,11 @@ For each key decision, follow the 5-step format: **context → options → decis
 > - Copy the ADR-001 format below for ADR-002, ADR-003, ...
 > - Title format: "Subject + result" — e.g. `ADR-002: Time-conflict boundary policy (touching is not overlap)`
 > - **Spell out "why we did NOT pick the rejected options"** — this is where reviewers award the most credit.
-> - Recommend mapping one ADR to each sub-checkpoint of SPEC rubric §{{DESIGN_CRITERION_INDEX}} (Design & code structure).
+> - Recommend mapping one ADR to each sub-checkpoint of the Design rubric category.
 
 ---
 
-### ADR-001: <!-- Decision title 1: one-line summary of result -->
+### ADR-001: _Decision title 1: one-line summary of result_
 
 **Context**: <!-- 1-2 sentences on the problem to solve. Which constraint forced this decision? -->
 
@@ -77,7 +78,7 @@ For each key decision, follow the 5-step format: **context → options → decis
 
 ---
 
-### ADR-002: <!-- Decision title 2 -->
+### ADR-002: _Decision title 2_
 
 **Context**: ...
 
@@ -110,7 +111,7 @@ For each key decision, follow the 5-step format: **context → options → decis
 
 ### External library choices (free-choice areas)
 
-<!-- HINT: If SPEC says "library choice is free, justify in README", this section is heavyweight in rubric §{{DESIGN_CRITERION_INDEX}}.
+<!-- HINT: If SPEC says "library choice is free, justify in README", this section is heavyweight in the Design rubric.
      For each area, compare "build vs library", and only adopt a library where building is riskier. -->
 
 | Area | Selection | Rationale | Why we did not build it ourselves |
@@ -130,9 +131,9 @@ For each key decision, follow the 5-step format: **context → options → decis
 ## 5. Domain-logic isolation principle
 
 <!-- HINT: Critical when SPEC explicitly checks "is X logic isolated?".
-     Examples: time math (lib/time.ts), permissions (lib/auth.ts), settlement (lib/billing.ts), algorithms (lib/<domain>.ts) -->
+     Examples: time math (`lib/time.ts`), permissions (`lib/auth.ts`), settlement (`lib/billing.ts`), algorithms (`lib/<domain>.ts`) -->
 
-**Isolated module**: `{{DOMAIN_MODULE_PATH}}`
+**Isolated module**: `<path/to/module>` <!-- e.g. src/lib/time.ts -->
 
 **Rules**:
 - No direct computation in components / endpoints
@@ -175,7 +176,7 @@ For each key decision, follow the 5-step format: **context → options → decis
 
 | Tier | Target | Count (estimate) | Tooling |
 |---|---|---|---|
-| 1. Pure functions | {{DOMAIN_MODULE_PATH}} | ~30 | ... |
+| 1. Pure functions | `<path>` | ~30 | ... |
 | 2. Components / endpoints | ... | ~10 | ... |
 | 3. Integration | ... | ~5 | ... |
 

@@ -1,7 +1,7 @@
 # PLAN — Project plan
 
 > What we're building, for whom, how far, and by when.
-> Holds our interpretation of and decisions about SPEC.md (the external spec).
+> Holds our interpretation of and decisions about [SPEC.md](SPEC.md) (the external spec).
 
 ---
 
@@ -30,7 +30,7 @@
 
 ## 2. Our planning interpretation (decisions outside SPEC)
 
-SPEC.md is external input; what follows are decisions we made when interpreting it.
+[SPEC.md](SPEC.md) is external input; what follows are decisions we made when interpreting it.
 
 | SPEC ambiguity | Our decision | Rationale |
 |---|---|---|
@@ -69,8 +69,8 @@ SPEC.md is external input; what follows are decisions we made when interpreting 
 ### External dependencies / environment decisions (response to SPEC's "free choice" areas)
 
 <!-- HINT: If SPEC offered free choice for "Mock API environment", "DB", "deployment", etc., document the decision + rationale + limitations.
-     fs-planner case: "MSW v2 chosen — close to production / test reusability / in-memory persistence". Limitation: "Seeds reset on refresh".
-     BE case: "PostgreSQL + Docker Compose — verifiable real transactions". Limitation: "No distributed transactions".
+     FE example: "MSW v2 chosen — close to production / test reusability / in-memory persistence". Limitation: "Seeds reset on refresh".
+     BE example: "PostgreSQL + Docker Compose — verifiable real transactions". Limitation: "No distributed transactions".
      Delete this section if not applicable. -->
 
 **Selection**: ...
@@ -88,36 +88,36 @@ SPEC.md is external input; what follows are decisions we made when interpreting 
 
 | Item | Date |
 |---|---|
-| **Assignment deadline** | {{DEADLINE_DATE}} ({{DEADLINE_TIME}}) |
-| **Today** (writing date) | {{TODAY}} |
-| **Time remaining** | ~{{DEADLINE_DAYS}} days |
+| **Assignment deadline** | `<YYYY-MM-DD HH:MM>` |
+| **Today** (writing date) | `<YYYY-MM-DD>` |
+| **Time remaining** | ~`<N>` days |
 
 **Schedule plan (rough)**:
 
-<!-- HINT: Daily milestones from D-N to D-0. Common pattern:
-     D-N    : Doc alignment + toolchain check
-     D-N+1  : Core infra (types, lib, mocks, providers)
-     D-N+2  : Required screens / endpoints — first pass
-     D-N+3  : Required — second pass + start bonus
-     D-1    : Polish + manual smoke
-     D-0    : README polish + repo public + submit
+<!-- HINT: Daily milestones from D-N to D-0. Common 5-day pattern:
+     D-5: Doc alignment + toolchain check
+     D-4: Core infra (types, lib, mocks, providers)
+     D-3: Required screens / endpoints — first pass
+     D-2: Required — second pass + start bonus
+     D-1: Polish + manual smoke
+     D-0: README polish + repo public + submit
+
+     Adjust to your actual remaining days.
 -->
 
-- D-{{DEADLINE_DAYS}} ({{TODAY}}): ... ← **today**
-- D-{{DAY_BEFORE_LAST}}: ...
+- D-N (`<today>`): ... ← **today**
+- D-N+1: ...
 - D-1: Polish + manual smoke
-- D-0 ({{DEADLINE_DATE}}): README polish + repo public + submit
+- D-0 (`<deadline>`): README polish + repo public + submit
 
 ---
 
 ## 5. Rubric mapping
 
-Mapping where each rubric score gets earned. (init dynamically generates rows from interview answers)
+Mapping where each rubric score gets earned.
 
-{{EVAL_MAPPING_TABLE}}
-
-<!-- HINT: For each §N category in the table above, fill "where it's satisfied".
-     Example (FE 5-day assignment):
+<!-- HINT: For each §N category in [SPEC.md "Rubric (detail)"](SPEC.md), fill "where it's satisfied".
+     Example shape:
      | §1 Requirements understanding (20) | SPEC = input / PLAN §2 interpretation / CHECKLIST edge cases |
      | §2 Design & code structure (25)    | DESIGN ADRs + actual code |
      | §3 Stability & exceptions (20)     | DESIGN error patterns / CHECKLIST stability / DoD gates |
@@ -125,6 +125,15 @@ Mapping where each rubric score gets earned. (init dynamically generates rows fr
      | §5 Documentation (10)              | SPEC + PLAN + DESIGN + PROCESS + CLAUDE + AI_USAGE + README |
      | §6 Git history (10)                | CLAUDE.md git policy + per-Phase commits + separate refactor/test commits |
 -->
+
+| Criterion (points) | Where it is satisfied |
+|---|---|
+| §1 ... | _TO FILL_ |
+| §2 ... | _TO FILL_ |
+| §3 ... | _TO FILL_ |
+| §4 ... | _TO FILL_ |
+| §5 ... | _TO FILL_ |
+| §6 ... | _TO FILL_ |
 
 ---
 
@@ -138,10 +147,10 @@ Mapping where each rubric score gets earned. (init dynamically generates rows fr
 
 ## 7. What we must satisfy at submission (summary)
 
-<!-- HINT: SPEC "Required deliverables" verbatim + rubric §5 (documentation) items. -->
+<!-- HINT: SPEC "Required deliverables" verbatim + Documentation rubric items. -->
 
 - Repository (public, with full commit history)
-- README.md — covers every section in SPEC's README template + rubric §{{DOC_CRITERION_INDEX}} items
+- README.md — covers every section in SPEC's README template + Documentation rubric items
 - Every required implementation works (manual smoke passes)
 - AI_USAGE.md finalized
 - Honest "Unimplemented / constraints" section
