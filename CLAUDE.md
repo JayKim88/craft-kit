@@ -28,6 +28,29 @@ When you need information mid-work, here's where to look:
 
 ---
 
+## Workflow phases (D-N to D-0)
+
+| Phase | When | Action | Files touched |
+|---|---|---|---|
+| **A. Doc alignment** | D-N (~5h) | Paste SPEC verbatim. Transcribe rubric (the 6 placeholder categories in `docs/SPEC.md`). Fill `docs/PLAN.md` §2 (interpretation), §3 (scope), §4 (schedule), §5 (rubric mapping), §6 (risks). Write 5-10 ADRs in `docs/DESIGN.md`. Decompose Phase 0~4 in `docs/PROCESS.md`. Tag 50-100 items with `[§N]` in `docs/CHECKLIST.md`. Fill project-specific HINT zones in this document. | All 6 docs + CLAUDE.md |
+| **B. Toolchain lock** | D-N+1 (~30m) | Pin runtime version. Add `lint` / `test` / `build` scripts. Run them — all PASS. Replace `<lint command>` placeholders in the DoD table below with real commands. Mark Phase B items `[x]` in CHECKLIST. | `package.json` (or stack equivalent), CLAUDE.md, CHECKLIST.md |
+| **C. Implementation cycle** | D-N+1 ~ D-1 (×30-60) | Per feature: code → run Procedure 1 (DoD verification) → mark CHECKLIST `[x]` + add AI_USAGE row → user approval → commit `<type>(<scope>): <subject> [§N]`. | src/, CHECKLIST.md, AI_USAGE.md, git log |
+| **D. Polish** | D-1 (~3h) | Run Procedure 2 (checklist trace) to find under-covered §N. Patch with extra `docs:` commits. Sweep all `_TO FILL_` markers in README. Run manual smoke checklist. | README.md, ad-hoc fixes |
+| **E. Submit** | D-0 (~2h) | Run Procedure 4 (strict pre-submission review) in a fresh Claude session. Apply 30-min critical fixes. Verify `grep -rn "_TO FILL_\|<!-- TODO" README.md docs/` returns 0. Make repo public + submit. | README.md, repo settings |
+
+The four procedures referenced above are detailed at the bottom of this document under "## AI agent procedures".
+
+**Phase nomenclature** — this kit uses two compatible naming schemes:
+
+| Scheme | Where | Meaning |
+|---|---|---|
+| `Phase A` / `Phase B` / `Phase C` / `Phase D` / `Phase E` | This document + [docs/CHECKLIST.md](docs/CHECKLIST.md) | Top-down workflow (doc alignment → toolchain → implementation → polish → submit) |
+| `PROCESS Phase 0` ~ `PROCESS Phase 4` | [docs/PROCESS.md](docs/PROCESS.md) + [docs/CHECKLIST.md](docs/CHECKLIST.md) "Phase C" subsections | Implementation steps inside Phase C (infra → required #1 → required #2 → bonus → wrap-up) |
+
+When a HINT comment says "Phase A" with no prefix, it means the workflow phase here. When it says "PROCESS Phase 4", it means the implementation step in PROCESS.md.
+
+---
+
 ## Assignment overview (context)
 
 <!-- HINT [Phase A]: Fill once you've read the SPEC. Keep it to 3 lines. -->
@@ -186,6 +209,15 @@ _TO FILL — list 2-4 risks specific to this assignment_
 ## AI agent procedures
 
 When the user's intent matches one of these triggers, execute the corresponding procedure inline. Report results in the same conversation. Do not wait for a slash command.
+
+| Procedure | Triggered when the user says... | What you do |
+|---|---|---|
+| **1. DoD verification** | "ready to commit", "DoD check", "커밋해도 돼" | Run the 8-gate check (lint/test/build + grep type-escapes per stack + grep debug logs + CHECKLIST/AI_USAGE/commit-msg sync). Do not propose a commit until all auto gates pass. |
+| **2. Checklist trace** | "§N coverage", "어디 부족", "rubric trace" | Count commits and CHECKLIST items per §N; flag under-covered categories. |
+| **3. SPEC drift check** | "SPEC updated", "company changed spec" | Map the SPEC change region to impacted PLAN / DESIGN / CHECKLIST sections; never auto-edit, propose changes only. |
+| **4. Pre-submission review** | "리뷰", "final review", "제출 전 점검", "self-eval" | Switch to strict-reviewer mode; output score simulation + weakness analysis + critical fixes + time-boxed patches. Prefer running in a fresh Claude session. |
+
+The detailed steps for each procedure are below.
 
 ### Procedure 1 — DoD verification
 

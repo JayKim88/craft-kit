@@ -1,5 +1,5 @@
 <details>
-<summary><b>About takehome-kit</b> — delete this block after cloning for your assignment</summary>
+<summary><b>About takehome-kit</b> — remove this entire block (including the <code>&lt;details&gt;</code> and <code>&lt;/details&gt;</code> tags) once you start filling the submission skeleton below</summary>
 
 This repository is a clone-and-edit template for corporate take-home assignments. It ships a 7-document SSOT workflow (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / AI_USAGE / README), an 8-gate Definition of Done in `CLAUDE.md`, `[§N]` rubric tagging, and four AI agent procedures embedded in `CLAUDE.md` (DoD verification, §N coverage trace, SPEC drift, strict pre-submission review).
 
@@ -12,26 +12,13 @@ rm -rf .git
 git init && git add . && git commit -m "chore: bootstrap from takehome-kit"
 ```
 
-After cloning, edit headers in this README, [`CLAUDE.md`](CLAUDE.md), and [`docs/PLAN.md`](docs/PLAN.md), then paste the company spec into [`docs/SPEC.md`](docs/SPEC.md). Universal best practices in `CLAUDE.md` stay; project-specific zones marked `<!-- HINT -->` are yours to fill.
+After cloning:
+1. Edit headers in this `README.md`, [`CLAUDE.md`](CLAUDE.md), [`AGENTS.md`](AGENTS.md), and [`docs/PLAN.md`](docs/PLAN.md). Look for `<...>` brackets and `_TO FILL_` markers.
+2. Paste the company spec into [`docs/SPEC.md`](docs/SPEC.md) (then never edit it).
+3. Transcribe the rubric into `docs/SPEC.md` "Rubric (detail)" (6 placeholder categories — adjust to match the company's spec).
+4. Follow the **5-phase workflow** documented at the top of `CLAUDE.md` ("Workflow phases (D-N to D-0)"). The AI agent will auto-trigger DoD verification, §N coverage trace, SPEC drift check, and strict pre-submission review based on natural-language cues described in `CLAUDE.md` "AI agent procedures".
 
-**How to use (after bootstrap):**
-
-| Phase | When | Action | Files touched |
-|---|---|---|---|
-| **A. Doc alignment** | D-N (~5h) | Paste SPEC verbatim. Transcribe rubric (6 placeholder categories in `docs/SPEC.md`). Fill `docs/PLAN.md` §2 (interpretation), §3 (scope), §4 (schedule), §5 (rubric mapping), §6 (risks). Write 5-10 ADRs in `docs/DESIGN.md`. Decompose Phase 0~4 in `docs/PROCESS.md`. Tag 50-100 items with `[§N]` in `docs/CHECKLIST.md`. Fill project-specific HINT zones in `CLAUDE.md`. | All 6 docs + CLAUDE.md |
-| **B. Toolchain lock** | D-N+1 (~30m) | Pin runtime version. Add `lint` / `test` / `build` scripts. Run them — all PASS. Replace `<lint command>` placeholders in `CLAUDE.md` DoD table with real commands. Mark Phase B items `[x]` in CHECKLIST. | `package.json` (or stack equivalent), CLAUDE.md, CHECKLIST.md |
-| **C. Implementation cycle** | D-N+1 ~ D-1 (×30-60) | Per feature: code → ask AI to verify DoD → mark CHECKLIST `[x]` + add AI_USAGE row → user approval → commit `<type>(<scope>): <subject> [§N]`. | src/, CHECKLIST.md, AI_USAGE.md, git log |
-| **D. Polish** | D-1 (~3h) | Ask AI for §N coverage trace. Patch with extra `docs:` commits. Sweep all `_TO FILL_` markers in README. Run manual smoke checklist. | README.md, ad-hoc fixes |
-| **E. Submit** | D-0 (~2h) | Open a fresh Claude session; ask for strict pre-submission review. Apply 30-min critical fixes. Verify `grep -rn "_TO FILL_\|<!-- TODO" README.md docs/` returns 0. Make repo public + submit. | README.md, repo settings |
-
-**AI agent procedures** (defined in `CLAUDE.md`, triggered by natural language — no slash command needed):
-
-| Procedure | Triggered when you say... | What the AI does |
-|---|---|---|
-| DoD verification | "ready to commit", "DoD check", "커밋해도 돼" | Runs the 8-gate check (lint/test/build + grep type-escapes per stack + grep debug logs + CHECKLIST/AI_USAGE/commit-msg sync) |
-| Checklist trace | "§N coverage", "어디 부족", "rubric trace" | Counts commits and CHECKLIST items per §N; flags under-covered categories |
-| SPEC drift check | "SPEC updated", "company changed spec" | Maps SPEC change to impacted PLAN / DESIGN / CHECKLIST sections |
-| Pre-submission review | "리뷰", "final review", "제출 전 점검" | Switches to strict-reviewer mode; outputs score-sim + weakness + critical fixes + time-boxed patches |
+Universal best practices in `CLAUDE.md` stay; project-specific zones marked `<!-- HINT -->` are yours to fill.
 
 **Forking:** edit `LICENSE` (copyright line) and the `git clone` URL above to point to your fork.
 
@@ -114,7 +101,7 @@ _TO FILL — complete at end of Phase A._
 <test command>             # e.g. npm test / pytest / cargo test
 ```
 
-<!-- HINT [After Phase B]: Update the table below at end of Phase 4:
+<!-- HINT [After Phase B]: Update the table below at end of PROCESS Phase 4 (wrap-up):
      | Tier | Target | Count |
      |---|---|---|
      | 1. Pure functions | lib/<domain>.ts | N |
@@ -129,13 +116,13 @@ _TO FILL — complete at end of Phase A._
 
 _TO FILL or DELETE if BE_
 
-### Dev-scenario URL flags (optional)
+### Dev-scenario URL flags (FE only — delete for BE / ML / Mobile)
 
-<!-- HINT: Provide URL flags so reviewers can reproduce error/edge cases easily.
+<!-- HINT [FE only]: Provide URL flags so reviewers can reproduce error/edge cases easily. Delete this entire subsection if not applicable to your assignment.
      Examples:
-     - `?_seed=empty` — empty week seed
-     - `?_seed=stress` — 100+ blocks stress test
-     - `?_simulate=TIME_CONFLICT` — trigger conflict response
+     - `?_seed=empty` — empty initial state
+     - `?_seed=stress` — N+ items stress test
+     - `?_simulate=<ERROR_CODE>` — trigger a specific error response
      - `?_slow=2000` — 2-second response delay
 -->
 
@@ -192,10 +179,10 @@ _TO FILL_
 
 ## Design decisions & rationale
 
-<!-- HINT [Phase 4 wrap-up, most important]: SPEC's README "Design decisions" section is at the heart of the Documentation rubric.
-     Extract 5-8 reviewer-friendly ADRs from DESIGN.md.
-
-     Below is the format for one ADR. In your assignment, scale to 5-8.
+<!-- HINT [PROCESS Phase 4 wrap-up, most important]: SPEC's README "Design decisions" section is at the heart of the Documentation rubric.
+     Extract 5-8 reviewer-friendly ADRs from DESIGN.md. The 5-step format
+     (context → options → decision → rationale → trade-off) is defined in
+     [docs/DESIGN.md "## 3. Decision Records (ADR)"](docs/DESIGN.md).
 -->
 
 ### 1. _Decision title 1_
@@ -212,7 +199,7 @@ _TO FILL_
 
 ## Unimplemented / constraints
 
-<!-- HINT [Phase 4]: Be honest. The Documentation rubric explicitly looks for "if anything is missing, state the reason and an alternative."
+<!-- HINT [PROCESS Phase 4]: Be honest. The Documentation rubric explicitly looks for "if anything is missing, state the reason and an alternative."
      Don't hide. Format: "X was not implemented due to time, alternative is Y." -->
 
 - _TO FILL 1_
@@ -230,7 +217,7 @@ See [docs/AI_USAGE.md](docs/AI_USAGE.md) for details.
 
 **Summary**:
 - Most first-pass implementation was done in collaboration with AI
-- Decisions (library selection, algorithm boundary cases, state-separation pattern) were made by me after option comparison
+- Decisions (library selection, edge-case handling, error-handling strategy) were made by me after option comparison
 - Discovered issues (e.g. ...) were diagnosed and fixed under my direction
 
 ---
