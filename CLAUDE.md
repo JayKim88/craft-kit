@@ -155,6 +155,7 @@ Commit ordering · dependencies → [PROCESS.md](docs/PROCESS.md) + [CHECKLIST.m
 | 4 | No type-escape | language-specific grep → 0 matches |
 | 5 | No debug logs | `grep -rn 'console\.log\|print(\|dbg!\|System\.out\.println' src/` → 0 |
 | 6 | CHECKLIST item updated to [x] | — |
+| 6b | No doc drift (DESIGN / PLAN / README still match code) | heuristic scan in Procedure 1 |
 | 7 | AI_USAGE.md row added (when AI used) | — |
 | 8 | Commit message follows convention + carries `[§N]` | — |
 
@@ -212,7 +213,7 @@ When the user's intent matches one of these triggers, execute the corresponding 
 
 | Procedure | Triggered when the user says... | What you do |
 |---|---|---|
-| **1. DoD verification** | "ready to commit", "DoD check", "커밋해도 돼" | Run the 8-gate check (lint/test/build + grep type-escapes per stack + grep debug logs + CHECKLIST/AI_USAGE/commit-msg sync). Do not propose a commit until all auto gates pass. |
+| **1. DoD verification** | "ready to commit", "DoD check", "커밋해도 돼" | Run the 8-gate check (lint/test/build + grep type-escapes per stack + grep debug logs + CHECKLIST/AI_USAGE/commit-msg sync + Gate 6b doc drift heuristic). Do not propose a commit until all auto gates pass. |
 | **2. Checklist trace** | "§N coverage", "어디 부족", "rubric trace" | Count commits and CHECKLIST items per §N; flag under-covered categories. |
 | **3. SPEC drift check** | "SPEC updated", "company changed spec" | Map the SPEC change region to impacted PLAN / DESIGN / CHECKLIST sections; never auto-edit, propose changes only. |
 | **4. Pre-submission review** | "리뷰", "final review", "제출 전 점검", "self-eval" | Switch to strict-reviewer mode; output score simulation + weakness analysis + critical fixes + time-boxed patches. Prefer running in a fresh Claude session. |
@@ -246,6 +247,23 @@ The detailed steps for each procedure are below.
 
 3. **Manual gates 6-8**:
    - Gate 6: Compare `git diff --name-only HEAD` against `[ ]` items in `docs/CHECKLIST.md`. Suggest which to mark `[x]`.
+   - **Gate 6b — Doc drift check** (interface vs documentation alignment):
+     - From `git diff --name-only HEAD`, identify changed files under `src/` (or stack equivalent: `lib/`, `internal/`, `pkg/`, `app/`).
+     - If no source files changed, skip this gate (docs-only commit).
+     - For each changed source file, scan the diff for interface markers:
+       - Exported function / class / type signatures (added, removed, or signature changed)
+       - New or removed HTTP route paths (`router.get(...)`, `@app.route(...)`, `app.Post(...)`, etc.)
+       - DB schema changes (column add/remove/rename, new tables)
+       - Public API surface changes (CLI flags, config keys, env vars)
+     - For each interface change found, grep:
+       - `docs/DESIGN.md` for the interface name — does an ADR mention it? Is the ADR now inconsistent with the change?
+       - `docs/PLAN.md` §3 for new feature names — is this in `Required` / `Optional` scope, or scope-creep?
+       - `README.md` "How to run" / "Project structure" / "Tech stack" — does any of these become stale?
+     - On mismatch, present options to the user:
+       (a) include the doc fix in this commit
+       (b) make a separate `docs:` commit before this one
+       (c) defer and record in `docs/CHECKLIST.md` "📌 Extra TODO" for batch sync later
+     - This is a heuristic check — false negatives possible (e.g., subtle behavior change without signature change). User judgment is final.
    - Gate 7: Check `git log -1 --pretty=%at -- docs/AI_USAGE.md` vs `git log -1 --pretty=%at`. If AI_USAGE is older, propose a one-line row.
    - Gate 8: Validate the proposed commit message against `<type>(<scope>): <subject> [§N]`.
 
@@ -260,9 +278,10 @@ The detailed steps for each procedure are below.
      4. No type-escape     ✅ PASS / ❌ N matches
      5. No debug logs      ✅ PASS / ❌ N matches
    Manual gates:
-     6. CHECKLIST sync     ⚠ items needing [x]: ...
-     7. AI_USAGE sync      ⚠ row missing
-     8. Commit convention  ⚠ proposed: <message>
+     6.  CHECKLIST sync    ⚠ items needing [x]: ...
+     6b. Doc drift         ⚠ DESIGN ADR-002 stale vs new signature / (or ✅ in sync)
+     7.  AI_USAGE sync     ⚠ row missing
+     8.  Commit convention ⚠ proposed: <message>
    ```
 
 5. **Do not propose a commit** until all auto gates 1-5 pass.
