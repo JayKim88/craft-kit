@@ -163,6 +163,8 @@ Commit ordering · dependencies → [PROCESS.md](docs/PROCESS.md) + [CHECKLIST.m
 
 > **Phase A note**: Before the toolchain is locked (CHECKLIST Phase B), gates 1-3 will report `(skipped: not configured)`. That's expected for `docs:` and `chore:` commits — activate gates 1-3 from your first `feat:` commit onward.
 
+> **v0.8 note**: Gates 1–5 are also enforced by `.githooks/pre-commit` at git-commit time (activated via `git config core.hooksPath .githooks` in the README bootstrap). Procedure 1 reports them in chat so you see the results before requesting approval; the hook is a safety net for cases where Procedure 1 is skipped. Bypass the hook with `SKIP_HOOK=1 git commit ...` (justify in commit body). **Never** use `--no-verify`.
+
 ---
 
 ## Git / Work trail
@@ -173,6 +175,7 @@ When git history is itself a rubric criterion (it usually is), follow these:
 - **No bulk dump**: never lump everything into a single final commit (explicit deduction).
 - **Separate refactor / test commits (bonus)**: keeping `refactor:` / `test:` commits apart from feature commits earns extra credit.
 - **User approval required**: every commit runs only after explicit user approval. AI must NOT auto-execute `git commit`.
+- **Pre-commit hook installed**: After `git init`, the user runs `git config core.hooksPath .githooks` (per README bootstrap). The hook enforces DoD gates 1-5 as a safety net. To bypass (rare; justify in commit body): `SKIP_HOOK=1 git commit ...`. Never use `--no-verify` — this kit's commit-safety protocol forbids it.
 
   **A commit-approval request always includes:**
   1. List of files to stage + summary of key changes
@@ -217,6 +220,7 @@ When the user's intent matches one of these triggers, execute the corresponding 
 | **2. Checklist trace** | "§N coverage", "어디 부족", "rubric trace" | Count commits and CHECKLIST items per §N; flag under-covered categories. |
 | **3. SPEC drift check** | "SPEC updated", "company changed spec" | Map the SPEC change region to impacted PLAN / DESIGN / CHECKLIST sections; never auto-edit, propose changes only. |
 | **4. Pre-submission review** | "리뷰", "final review", "제출 전 점검", "self-eval" | Switch to strict-reviewer mode; output score simulation + weakness analysis + critical fixes + time-boxed patches. Prefer running in a fresh Claude session. |
+| **5. Cadence check** | "어디까지 왔어", "오늘 진행", "cadence", "progress check", "진행 상황" | Run `bash scripts/cadence.sh` (or re-implement inline). Output today's commits, §N distribution, CHECKLIST progress, days to deadline, likely phase. Read-only — no recommendations. |
 
 The detailed steps for each procedure are below.
 
@@ -266,6 +270,16 @@ The detailed steps for each procedure are below.
      - This is a heuristic check — false negatives possible (e.g., subtle behavior change without signature change). User judgment is final.
    - Gate 7: Check `git log -1 --pretty=%at -- docs/AI_USAGE.md` vs `git log -1 --pretty=%at`. If AI_USAGE is older, propose a one-line row.
    - Gate 8: Validate the proposed commit message against `<type>(<scope>): <subject> [§N]`.
+
+3b. **Optional auto-corrective — `package.json` ↔ README "How to run" drift** (Tier-4 narrow corrective; introduced in v0.8):
+    - Trigger only when: (a) detected stack is `node`, AND (b) staged diff touches the `scripts` block in `package.json`.
+    - For each renamed script entry (e.g. `"dev"` → `"start"`), grep `README.md` "How to run" code fences for the OLD invocation (`npm run dev`, `npm dev`, `yarn dev`, etc.).
+    - If a match is found, propose ONE `sed` patch (do **not** apply it):
+      ```
+      sed -i.bak 's/npm run dev/npm run start/g' README.md && rm README.md.bak
+      ```
+    - **Never auto-apply.** Present the proposed diff and require user approval. Treat as advisory.
+    - **Out of scope** (do NOT attempt these corrections — false-positive risk too high): function renames, DB schema migrations, HTTP route renames, environment variable renames, test file renames.
 
 4. **Output** as a fixed table:
 
@@ -335,6 +349,8 @@ The detailed steps for each procedure are below.
 
 **Read** all of: `docs/SPEC.md`, `README.md`, `docs/CHECKLIST.md`, `docs/AI_USAGE.md`, `docs/DESIGN.md`, `docs/PLAN.md`, `git log --oneline | head -50`. Optionally `Glob "src/**/*"`, `Glob "**/*.test.*"`.
 
+**Cross-check (v0.8): SPEC origin coverage.** Count `**SPEC origin**:` occurrences in `docs/DESIGN.md` vs `### ADR-` headings. If `ADR_count - origin_count > 0`, flag the gap as a 🔴 critical Documentation-rubric issue in the output.
+
 **Output 4 sections**:
 
 1. **Score-simulation table**: per §N, max / sim score / 1-line rationale, ending with `**Total** | | 100 | **NN/100**`.
@@ -343,3 +359,25 @@ The detailed steps for each procedure are below.
 4. **Next actions** (time-boxed): "1 hour for +N points: ..." and "Additional 2 hours for +M points: ...".
 
 End with: "This is a simulation, not the real evaluation. Real reviewers may weight differently."
+
+### Procedure 5 — Cadence check
+
+**Trigger**: user says "어디까지 왔어", "오늘 진행", "cadence", "progress check", "진행 상황".
+
+**Steps**:
+
+1. Run `bash scripts/cadence.sh`. If the script is missing or exits non-zero, run step 2 inline.
+2. **Inline equivalent** (one-liner each):
+   - Commits today: `git log --since="$(date +%Y-%m-%d) 00:00" --oneline | wc -l`
+   - Commits last 7 days: `git log --since='7 days ago' --oneline | wc -l`
+   - §N distribution: `git log --pretty=%s | grep -oE '\[§[0-9-]+(,§[0-9-]+)*\]' | tr -d '[]§' | tr ',' '\n' | sort | uniq -c`
+   - CHECKLIST open / done: `grep -c '^- \[ \]' docs/CHECKLIST.md` and `grep -c '^- \[x\]' docs/CHECKLIST.md`
+   - Days to deadline: parse `**Deadline**:` line in this file's "Assignment overview", subtract `date +%s` for today, divide by 86400.
+   - Phase guess: `git log --pretty=%s | grep -E '^(feat|fix|refactor|test)' | head -1` — if empty → Phase A, else → Phase C+.
+3. **Output** as an 8-line digest:
+   - Commits today / Commits 7d
+   - §N distribution (rows per §N, sorted desc)
+   - CHECKLIST done / total (percentage)
+   - Days to deadline
+   - Likely current phase
+4. **Do NOT make recommendations**. This procedure is read-only observability. Let the user decide what to do with the numbers.
