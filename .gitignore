@@ -29,9 +29,13 @@ dist/
 /tmp/
 .cache/
 
-# Claude Code per-user state (permissions etc.) — never commit
+# Claude Code per-user state — never commit (these specific files only)
 .claude/settings.json
 .claude/settings.local.json
+# Note: .claude/skills/ IS tracked — it ships with the template.
+
+# Per-session wrap-up logs (kit dev only — do not ship to user clones)
+wrap-up/
 
 # Per language/framework — uncomment or extend the lines you need:
 # Next.js:    .next/
