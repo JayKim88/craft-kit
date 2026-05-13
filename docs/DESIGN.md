@@ -55,10 +55,16 @@ For each key decision, follow the 5-step format: **context → options → decis
 > - Title format: "Subject + result" — e.g. `ADR-002: Time-conflict boundary policy (touching is not overlap)`
 > - **Spell out "why we did NOT pick the rejected options"** — this is where reviewers award the most credit.
 > - Recommend mapping one ADR to each sub-checkpoint of the Design rubric category.
+> - **SPEC origin is mandatory.** Every ADR must cite the SPEC clause it derives from. If no direct SPEC clause exists, write `Inferred — no direct SPEC clause` and explain why in Rationale.
 
 ---
 
 ### ADR-001: _Decision title 1: one-line summary of result_
+
+**SPEC origin**: <!-- HINT: cite the SPEC clause this decision derives from.
+     Format: `docs/SPEC.md §<section> L<line> — "<verbatim quote>"`
+     Example: `docs/SPEC.md §"Implementation scope" L34 — "the schedule must persist across page reloads"`
+     If the decision is not directly tied to a SPEC clause, write `Inferred — no direct SPEC clause` and explain why in Rationale below. -->
 
 **Context**: <!-- 1-2 sentences on the problem to solve. Which constraint forced this decision? -->
 
@@ -79,6 +85,8 @@ For each key decision, follow the 5-step format: **context → options → decis
 ---
 
 ### ADR-002: _Decision title 2_
+
+**SPEC origin**: <!-- cite the SPEC clause; format as in ADR-001 -->
 
 **Context**: ...
 
