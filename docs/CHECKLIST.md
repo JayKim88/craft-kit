@@ -29,6 +29,10 @@
 - [ ] `<test command>` passing
 - [ ] `<build command>` passing
 - [ ] Type checker passes in strict mode (when applicable)
+- [ ] `.githooks/pre-commit` runs on a docs-only commit and passes (stack=none path)
+- [ ] `.githooks/pre-commit` runs on first `feat:` commit with stack detected and gates 1-3 pass
+- [ ] `bash scripts/cadence.sh` returns sensible output (deadline parses correctly)
+- [ ] `.claude/skills/*` skills are discoverable (try any trigger phrase in Claude Code)
 
 ---
 
