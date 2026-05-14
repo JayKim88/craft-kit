@@ -1,7 +1,7 @@
 <details>
 <summary><b>About takehome-kit</b> — remove this entire block (including the <code>&lt;details&gt;</code> and <code>&lt;/details&gt;</code> tags) once you start filling the submission skeleton below</summary>
 
-This repository is a clone-and-edit template for corporate take-home assignments. It ships a 7-document SSOT workflow (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / AI_USAGE / README), an 8-gate Definition of Done in `CLAUDE.md`, `[§N]` rubric tagging, **five AI agent procedures** (DoD verify, §N trace, SPEC drift, strict pre-submission review, cadence check), and a **stack-aware pre-commit safety net** installed via `git config core.hooksPath`.
+This repository is a clone-and-edit template for corporate take-home assignments. It ships a 7-document SSOT workflow (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / AI_USAGE / README), an 8-gate Definition of Done in `CLAUDE.md`, `[§N]` rubric tagging, **six AI agent procedures** (DoD verify, §N trace, SPEC drift, strict pre-submission review, cadence check, Phase A guided fill), and a **stack-aware pre-commit safety net** installed via `git config core.hooksPath`.
 
 **Bootstrap a new assignment:**
 
@@ -18,7 +18,7 @@ After cloning:
 1. Edit headers in this `README.md`, [`CLAUDE.md`](CLAUDE.md), [`AGENTS.md`](AGENTS.md), and [`docs/PLAN.md`](docs/PLAN.md). Look for `<...>` brackets and `_TO FILL_` markers.
 2. Paste the company spec into [`docs/SPEC.md`](docs/SPEC.md) (then never edit it).
 3. Transcribe the rubric into `docs/SPEC.md` "Rubric (detail)" (6 placeholder categories — adjust to match the company's spec).
-4. Follow the **5-phase workflow** documented at the top of `CLAUDE.md` ("Workflow phases (D-N to D-0)"). The AI agent will auto-trigger DoD verification, §N coverage trace, SPEC drift check, strict pre-submission review, and cadence check based on natural-language cues described in `CLAUDE.md` "AI agent procedures".
+4. Follow the **5-phase workflow** documented at the top of `CLAUDE.md` ("Workflow phases (D-N to D-0)"). The AI agent will auto-trigger six procedures — Phase A guided fill (Procedure 6), DoD verification, §N coverage trace, SPEC drift check, strict pre-submission review, and cadence check — based on natural-language cues described in `CLAUDE.md` "AI agent procedures".
 5. The pre-commit hook (`.githooks/pre-commit`) is now active. Lint / test / build / type-escape / debug-log checks run before each commit. Auto-skips on Phase A docs-only commits. Emergency bypass: `SKIP_HOOK=1 git commit ...` (justify in body). **Never** use `--no-verify`.
 
 Universal best practices in `CLAUDE.md` stay; project-specific zones marked `<!-- HINT -->` are yours to fill.

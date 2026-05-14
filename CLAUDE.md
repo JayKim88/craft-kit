@@ -221,6 +221,7 @@ When the user's intent matches one of these triggers, execute the corresponding 
 | **3. SPEC drift check** | "SPEC updated", "company changed spec" | Map the SPEC change region to impacted PLAN / DESIGN / CHECKLIST sections; never auto-edit, propose changes only. |
 | **4. Pre-submission review** | "리뷰", "final review", "제출 전 점검", "self-eval" | Switch to strict-reviewer mode; output score simulation + weakness analysis + critical fixes + time-boxed patches. Prefer running in a fresh Claude session. |
 | **5. Cadence check** | "어디까지 왔어", "오늘 진행", "cadence", "progress check", "진행 상황" | Run `bash scripts/cadence.sh` (or re-implement inline). Output today's commits, §N distribution, CHECKLIST progress, days to deadline, likely phase. Read-only — no recommendations. |
+| **6. Phase A guided fill** | "fill PLAN", "start Phase A", "Phase A 시작", "PLAN 채우자", "docs/PLAN.md 같이 채우자" | Surface SPEC ambiguities one at a time with 3-option A/B/C tables, force user to pick, append rows to PLAN.md §2. Never decide for the user — Phase A is judgment-heavy. |
 
 The detailed steps for each procedure are below.
 
@@ -381,3 +382,66 @@ End with: "This is a simulation, not the real evaluation. Real reviewers may wei
    - Days to deadline
    - Likely current phase
 4. **Do NOT make recommendations**. This procedure is read-only observability. Let the user decide what to do with the numbers.
+
+### Procedure 6 — Phase A guided fill
+
+**Trigger**: user says "fill PLAN", "start Phase A", "Phase A 시작", "PLAN 채우자", "docs/PLAN.md 같이 채우자", "doc alignment", or makes any first attempt to populate `docs/PLAN.md` §2.
+
+**Prerequisites**:
+- `docs/SPEC.md` `<!-- SPEC PASTE START -->` region must contain real content. If still `[[ paste original company spec here ]]`, **halt** and tell the user to paste the SPEC first.
+- `docs/PLAN.md` exists (it does in the template).
+
+**Steps**:
+
+1. **Read `docs/SPEC.md` completely.** Pay attention to:
+   - "Required implementation" / "Optional / Bonus" lists
+   - "Background scenario" / "Usage flow"
+   - "Error codes" / "Error handling"
+   - "Library choice is free" / "free-choice" phrasing
+   - Type definitions / schema fragments
+   - Sample code (and whether samples agree with the spec text)
+
+2. **Identify SPEC ambiguities.** Look for these patterns:
+   - **Boundary cases unaddressed**: empty inputs (0 items, null user), maximum bounds (10000 records? 1MB upload?), time boundaries (midnight, year-end, leap year, timezone), concurrent requests (race conditions).
+   - **Soft-modal language**: "should", "recommended", "preferably", "may", "could" — opens interpretation.
+   - **Sample-vs-spec mismatches**: type definition diverges from example payload; field name differs between sections.
+   - **Missing error semantics**: API mentions error codes but not response shape; UI mentions "show error" but not what kind / how visible.
+   - **Free-choice areas**: "library is free, justify in README" — which decisions need explicit documentation?
+   - **Implicit assumptions**: authentication scope (per-user / per-team / anonymous?), data persistence (in-memory / localStorage / real DB?).
+
+3. **Surface ONE ambiguity at a time** to the user in this format:
+
+   ```
+   SPEC §<section> says: "<ambiguous phrase, verbatim quote>"
+
+   Three reasonable interpretations:
+
+   | Option | Decision | Trade-off |
+   |---|---|---|
+   | A. Strict  | <conservative reading> | <what you give up>          |
+   | B. Lenient | <permissive reading>   | <what risk you take>        |
+   | C. Ask     | <suggested clarification question> | <delay, certainty> |
+
+   Which fits your judgment? (Or propose D with your own framing.)
+   ```
+
+   - **Do NOT pre-pick.** The user must own the judgment.
+   - **Do NOT propose options outside SPEC's stated scope** (no scope-creep proposals).
+
+4. **After user picks** (A / B / C / D), append a row to `docs/PLAN.md` §2 table:
+
+   | SPEC ambiguity | Our decision | Rationale | Confidence | Verified by |
+   |---|---|---|---|---|
+   | "<verbatim quote>" | <chosen option> | <user's reason> | High / Med / Low | Inferred / Asked company / Cross-checked sample |
+
+5. **Move to the next ambiguity.** Typical assignment yields 4-7 ambiguities. Stop after surfacing all of them, or when the user says "enough" / "충분".
+
+6. **Do NOT write code yet.** Phase A is doc-only. Procedure 6 ends when PLAN §2 has all rows filled. The user then proceeds to §3 (scope), §4 (schedule), DESIGN ADRs, etc. — those have their own templates and trigger their own work.
+
+**Anti-patterns** (what to avoid):
+
+- Don't pitch one option as obviously correct. The user's judgment is the point of Phase A.
+- Don't propose options outside SPEC's stated scope ("we could also add feature X" — no, that's scope-creep).
+- Don't decide for the user. Phase A is judgment-heavy; AI's role is **surfacing**, not deciding.
+- Don't bundle ambiguities. One question per round; let the user think.
+- Don't write code. Phase A is doc-only. Procedure 1 (DoD) and the pre-commit hook will block premature implementation anyway.

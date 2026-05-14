@@ -32,11 +32,16 @@
 
 [SPEC.md](SPEC.md) is external input; what follows are decisions we made when interpreting it.
 
-| SPEC ambiguity | Our decision | Rationale |
-|---|---|---|
-| <!-- HINT: ambiguous parts of SPEC (boundary cases, empty states, timezones, ...) --> | <!-- how we interpreted it --> | <!-- why --> |
+<!-- HINT: This 5-column table is the Assumption-Map pattern. The AI agent's
+     Procedure 6 (Phase A guided fill) surfaces ambiguities one at a time
+     with A/B/C option tables and appends rows here after you pick. Trigger
+     with "fill PLAN" / "Phase A 시작" / "PLAN 채우자". -->
 
-→ These decisions feed [DESIGN.md](DESIGN.md) as design rationale and the [README.md](../README.md) "Requirements interpretation & assumptions" section as reviewer-facing copy.
+| SPEC ambiguity | Our decision | Rationale | Confidence | Verified by |
+|---|---|---|---|---|
+| <!-- "<verbatim quote from SPEC>" --> | <!-- chosen option --> | <!-- user's reason --> | <!-- High / Med / Low --> | <!-- Inferred / Asked company / Cross-checked sample --> |
+
+→ These decisions feed [DESIGN.md](DESIGN.md) as design rationale and the [README.md](../README.md) "Requirements interpretation & assumptions" section as reviewer-facing copy. The **Verified by** column is the strongest reviewer signal — `Asked company` > `Cross-checked sample` > `Inferred`. Distinguishing them honestly is itself a Documentation rubric signal.
 
 ---
 

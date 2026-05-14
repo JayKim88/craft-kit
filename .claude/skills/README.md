@@ -11,5 +11,6 @@ These exist so Claude Code's skill auto-loader (and compatible agents like Codex
 | `spec-drift.md` | Procedure 3 — SPEC drift check | "SPEC updated" |
 | `pre-submission-review.md` | Procedure 4 — Pre-submission review | "리뷰", "final review" |
 | `cadence.md` | Procedure 5 — Cadence check | "어디까지 왔어", "cadence" |
+| `phase-a-guide.md` | Procedure 6 — Phase A guided fill | "fill PLAN", "Phase A 시작", "PLAN 채우자" |
 
 **Do not edit skill bodies in isolation.** When a procedure changes, update `CLAUDE.md` first; the skill files only point at it.
