@@ -12,17 +12,19 @@
 
 When you need information mid-work, here's where to look:
 
-| What you're looking for | Where it lives |
-|---|---|
-| External spec (immutable contract) | [SPEC.md](docs/SPEC.md) |
-| **Rubric (check while working)** | **[SPEC.md "## Rubric (detail)"](docs/SPEC.md) + the inline `[§N]` markers in [CHECKLIST.md](docs/CHECKLIST.md)** |
-| Our planning (product definition · scope · schedule · bonus priority · rubric mapping) | [PLAN.md](docs/PLAN.md) |
-| Design decisions (architecture · library choices · trade-offs) | [DESIGN.md](docs/DESIGN.md) |
-| Workflow (Phases, dependency graph, commit cycle) | [PROCESS.md](docs/PROCESS.md) |
-| Task list / progress | [CHECKLIST.md](docs/CHECKLIST.md) |
-| AI usage rules · coding rules · DoD · prohibitions | **This document** |
-| AI usage history (for submission) | [AI_USAGE.md](docs/AI_USAGE.md) |
-| Reviewer-facing output | [README.md](README.md) |
+| What you're looking for | Where it lives | Updated when |
+|---|---|---|
+| External spec (immutable contract) | [SPEC.md](docs/SPEC.md) | 🔒 never — paste once, immutable |
+| **Rubric (check while working)** | **[SPEC.md "## Rubric (detail)"](docs/SPEC.md) + the inline `[§N]` markers in [CHECKLIST.md](docs/CHECKLIST.md)** | 🔒 never |
+| Our planning (product definition · scope · schedule · bonus priority · rubric mapping) | [PLAN.md](docs/PLAN.md) | Phase A only |
+| Design decisions (architecture · library choices · trade-offs) | [DESIGN.md](docs/DESIGN.md) | Phase A + C (new ADRs) |
+| Workflow (Phases, dependency graph, commit cycle) | [PROCESS.md](docs/PROCESS.md) | Phase A only |
+| Task list / progress | [CHECKLIST.md](docs/CHECKLIST.md) | Phase C (every commit) |
+| AI usage rules · coding rules · DoD · prohibitions | **This document** | Phase A (project-specific zones) |
+| AI usage history (for submission) | [AI_USAGE.md](docs/AI_USAGE.md) | Phase C (every AI-assisted commit) |
+| Reviewer-facing output | [README.md](README.md) | Phase A + D (polish) |
+| Kit structure / file roles | [docs/OVERVIEW.md](docs/OVERVIEW.md) | Kit releases only |
+| Kit design rationale | [docs/HARNESS.md](docs/HARNESS.md) | Kit releases only |
 
 **Rule**: A single piece of information lives in a single document. If you find a duplicate, consolidate into the SSOT and replace the others with links.
 
@@ -163,7 +165,7 @@ Commit ordering · dependencies → [PROCESS.md](docs/PROCESS.md) + [CHECKLIST.m
 
 > **Phase A note**: Before the toolchain is locked (CHECKLIST Phase B), gates 1-3 will report `(skipped: not configured)`. That's expected for `docs:` and `chore:` commits — activate gates 1-3 from your first `feat:` commit onward.
 
-> **v0.8 note**: Gates 1–5 are also enforced by `.githooks/pre-commit` at git-commit time (activated via `git config core.hooksPath .githooks` in the README bootstrap). Procedure 1 reports them in chat so you see the results before requesting approval; the hook is a safety net for cases where Procedure 1 is skipped. Bypass the hook with `SKIP_HOOK=1 git commit ...` (justify in commit body). **Never** use `--no-verify`.
+> **v0.8 note**: Gates 1–5 are also enforced by `.githooks/pre-commit` at git-commit time. Procedure 1 reports them in chat so you see the results before requesting approval; the hook is a safety net for cases where Procedure 1 is skipped. Bypass and prohibition rules → see "Git / Work trail" above.
 
 ---
 

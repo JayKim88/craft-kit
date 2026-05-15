@@ -25,6 +25,8 @@ Universal best practices in `CLAUDE.md` stay; project-specific zones marked `<!-
 
 **Forking:** edit `LICENSE` (copyright line) and the `git clone` URL above to point to your fork.
 
+**How it works:** [docs/OVERVIEW.md](docs/OVERVIEW.md) — unified diagram + 3-view breakdown (timeline / file map / per-commit flow).
+
 **Design rationale:** [docs/HARNESS.md](docs/HARNESS.md) — why this kit is shaped the way it is, mapped to OpenAI's harness engineering principles.
 
 </details>
