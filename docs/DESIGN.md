@@ -5,6 +5,35 @@
 
 ---
 
+## 0. Core beliefs
+
+> Permanent operating principles. Apply to every ADR below.
+> Violating one requires explicit justification in the ADR's **Trade-off** field.
+> Source: OpenAI harness engineering discipline — adapted for take-home assignments.
+
+<!-- HINT: These defaults are intentionally generic. Override any line that conflicts with your
+     assignment's specific constraints (e.g. "framework is mandated by SPEC" overrides belief 1). -->
+
+1. **Agent legibility over human elegance** — prefer technologies with stable APIs, wide training-set
+   coverage, and predictable behavior. The agent's ability to reason about a dependency matters more
+   than stylistic preference.
+
+2. **Boring is a virtue** — when a library's behavior is opaque or hard to model in-context, reimplementing
+   a focused subset is often cheaper than working around the library. Justify any non-trivial
+   dependency in §4 (Tech-selection rationale).
+
+3. **In-repo over out-of-repo** — every decision, constraint, and architectural rationale must live in
+   this repository. Knowledge in chat logs, Google Docs, or implicit team consensus is invisible to
+   the agent and to reviewers.
+
+4. **Enforce invariants mechanically** — if a rule is important enough to state, it is important enough
+   to lint or test. Prose rules rot; code rules hold.
+
+5. **Unidirectional data flow** — state has one owner. Derived / edit state never mixes with
+   source-of-truth state. Bidirectional bindings are disallowed unless SPEC explicitly requires them.
+
+---
+
 ## 1. Architecture overview
 
 <!-- HINT: One or two diagrams (ASCII OK) covering the entire system. Examples:

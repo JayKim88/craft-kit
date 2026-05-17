@@ -1,7 +1,8 @@
-# Harness Engineering — Design of takehome-kit v0.8
+# Harness Engineering — Design of takehome-kit
 
 > Why this kit is shaped the way it is, mapped to OpenAI's *harness engineering* discipline.
 > Reference: [OpenAI — Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/).
+> **Version history**: v0.8 — pre-commit hook, SPEC origin, skills, auto-corrective, cadence. v0.9 — exec-plans, quality grades, core beliefs, doc-gardening, self-review.
 
 ---
 
@@ -310,18 +311,70 @@ All five principles covered. None weakened.
 
 ---
 
+---
+
+## v0.9 additions
+
+Five new components derived from OpenAI's harness engineering article.
+
+### Context — v0.8 gaps that motivated v0.9
+
+| Pattern (OpenAI article) | v0.8 status | Gap |
+|---|---|---|
+| Execution plans as versioned artifacts | PROCESS.md covers phase order | No active/completed separation; no decision log per task |
+| Quality grades per domain | CHECKLIST.md tracks `[x]`/`[ ]` only | No domain-level health scores visible at a glance |
+| Core beliefs document | Implied in coding rules | Never codified as explicit, permanent design principles |
+| Doc-gardening scan | Gate 6b fires at commit time only | No proactive stale-doc detection between commits |
+| Short entry point (~100 lines) | CLAUDE.md was ~450 lines | Excess context load every turn |
+| Active/completed plan split | Flat PLAN.md only | No per-feature state tracking; agent re-derives context each turn |
+
+### Components
+
+| Component | File(s) changed | Principle |
+|---|---|---|
+| **Exec-plan templates** (`docs/exec-plans/`) | New dir: `active/TEMPLATE.md`, `completed/`, `tech-debt-tracker.md` | **Inform** — agent gets explicit "what am I working on now" artifact; no context re-derivation per turn |
+| **Quality grades table** (CHECKLIST.md §0) | `docs/CHECKLIST.md` | **Verify** — one-glance domain health map; surfaced by Procedure 5 cadence |
+| **Core beliefs** (DESIGN.md §0) | `docs/DESIGN.md` | **Inform** — permanent operating principles (agent legibility, boring tech, in-repo) applied to every ADR |
+| **Procedure 7: doc-gardening** | `CLAUDE.md` (new procedure) | **Correct** — proactive stale-doc detection between commits, not just at commit time |
+| **Procedure 4: self-review pass** | `CLAUDE.md` (Procedure 4 extension) | **Verify** — pre-submission review now includes a silent diff-against-rubric pass before producing the score simulation |
+
+### Principle coverage after v0.9
+
+| Principle | v0.8 | v0.9 addition |
+|---|---|---|
+| **Constrain** | Pre-commit hook gates 1-5 | (no change) |
+| **Inform** | SPEC origin field + `.claude/skills/` | Core beliefs in DESIGN.md + exec-plan active artifacts |
+| **Verify** | Procedure 5 cadence sensor | Quality grades in cadence output + self-review pass in Procedure 4 |
+| **Correct** | Procedure 1 step 3b (README↔scripts) | Procedure 7 doc-gardening (broader stale-doc scan) + exec-plan step sync in Gate 6 |
+| **Human in loop** | All correctves advisory | Preserved — Procedure 7 never auto-edits |
+
+---
+
 ## What the kit deliberately does NOT do
 
-Honest enumeration of patterns rejected during v0.8 design:
+### Permanent rejections (any version)
 
 | Rejected pattern | Why |
 |---|---|
 | Auto-commit (bypassing user approval) | Violates Principle #5 (human-in-loop). Absolute prohibition. |
-| Multi-agent orchestration (Vera/Axel/etc. style) | 5-day projects don't warrant agent-team overhead |
-| MCP server integration | Assumes user infrastructure. Violates tech-neutrality. |
+| Drift detector that auto-edits SPEC | Violates SPEC-immutable rule |
 | Broader auto-correctives (function renames, schema migrations) | False-positive risk > value |
 | Skill marketplace external dependencies | Community-dependent, breaks the kit's single-source self-containment |
-| Drift detector that auto-edits SPEC | Violates SPEC-immutable rule |
+
+### Out of scope for 3–7 day assignments (from OpenAI article)
+
+These patterns exist in production-scale harness engineering but are explicitly rejected because the 5-day timeline can't absorb the infrastructure cost:
+
+| Rejected pattern | Why not applicable |
+|---|---|
+| Chrome DevTools Protocol wiring | Requires app to be bootable per-worktree + local browser automation setup |
+| Local observability stack (Loki/Victoria) | Ephemeral per-worktree observability is a multi-day infrastructure investment |
+| Layered domain architecture enforcement via custom linters | Too project-specific; the kit is stack-neutral |
+| Background recurring garbage-collection agents | Requires persistent agent runtime; take-home sessions are ephemeral |
+| Multi-agent PR review (full Ralph Wiggum loop) | Assumes PR queue, CI triggers, and agent orchestration infrastructure |
+| MCP server integration | Assumes user infrastructure; violates tech-neutrality |
+| Multi-agent orchestration (Vera/Axel/etc. style) | 5-day projects don't warrant agent-team overhead |
+| Production-scale thinking (1,500 PRs / ~100M LoC) | Kit targets 50–200 commits, 5k–20k LoC; different threat model |
 
 ---
 

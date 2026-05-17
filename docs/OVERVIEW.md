@@ -182,25 +182,39 @@ sequenceDiagram
 
 ```
 takehome-kit/
-├── CLAUDE.md              ← AI rules SSOT (loaded into AI context every turn)
-├── README.md              ← Dual identity: kit-readme (initially) → submission-readme (after <details> block removed)
+├── CLAUDE.md              ← AI rules index ~140 lines (routing + rules + procedure trigger table)
+├── README.md              ← Dual identity: kit-readme → submission-readme
 ├── AGENTS.md              ← Environment-specific gotchas
 ├── LICENSE
 ├── docs/
 │   ├── SPEC.md            ← Immutable external contract (paste, then never edit)
-│   ├── PLAN.md            ← Our interpretation, scope, schedule, rubric (§N) map
-│   ├── DESIGN.md          ← ADRs with SPEC origin field
+│   ├── PLAN.md            ← Interpretation, scope, schedule, rubric (§N) map
+│   ├── DESIGN.md          ← §0 Core beliefs + ADRs with SPEC origin field
 │   ├── PROCESS.md         ← Implementation order, dependency graph
-│   ├── CHECKLIST.md       ← Tasks tagged [§N], per-phase
+│   ├── CHECKLIST.md       ← Quality grades + tasks tagged [§N], per-phase
 │   ├── AI_USAGE.md        ← AI collaboration log (rubric requirement)
 │   ├── HARNESS.md         ← Design rationale (WHY this kit shape)
-│   └── OVERVIEW.md        ← This file (WHAT the kit does)
+│   ├── OVERVIEW.md        ← This file (WHAT the kit does)
+│   ├── procedures/        ← Procedure details (read on demand — not loaded every turn)
+│   │   ├── proc-1-dod.md
+│   │   ├── proc-2-trace.md
+│   │   ├── proc-3-spec-drift.md
+│   │   ├── proc-4-review.md
+│   │   ├── proc-5-cadence.md
+│   │   ├── proc-6-phase-a.md
+│   │   └── proc-7-gardening.md
+│   └── exec-plans/
+│       ├── active/
+│       │   └── TEMPLATE.md  ← Copy + rename for each complex feature (3+ files)
+│       ├── completed/       ← Finished exec-plans (history)
+│       └── tech-debt-tracker.md  ← Running catalog of known shortcuts
 ├── .claude/
-│   └── skills/            ← Multi-vendor SKILL.md triggers (pointers to CLAUDE.md procedures)
+│   └── skills/            ← Multi-vendor SKILL.md triggers (Codex/Cursor/Aider)
 ├── .githooks/
-│   └── pre-commit         ← Stack-aware DoD gate enforcement (activated via git config core.hooksPath)
+│   ├── pre-commit         ← DoD gates 1-5 enforcement (stack-auto, blocks bad commits)
+│   └── post-commit        ← Exec-plan sync reminder + inline TODO scan (advisory only)
 ├── scripts/
-│   └── cadence.sh         ← 8-line progress digest
+│   └── cadence.sh         ← Progress digest: commits / §N / quality grades / tech-debt / stale docs / D-day
 └── wrap-up/               ← Per-session work logs (gitignored)
 ```
 

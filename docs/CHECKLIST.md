@@ -6,6 +6,23 @@
 
 ---
 
+## Quality grades
+
+> Update at the end of each Phase C cycle (or when running Procedure 5 cadence check).
+> Grade scale: 🟢 Good / 🟡 Fair / 🔴 Weak
+> Known gaps → log in [exec-plans/tech-debt-tracker.md](exec-plans/tech-debt-tracker.md).
+
+| Domain / Layer | Grade | Notes |
+|---|---|---|
+| Core domain logic | — | _not started_ |
+| API / endpoint layer | — | _not started_ |
+| UI / presentation | — | _not started_ |
+| Test coverage | — | _not started_ |
+| Documentation (§ doc) | — | _not started_ |
+| Error handling | — | _not started_ |
+
+---
+
 ## Phase A — Document alignment
 
 <!-- HINT: Verify every doc is aligned before starting work. -->

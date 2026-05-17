@@ -1,129 +1,77 @@
 # AI Collaboration Context
 
-> Ground truth for collaborating with AI (Claude) on this take-home assignment.
-> This document holds **universal rules** (coding · commit · DoD · prohibitions).
-> Everything else is routed to a single-responsibility document.
->
-> <!-- HINT: Replace this header with `# {Company} {Role} — {Product} / AI Collaboration Context` once you know it. -->
+> Universal rules · DoD · prohibitions. Everything else lives in a pointed-to document.
+> <!-- HINT: Replace header → `# {Company} {Role} — {Product} / AI Collaboration Context` -->
 
 ---
 
-## Document routing (Single Source of Truth)
-
-When you need information mid-work, here's where to look:
+## Document routing
 
 | What you're looking for | Where it lives | Updated when |
 |---|---|---|
-| External spec (immutable contract) | [SPEC.md](docs/SPEC.md) | 🔒 never — paste once, immutable |
-| **Rubric (check while working)** | **[SPEC.md "## Rubric (detail)"](docs/SPEC.md) + the inline `[§N]` markers in [CHECKLIST.md](docs/CHECKLIST.md)** | 🔒 never |
-| Our planning (product definition · scope · schedule · bonus priority · rubric mapping) | [PLAN.md](docs/PLAN.md) | Phase A only |
-| Design decisions (architecture · library choices · trade-offs) | [DESIGN.md](docs/DESIGN.md) | Phase A + C (new ADRs) |
-| Workflow (Phases, dependency graph, commit cycle) | [PROCESS.md](docs/PROCESS.md) | Phase A only |
-| Task list / progress | [CHECKLIST.md](docs/CHECKLIST.md) | Phase C (every commit) |
-| AI usage rules · coding rules · DoD · prohibitions | **This document** | Phase A (project-specific zones) |
-| AI usage history (for submission) | [AI_USAGE.md](docs/AI_USAGE.md) | Phase C (every AI-assisted commit) |
-| Reviewer-facing output | [README.md](README.md) | Phase A + D (polish) |
-| Kit structure / file roles | [docs/OVERVIEW.md](docs/OVERVIEW.md) | Kit releases only |
-| Kit design rationale | [docs/HARNESS.md](docs/HARNESS.md) | Kit releases only |
-
-**Rule**: A single piece of information lives in a single document. If you find a duplicate, consolidate into the SSOT and replace the others with links.
+| External spec (immutable) | [SPEC.md](docs/SPEC.md) | 🔒 never |
+| **Rubric** | **[SPEC.md §"Rubric (detail)"](docs/SPEC.md) + `[§N]` in [CHECKLIST.md](docs/CHECKLIST.md)** | 🔒 never |
+| Planning · scope · schedule · §N map | [PLAN.md](docs/PLAN.md) | Phase A only |
+| Design decisions (ADRs) | [DESIGN.md](docs/DESIGN.md) | Phase A + C |
+| Implementation order / deps | [PROCESS.md](docs/PROCESS.md) | Phase A only |
+| Task list / progress | [CHECKLIST.md](docs/CHECKLIST.md) | Phase C every commit |
+| AI usage history | [AI_USAGE.md](docs/AI_USAGE.md) | Phase C every commit |
+| Reviewer-facing output | [README.md](README.md) | Phase A + D |
+| Kit structure | [OVERVIEW.md](docs/OVERVIEW.md) | Kit releases |
+| Kit design rationale | [HARNESS.md](docs/HARNESS.md) | Kit releases |
+| Active feature plans | [exec-plans/active/](docs/exec-plans/active/) | Phase C per feature |
+| Known tech debt | [tech-debt-tracker.md](docs/exec-plans/tech-debt-tracker.md) | Phase C per shortcut |
+| Domain health grades | [CHECKLIST.md "Quality grades"](docs/CHECKLIST.md) | Phase C per cycle |
+| Procedure details | [docs/procedures/](docs/procedures/) | Kit releases |
 
 ---
 
-## Workflow phases (D-N to D-0)
+## Workflow phases (D-N → D-0)
 
-| Phase | When | Action | Files touched |
-|---|---|---|---|
-| **A. Doc alignment** | D-N (~5h) | Paste SPEC verbatim. Transcribe rubric (the 6 placeholder categories in `docs/SPEC.md`). Fill `docs/PLAN.md` §2 (interpretation), §3 (scope), §4 (schedule), §5 (rubric mapping), §6 (risks). Write 5-10 ADRs in `docs/DESIGN.md`. Decompose Phase 0~4 in `docs/PROCESS.md`. Tag 50-100 items with `[§N]` in `docs/CHECKLIST.md`. Fill project-specific HINT zones in this document. | All 6 docs + CLAUDE.md |
-| **B. Toolchain lock** | D-N+1 (~30m) | Pin runtime version. Add `lint` / `test` / `build` scripts. Run them — all PASS. Replace `<lint command>` placeholders in the DoD table below with real commands. Mark Phase B items `[x]` in CHECKLIST. | `package.json` (or stack equivalent), CLAUDE.md, CHECKLIST.md |
-| **C. Implementation cycle** | D-N+1 ~ D-1 (×30-60) | Per feature: code → run Procedure 1 (DoD verification) → mark CHECKLIST `[x]` + add AI_USAGE row → user approval → commit `<type>(<scope>): <subject> [§N]`. | src/, CHECKLIST.md, AI_USAGE.md, git log |
-| **D. Polish** | D-1 (~3h) | Run Procedure 2 (checklist trace) to find under-covered §N. Patch with extra `docs:` commits. Sweep all `_TO FILL_` markers in README. Run manual smoke checklist. | README.md, ad-hoc fixes |
-| **E. Submit** | D-0 (~2h) | Run Procedure 4 (strict pre-submission review) in a fresh Claude session. Apply 30-min critical fixes. Verify `grep -rn "_TO FILL_\|<!-- TODO" README.md docs/` returns 0. Make repo public + submit. | README.md, repo settings |
-
-The four procedures referenced above are detailed at the bottom of this document under "## AI agent procedures".
-
-**Phase nomenclature** — this kit uses two compatible naming schemes:
-
-| Scheme | Where | Meaning |
+| Phase | When | Action |
 |---|---|---|
-| `Phase A` / `Phase B` / `Phase C` / `Phase D` / `Phase E` | This document + [docs/CHECKLIST.md](docs/CHECKLIST.md) | Top-down workflow (doc alignment → toolchain → implementation → polish → submit) |
-| `PROCESS Phase 0` ~ `PROCESS Phase 4` | [docs/PROCESS.md](docs/PROCESS.md) + [docs/CHECKLIST.md](docs/CHECKLIST.md) "Phase C" subsections | Implementation steps inside Phase C (infra → required #1 → required #2 → bonus → wrap-up) |
+| **A. Doc alignment** | D-N ~5h | Paste SPEC · Procedure 6 guided fill · fill PLAN/DESIGN/PROCESS/CHECKLIST |
+| **B. Toolchain lock** | D-N+1 ~30m | Pin runtime · add lint/test/build scripts · verify hook + cadence.sh |
+| **C. Implementation** | D-N+1~D-1 ×30-60 | code → Procedure 1 DoD → user approval → `git commit [§N]` |
+| **D. Polish** | D-1 ~3h | Procedure 2 §N trace · sweep `_TO FILL_` · Procedure 7 doc-gardening |
+| **E. Submit** | D-0 ~2h | Fresh session → Procedure 4 strict review · 30-min fixes · go public |
 
-When a HINT comment says "Phase A" with no prefix, it means the workflow phase here. When it says "PROCESS Phase 4", it means the implementation step in PROCESS.md.
+Phase A/B/C/D/E = workflow. PROCESS Phase 0-4 = implementation steps inside Phase C. See [PROCESS.md](docs/PROCESS.md).
 
 ---
 
-## Assignment overview (context)
+## Assignment overview
 
-<!-- HINT [Phase A]: Fill once you've read the SPEC. Keep it to 3 lines. -->
+<!-- HINT [Phase A]: Fill once SPEC is read. 3 lines max. -->
 
 - **Deadline**: `<YYYY-MM-DD HH:MM>`
 - **Type**: `<FE | BE | FS | ML | Mobile | Other>` — `<one-line product name>`
 - **Core challenge**: `<one-line of what this assignment is really testing>`
 
-Detailed planning · scope · schedule → [PLAN.md](docs/PLAN.md)
-
 ---
 
 ## Tech stack
 
-<!-- HINT [Phase B]: Fill after tech is decided. If still undecided, compare in the DESIGN.md "Tech selection rationale" section first.
-     Example rows (replace per role):
-     | Tech | Version | Purpose |
-     |---|---|---|
-     | Node.js | 22.19 LTS | runtime |
-     | TypeScript | strict | type safety |
-     | <Framework> | <X.Y> | framework |
--->
+<!-- HINT [Phase B]: Fill after tech is decided. Rationale → DESIGN.md "Tech selection rationale". -->
 
 | Tech | Version | Purpose |
 |------|---------|---------|
 | _TO FILL_ | | |
 
-Tech-selection rationale → [DESIGN.md](docs/DESIGN.md) "Tech selection rationale"
-
----
-
-## Environment notes (optional)
-
-<!-- HINT: If your framework/language differs from typical training data, note it here.
-     Examples: "Next 16 async dynamic API", "Python 3.13 deprecation", "Java 21 record patterns".
-     Otherwise delete this section or keep [AGENTS.md](AGENTS.md) as the home for these. -->
-
-See [AGENTS.md](AGENTS.md) for environment-specific gotchas.
-
 ---
 
 ## Coding rules — universal
 
-These apply to every assignment regardless of stack.
-
-- **No type escapes** — no unintended `any` / `unknown` / `as any` / `cast()` / `# type: ignore` etc.
-- **No debug code** — `console.log` / `print()` / `dbg!()` / `System.out.println` etc. (intentional `error`/`warn` logging is fine)
-- **Isolate domain logic in domain modules** — no direct computation in components / endpoints. Pure functions go to `lib/<domain>/` (or your stack's equivalent), tested in isolation.
-- **Unidirectional data flow** — never mix derived/edit state with source-of-truth state. Each piece of state has one owner.
-- **For each item you implement, check the `[§N]` marker in [CHECKLIST.md](docs/CHECKLIST.md) → aim to satisfy the "high proficiency" bar in [SPEC.md "Rubric (detail)" §N](docs/SPEC.md).**
+- **No type escapes** — no `any` / `as any` / `cast()` / `# type: ignore`
+- **No debug code** — no `console.log` / `print()` / `dbg!()` / `System.out.println`
+- **Domain logic isolated** — pure functions in `lib/<domain>/`, not in components/endpoints
+- **Unidirectional data flow** — each piece of state has one owner; derived ≠ source-of-truth
+- **Check `[§N]` in [CHECKLIST.md](docs/CHECKLIST.md)** for every item you implement
+- **TDD for complex features** — when an exec-plan is created, domain logic steps follow Red → Green → Refactor. Simple CRUD / UI wiring steps skip TDD. Red commit uses `TDD_RED=1 git commit` (Gate 2 bypass).
 
 ## Coding rules — project-specific
 
-<!-- HINT: Add domain-specific rules during Phase A. Examples (delete what doesn't apply):
-
-   FE:
-   - State separation: server state (TanStack Query / SWR) ⊥ edit state (Zustand / Redux)
-   - Time / date logic isolated in `src/lib/time.ts`
-   - Never mutate query cache directly; sync via `setQueryData` after success
-
-   BE:
-   - DB transactions start only in the service layer
-   - Authorization checked before any mutation
-   - Idempotency strategy explicit per endpoint
-
-   ML:
-   - Random seeds fixed
-   - Train/val/test split deterministic
--->
-
-_TO FILL — add 3-5 rules specific to this assignment's domain_
+_TO FILL — 3-5 rules specific to this assignment's domain_
 
 ---
 
@@ -132,318 +80,64 @@ _TO FILL — add 3-5 rules specific to this assignment's domain_
 Format: `<type>(<scope>): <subject> [§N]`
 
 - **type**: `feat | fix | refactor | test | chore | docs | style | perf`
-- **scope**: project-defined (e.g. `types | core | api | ui | nav | a11y | mocks`)
-  <!-- HINT: lock 5-10 scope tokens at project start; keep them stable -->
-- **subject**: English, imperative, ≤ 50 characters
-- **`[§N]`**: rubric criterion number. Multiple → `[§2,§3]`. Infrastructure/tooling work → `[§-]`.
-
-Examples:
-- `feat(api): add user authentication endpoint [§2,§3]`
-- `test(core): cover boundary cases for time conflict [§3]`
-- `refactor(ui): extract validation hook [§2]`
-- `chore(deps): upgrade test framework [§-]`
-
-Commit ordering · dependencies → [PROCESS.md](docs/PROCESS.md) + [CHECKLIST.md](docs/CHECKLIST.md)
+- **scope**: 5-10 project tokens locked at Phase A start
+- **subject**: English, imperative, ≤ 50 chars
+- **`[§N]`**: rubric number. Multiple → `[§2,§3]`. Infra/tooling → `[§-]`
 
 ---
 
-## Definition of Done (per feature commit)
+## Definition of Done (gates per commit)
 
-| # | Gate | Verification command |
+| # | Gate | How verified |
 |---|---|---|
-| 1 | Lint clean | `<lint command>` <!-- HINT: npm run lint / ruff check . / cargo clippy / go vet ./... --> |
-| 2 | Tests green | `<test command>` <!-- HINT: npm test / pytest / cargo test / go test ./... --> |
-| 3 | Build OK | `<build command>` <!-- HINT: npm run build / mvn package / cargo build / tsc --noEmit --> |
-| 4 | No type-escape | language-specific grep → 0 matches |
-| 5 | No debug logs | `grep -rn 'console\.log\|print(\|dbg!\|System\.out\.println' src/` → 0 |
-| 6 | CHECKLIST item updated to [x] | — |
-| 6b | No doc drift (DESIGN / PLAN / README still match code) | heuristic scan in Procedure 1 |
-| 7 | AI_USAGE.md row added (when AI used) | — |
-| 8 | Commit message follows convention + carries `[§N]` | — |
+| 1 | Lint clean | `<lint command>` |
+| 2 | Tests green | `<test command>` |
+| 3 | Build OK | `<build command>` |
+| 4 | No type-escape | language grep → 0 |
+| 5 | No debug logs | grep → 0 |
+| 6 | CHECKLIST `[x]` + exec-plan sync | manual |
+| 6b | No doc drift (DESIGN/PLAN/README) | Procedure 1 Gate 6b |
+| 7 | AI_USAGE.md row added | manual |
+| 8 | Commit message `[§N]` | manual |
 
-1-5 are automated quality gates; 6-8 are manual rubric-alignment gates. The AI executes them per "Procedure 1 — DoD verification" below; the user does not need to invoke a tool explicitly.
-
-> **Phase A note**: Before the toolchain is locked (CHECKLIST Phase B), gates 1-3 will report `(skipped: not configured)`. That's expected for `docs:` and `chore:` commits — activate gates 1-3 from your first `feat:` commit onward.
-
-> **v0.8 note**: Gates 1–5 are also enforced by `.githooks/pre-commit` at git-commit time. Procedure 1 reports them in chat so you see the results before requesting approval; the hook is a safety net for cases where Procedure 1 is skipped. Bypass and prohibition rules → see "Git / Work trail" above.
+Gates 1-5: also enforced by `.githooks/pre-commit` as safety net. Bypass: `SKIP_HOOK=1 git commit` (justify in body). Never `--no-verify`.
 
 ---
 
 ## Git / Work trail
 
-When git history is itself a rubric criterion (it usually is), follow these:
-
-- **Semantic-unit commits**: one commit = one semantic unit. Align with [PROCESS.md](docs/PROCESS.md) phases.
-- **No bulk dump**: never lump everything into a single final commit (explicit deduction).
-- **Separate refactor / test commits (bonus)**: keeping `refactor:` / `test:` commits apart from feature commits earns extra credit.
-- **User approval required**: every commit runs only after explicit user approval. AI must NOT auto-execute `git commit`.
-- **Pre-commit hook installed**: After `git init`, the user runs `git config core.hooksPath .githooks` (per README bootstrap). The hook enforces DoD gates 1-5 as a safety net. To bypass (rare; justify in commit body): `SKIP_HOOK=1 git commit ...`. Never use `--no-verify` — this kit's commit-safety protocol forbids it.
-
-  **A commit-approval request always includes:**
-  1. List of files to stage + summary of key changes
-  2. Proposed commit message (full body, including `[§N]`)
-  3. DoD gate results (lint / test / build / no-type-escape / no-debug-log)
-  4. **Doc-sync check** — verify before every commit:
-     - [docs/CHECKLIST.md](docs/CHECKLIST.md): any items completed by this commit still marked [ ]?
-     - [docs/AI_USAGE.md](docs/AI_USAGE.md): is an AI-usage row missing for this work?
-     - [docs/DESIGN.md](docs/DESIGN.md) / [docs/PLAN.md](docs/PLAN.md) / [README.md](README.md): any unreflected design / scope / interface changes?
-     - Offer disposition options when needed: (a) include in this commit / (b) separate docs commit / (c) batch sync later
+- **Semantic-unit commits** — one commit = one unit. Align with [PROCESS.md](docs/PROCESS.md).
+- **No bulk dump** — explicit deduction if everything lands in one commit.
+- **User approval required** — AI must NOT auto-execute `git commit`.
+- **Every commit-approval request includes**: staged files · commit message · DoD gate results · doc-sync check (CHECKLIST / AI_USAGE / DESIGN / PLAN / README).
 
 ---
 
 ## Absolute prohibitions — universal
 
-- **Never run a commit without user approval** (see "Git / Work trail" above)
-- **Never modify [SPEC.md](docs/SPEC.md)** — it is the external contract. Our interpretation goes in PLAN.md / DESIGN.md.
-- **Never modify [AGENTS.md](AGENTS.md) without intent** — it captures environment-level facts.
-- **Never inline domain logic in components / endpoints** — keep domain logic in dedicated modules with isolated tests.
-- **Never mix sources of state** — derived/edit state and authoritative state stay separated; data flow stays unidirectional.
+- Never commit without user approval
+- Never modify [SPEC.md](docs/SPEC.md)
+- Never modify [AGENTS.md](AGENTS.md) without intent
+- Never inline domain logic in components/endpoints
+- Never mix derived/edit state with source-of-truth state
 
 ## Absolute prohibitions — project-specific
 
-<!-- HINT: Add 2-4 prohibitions tied to this assignment's risk areas. Examples:
-- Never directly mutate the TanStack Query cache (FE)
-- Never start a DB transaction outside the service layer (BE)
-- Never bypass authorization without an authenticated user context (BE)
-- Never train on the test split (ML)
--->
-
-_TO FILL — list 2-4 risks specific to this assignment_
+_TO FILL — 2-4 risks specific to this assignment_
 
 ---
 
 ## AI agent procedures
 
-When the user's intent matches one of these triggers, execute the corresponding procedure inline. Report results in the same conversation. Do not wait for a slash command.
+Execute inline when triggered. Read the linked procedure file for full steps.
 
-| Procedure | Triggered when the user says... | What you do |
-|---|---|---|
-| **1. DoD verification** | "ready to commit", "DoD check", "커밋해도 돼" | Run the 8-gate check (lint/test/build + grep type-escapes per stack + grep debug logs + CHECKLIST/AI_USAGE/commit-msg sync + Gate 6b doc drift heuristic). Do not propose a commit until all auto gates pass. |
-| **2. Checklist trace** | "§N coverage", "어디 부족", "rubric trace" | Count commits and CHECKLIST items per §N; flag under-covered categories. |
-| **3. SPEC drift check** | "SPEC updated", "company changed spec" | Map the SPEC change region to impacted PLAN / DESIGN / CHECKLIST sections; never auto-edit, propose changes only. |
-| **4. Pre-submission review** | "리뷰", "final review", "제출 전 점검", "self-eval" | Switch to strict-reviewer mode; output score simulation + weakness analysis + critical fixes + time-boxed patches. Prefer running in a fresh Claude session. |
-| **5. Cadence check** | "어디까지 왔어", "오늘 진행", "cadence", "progress check", "진행 상황" | Run `bash scripts/cadence.sh` (or re-implement inline). Output today's commits, §N distribution, CHECKLIST progress, days to deadline, likely phase. Read-only — no recommendations. |
-| **6. Phase A guided fill** | "fill PLAN", "start Phase A", "Phase A 시작", "PLAN 채우자", "docs/PLAN.md 같이 채우자" | Surface SPEC ambiguities one at a time with 3-option A/B/C tables, force user to pick, append rows to PLAN.md §2. Never decide for the user — Phase A is judgment-heavy. |
-
-The detailed steps for each procedure are below.
-
-### Procedure 1 — DoD verification
-
-**Trigger**: user says "ready to commit", "DoD check", "verify gates", "커밋해도 돼", or any time you are about to request commit approval.
-
-**Steps**:
-
-1. **Detect commands** by inspecting the project root:
-   - `package.json` (Node/JS): read `scripts.lint`, `scripts.test:run` (fallback `scripts.test`), `scripts.build`
-   - `pyproject.toml` / `requirements.txt` (Python): `ruff check .` / `pytest` / `python -m build` (build only if applicable)
-   - `Cargo.toml` (Rust): `cargo clippy --all-targets` / `cargo test` / `cargo build`
-   - `go.mod` (Go): `go vet ./...` / `go test ./...` / `go build ./...`
-   - Otherwise: ask the user once for the commands.
-   - If a script is missing, mark the gate `(skipped: not configured)` and continue.
-
-2. **Run gates 1-5** in order. Stop on the first FAIL and surface the file/line.
-
-   - Gate 1 (Lint), Gate 2 (Test), Gate 3 (Build) — run the inferred commands.
-   - Gate 4 (No type-escape) — language-specific:
-     - TypeScript: `grep -rEn ': any($|[^a-zA-Z])|as any| any\[\]' src/ --include='*.ts' --include='*.tsx' | grep -v '// allow:'`
-     - Python: `grep -rEn 'cast\(|# type: ignore' src/ | grep -v '# allow:'`
-     - Rust: `grep -rEn 'unsafe |#\[allow\(' src/ | grep -v '// allow:'`
-     - Java: `grep -rEn '@SuppressWarnings' src/`
-     - Go: skip (no equivalent broad escape).
-   - Gate 5 (No debug logs): `grep -rn 'console\.log\|print(\|dbg!\|fmt\.Println\|System\.out\.println' src/ | grep -v '// allow:'`
-
-3. **Manual gates 6-8**:
-   - Gate 6: Compare `git diff --name-only HEAD` against `[ ]` items in `docs/CHECKLIST.md`. Suggest which to mark `[x]`.
-   - **Gate 6b — Doc drift check** (interface vs documentation alignment):
-     - From `git diff --name-only HEAD`, identify changed files under `src/` (or stack equivalent: `lib/`, `internal/`, `pkg/`, `app/`).
-     - If no source files changed, skip this gate (docs-only commit).
-     - For each changed source file, scan the diff for interface markers:
-       - Exported function / class / type signatures (added, removed, or signature changed)
-       - New or removed HTTP route paths (`router.get(...)`, `@app.route(...)`, `app.Post(...)`, etc.)
-       - DB schema changes (column add/remove/rename, new tables)
-       - Public API surface changes (CLI flags, config keys, env vars)
-     - For each interface change found, grep:
-       - `docs/DESIGN.md` for the interface name — does an ADR mention it? Is the ADR now inconsistent with the change?
-       - `docs/PLAN.md` §3 for new feature names — is this in `Required` / `Optional` scope, or scope-creep?
-       - `README.md` "How to run" / "Project structure" / "Tech stack" — does any of these become stale?
-     - On mismatch, present options to the user:
-       (a) include the doc fix in this commit
-       (b) make a separate `docs:` commit before this one
-       (c) defer and record in `docs/CHECKLIST.md` "📌 Extra TODO" for batch sync later
-     - This is a heuristic check — false negatives possible (e.g., subtle behavior change without signature change). User judgment is final.
-   - Gate 7: Check `git log -1 --pretty=%at -- docs/AI_USAGE.md` vs `git log -1 --pretty=%at`. If AI_USAGE is older, propose a one-line row.
-   - Gate 8: Validate the proposed commit message against `<type>(<scope>): <subject> [§N]`.
-
-3b. **Optional auto-corrective — `package.json` ↔ README "How to run" drift** (Tier-4 narrow corrective; introduced in v0.8):
-    - Trigger only when: (a) detected stack is `node`, AND (b) staged diff touches the `scripts` block in `package.json`.
-    - For each renamed script entry (e.g. `"dev"` → `"start"`), grep `README.md` "How to run" code fences for the OLD invocation (`npm run dev`, `npm dev`, `yarn dev`, etc.).
-    - If a match is found, propose ONE `sed` patch (do **not** apply it):
-      ```
-      sed -i.bak 's/npm run dev/npm run start/g' README.md && rm README.md.bak
-      ```
-    - **Never auto-apply.** Present the proposed diff and require user approval. Treat as advisory.
-    - **Out of scope** (do NOT attempt these corrections — false-positive risk too high): function renames, DB schema migrations, HTTP route renames, environment variable renames, test file renames.
-
-4. **Output** as a fixed table:
-
-   ```
-   === DoD Check (8 gates) ===
-   Auto gates:
-     1. Lint clean         ✅ PASS / ❌ FAIL (location)
-     2. Tests green        ✅ PASS (N/N)
-     3. Build OK           ✅ PASS
-     4. No type-escape     ✅ PASS / ❌ N matches
-     5. No debug logs      ✅ PASS / ❌ N matches
-   Manual gates:
-     6.  CHECKLIST sync    ⚠ items needing [x]: ...
-     6b. Doc drift         ⚠ DESIGN ADR-002 stale vs new signature / (or ✅ in sync)
-     7.  AI_USAGE sync     ⚠ row missing
-     8.  Commit convention ⚠ proposed: <message>
-   ```
-
-5. **Do not propose a commit** until all auto gates 1-5 pass.
-
-### Procedure 2 — Checklist trace (§N coverage)
-
-**Trigger**: user says "§N coverage", "어디 부족", "rubric trace", "checklist trace", or D-1 polish phase.
-
-**Steps**:
-
-1. Extract per-§N commit counts: `git log --pretty=%s | grep -oE '\[§[0-9-]+(,§[0-9-]+)*\]' | tr -d '[]§' | tr ',' '\n' | sort | uniq -c`
-2. Extract per-§N CHECKLIST item counts: `grep -oE '\[§[0-9-]+\]' docs/CHECKLIST.md | sort | uniq -c`
-3. Cross-reference with the rubric in `docs/SPEC.md` "Rubric (detail)" to get category names + max points.
-4. Output table:
-
-   ```
-   | §N | Category | Points | Commits | Checklist items | Status |
-   |----|----------|--------|---------|-----------------|--------|
-   | §1 | ...      | 20     | 6       | 12              | ✅ healthy |
-   | §5 | Docs     | 10     | 1       | 3               | ⚠ low coverage |
-   ```
-
-5. Flag any §N with 0 commits as a point-leakage risk (unless the category is auto-evaluated like "Git history").
-
-### Procedure 3 — SPEC drift check
-
-**Trigger**: user says "SPEC updated", "company changed spec", or you observe a recent change to `docs/SPEC.md`.
-
-**Steps**:
-
-1. `git log --follow --pretty='%h %s' docs/SPEC.md` — find the most recent change.
-2. Map the changed region to impact zones:
-   - Implementation scope → PLAN §3 + CHECKLIST Phase C
-   - Rubric → PLAN §5 + CHECKLIST `[§N]` tags
-   - API schema → DESIGN ADRs
-   - Constraints → PLAN §3 (out-of-scope) + DESIGN §6 (errors)
-3. For each impacted doc, check `git log -1 --pretty=%at <doc>` vs the SPEC change time.
-4. Report a drift table; never auto-edit other documents — propose changes for user approval.
-
-### Procedure 4 — Pre-submission review (strict reviewer mode)
-
-**Trigger**: user says "리뷰", "final review", "rubric review", "제출 전 점검", "self-eval", or D-0 polish.
-
-**Recommended invocation**: open a **fresh Claude Code session** (so prior conversation context doesn't bias the review). If running in the same session, explicitly clear the working assumption that the project is good.
-
-**Stance for this procedure only**:
-- Empathetic but no breaks. A miss is a miss. Never award points by inference.
-- Cite specifically: `[DESIGN.md ADR-002]` + `[src/lib/billing/calculate.ts:42-58]`. Never "this is nice".
-- No off-rubric points. Pretty UI counts only under the UI/UX category if one exists.
-- No time-pressure leniency.
-
-**Read** all of: `docs/SPEC.md`, `README.md`, `docs/CHECKLIST.md`, `docs/AI_USAGE.md`, `docs/DESIGN.md`, `docs/PLAN.md`, `git log --oneline | head -50`. Optionally `Glob "src/**/*"`, `Glob "**/*.test.*"`.
-
-**Cross-check (v0.8): SPEC origin coverage.** Count `**SPEC origin**:` occurrences in `docs/DESIGN.md` vs `### ADR-` headings. If `ADR_count - origin_count > 0`, flag the gap as a 🔴 critical Documentation-rubric issue in the output.
-
-**Output 4 sections**:
-
-1. **Score-simulation table**: per §N, max / sim score / 1-line rationale, ending with `**Total** | | 100 | **NN/100**`.
-2. **Weakness analysis** (no praise — weaknesses only): for each §N, 1-3 bullets of what's needed to reach max.
-3. **Critical-omission risks**: only items materially affecting the score, split into 🔴 (must fix before submission) and 🟡 (if time permits).
-4. **Next actions** (time-boxed): "1 hour for +N points: ..." and "Additional 2 hours for +M points: ...".
-
-End with: "This is a simulation, not the real evaluation. Real reviewers may weight differently."
-
-### Procedure 5 — Cadence check
-
-**Trigger**: user says "어디까지 왔어", "오늘 진행", "cadence", "progress check", "진행 상황".
-
-**Steps**:
-
-1. Run `bash scripts/cadence.sh`. If the script is missing or exits non-zero, run step 2 inline.
-2. **Inline equivalent** (one-liner each):
-   - Commits today: `git log --since="$(date +%Y-%m-%d) 00:00" --oneline | wc -l`
-   - Commits last 7 days: `git log --since='7 days ago' --oneline | wc -l`
-   - §N distribution: `git log --pretty=%s | grep -oE '\[§[0-9-]+(,§[0-9-]+)*\]' | tr -d '[]§' | tr ',' '\n' | sort | uniq -c`
-   - CHECKLIST open / done: `grep -c '^- \[ \]' docs/CHECKLIST.md` and `grep -c '^- \[x\]' docs/CHECKLIST.md`
-   - Days to deadline: parse `**Deadline**:` line in this file's "Assignment overview", subtract `date +%s` for today, divide by 86400.
-   - Phase guess: `git log --pretty=%s | grep -E '^(feat|fix|refactor|test)' | head -1` — if empty → Phase A, else → Phase C+.
-3. **Output** as an 8-line digest:
-   - Commits today / Commits 7d
-   - §N distribution (rows per §N, sorted desc)
-   - CHECKLIST done / total (percentage)
-   - Days to deadline
-   - Likely current phase
-4. **Do NOT make recommendations**. This procedure is read-only observability. Let the user decide what to do with the numbers.
-
-### Procedure 6 — Phase A guided fill
-
-**Trigger**: user says "fill PLAN", "start Phase A", "Phase A 시작", "PLAN 채우자", "docs/PLAN.md 같이 채우자", "doc alignment", or makes any first attempt to populate `docs/PLAN.md` §2.
-
-**Prerequisites**:
-- `docs/SPEC.md` `<!-- SPEC PASTE START -->` region must contain real content. If still `[[ paste original company spec here ]]`, **halt** and tell the user to paste the SPEC first.
-- `docs/PLAN.md` exists (it does in the template).
-
-**Steps**:
-
-1. **Read `docs/SPEC.md` completely.** Pay attention to:
-   - "Required implementation" / "Optional / Bonus" lists
-   - "Background scenario" / "Usage flow"
-   - "Error codes" / "Error handling"
-   - "Library choice is free" / "free-choice" phrasing
-   - Type definitions / schema fragments
-   - Sample code (and whether samples agree with the spec text)
-
-2. **Identify SPEC ambiguities.** Look for these patterns:
-   - **Boundary cases unaddressed**: empty inputs (0 items, null user), maximum bounds (10000 records? 1MB upload?), time boundaries (midnight, year-end, leap year, timezone), concurrent requests (race conditions).
-   - **Soft-modal language**: "should", "recommended", "preferably", "may", "could" — opens interpretation.
-   - **Sample-vs-spec mismatches**: type definition diverges from example payload; field name differs between sections.
-   - **Missing error semantics**: API mentions error codes but not response shape; UI mentions "show error" but not what kind / how visible.
-   - **Free-choice areas**: "library is free, justify in README" — which decisions need explicit documentation?
-   - **Implicit assumptions**: authentication scope (per-user / per-team / anonymous?), data persistence (in-memory / localStorage / real DB?).
-
-3. **Surface ONE ambiguity at a time** to the user in this format:
-
-   ```
-   SPEC §<section> says: "<ambiguous phrase, verbatim quote>"
-
-   Three reasonable interpretations:
-
-   | Option | Decision | Trade-off |
-   |---|---|---|
-   | A. Strict  | <conservative reading> | <what you give up>          |
-   | B. Lenient | <permissive reading>   | <what risk you take>        |
-   | C. Ask     | <suggested clarification question> | <delay, certainty> |
-
-   Which fits your judgment? (Or propose D with your own framing.)
-   ```
-
-   - **Do NOT pre-pick.** The user must own the judgment.
-   - **Do NOT propose options outside SPEC's stated scope** (no scope-creep proposals).
-
-4. **After user picks** (A / B / C / D), append a row to `docs/PLAN.md` §2 table:
-
-   | SPEC ambiguity | Our decision | Rationale | Confidence | Verified by |
-   |---|---|---|---|---|
-   | "<verbatim quote>" | <chosen option> | <user's reason> | High / Med / Low | Inferred / Asked company / Cross-checked sample |
-
-5. **Move to the next ambiguity.** Typical assignment yields 4-7 ambiguities. Stop after surfacing all of them, or when the user says "enough" / "충분".
-
-6. **Do NOT write code yet.** Phase A is doc-only. Procedure 6 ends when PLAN §2 has all rows filled. The user then proceeds to §3 (scope), §4 (schedule), DESIGN ADRs, etc. — those have their own templates and trigger their own work.
-
-**Anti-patterns** (what to avoid):
-
-- Don't pitch one option as obviously correct. The user's judgment is the point of Phase A.
-- Don't propose options outside SPEC's stated scope ("we could also add feature X" — no, that's scope-creep).
-- Don't decide for the user. Phase A is judgment-heavy; AI's role is **surfacing**, not deciding.
-- Don't bundle ambiguities. One question per round; let the user think.
-- Don't write code. Phase A is doc-only. Procedure 1 (DoD) and the pre-commit hook will block premature implementation anyway.
+| # | Trigger phrases | Action | Steps |
+|---|---|---|---|
+| **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 8-gate DoD check. No commit until gates 1-5 pass. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
+| **2** | "§N coverage" · "어디 부족" · "rubric trace" | Per-§N commit + CHECKLIST count; flag gaps. | → [proc-2-trace.md](docs/procedures/proc-2-trace.md) |
+| **3** | "SPEC updated" · "company changed spec" | Map SPEC change to PLAN/DESIGN/CHECKLIST impact zones. | → [proc-3-spec-drift.md](docs/procedures/proc-3-spec-drift.md) |
+| **4** | "리뷰" · "final review" · "제출 전 점검" · "self-eval" | Strict review: score sim + weakness + critical fixes. Fresh session preferred. | → [proc-4-review.md](docs/procedures/proc-4-review.md) |
+| **5** | "어디까지 왔어" · "cadence" · "progress check" · "진행 상황" | `bash scripts/cadence.sh` digest. Read-only — no recommendations. | → [proc-5-cadence.md](docs/procedures/proc-5-cadence.md) |
+| **6** | "fill PLAN" · "start Phase A" · "Phase A 시작" · "PLAN 채우자" | Surface SPEC ambiguities one-at-a-time; user picks A/B/C; append to PLAN.md §2. | → [proc-6-phase-a.md](docs/procedures/proc-6-phase-a.md) |
+| **7** | "stale docs" · "doc scan" · "가든" · "문서 점검" · Phase D start | Scan docs/ staleness vs recent src/ diff. Report only — no auto-edit. | → [proc-7-gardening.md](docs/procedures/proc-7-gardening.md) |
+| **8** | "코드 리뷰해줘" · "code review" · "리뷰해줘" · "review this code" | Deep code quality review: correctness vs SPEC, architecture, simplicity, duplication, naming, error handling, types, security. No auto-fix — user owns all decisions. | → [proc-8-code-review.md](docs/procedures/proc-8-code-review.md) |

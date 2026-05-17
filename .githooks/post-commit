@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# .githooks/post-commit — exec-plan step sync reminder + tech-debt inline check.
+# Runs after every successful commit. Read-only advisory: prints reminders, never blocks.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+ACTIVE_DIR="docs/exec-plans/active"
+reminded=0
+
+# 1. Exec-plan step sync check
+if [ -d "$ACTIVE_DIR" ]; then
+  for plan in "$ACTIVE_DIR"/*.md; do
+    [ -f "$plan" ] || continue
+    basename_plan=$(basename "$plan")
+    [ "$basename_plan" = "TEMPLATE.md" ] && continue
+
+    # Count open steps in this plan
+    open_steps=$(grep -cE '^- \[ \]' "$plan" 2>/dev/null) || open_steps=0
+    done_steps=$(grep -cE '^- \[x\]' "$plan" 2>/dev/null) || done_steps=0
+
+    if [ "$open_steps" -gt 0 ]; then
+      echo ""
+      echo "📋 Exec-plan reminder: $basename_plan"
+      echo "   $done_steps step(s) done, $open_steps open."
+      echo "   If this commit completed a step, mark it [x] in the plan file."
+      reminded=1
+    elif [ "$done_steps" -gt 0 ] && [ "$open_steps" -eq 0 ]; then
+      echo ""
+      echo "✅ Exec-plan complete: $basename_plan — all steps [x]."
+      echo "   Move to docs/exec-plans/completed/ when ready."
+      reminded=1
+    fi
+  done
+fi
+
+# 2. Inline TODO/FIXME scan in staged src/ files
+changed_src=$(git diff-tree --no-commit-id -r --name-only HEAD 2>/dev/null \
+  | grep -E '^src/' || true)
+
+if [ -n "$changed_src" ]; then
+  todo_hits=$(echo "$changed_src" | xargs grep -n 'TODO\|FIXME\|fix later' 2>/dev/null | head -5 || true)
+  if [ -n "$todo_hits" ]; then
+    echo ""
+    echo "⚠ Untracked shortcuts in committed files:"
+    echo "$todo_hits" | while IFS= read -r line; do
+      echo "   $line"
+    done
+    echo "   Consider adding to docs/exec-plans/tech-debt-tracker.md"
+    reminded=1
+  fi
+fi
+
+# 3. D-2 proximity warning — re-read deadline from CLAUDE.md
+if [ -f CLAUDE.md ]; then
+  deadline=$(grep -oE '\*\*Deadline\*\*: `?<?[0-9]{4}-[0-9]{2}-[0-9]{2}' CLAUDE.md \
+              | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' \
+              | head -1 || true)
+  if [ -n "$deadline" ]; then
+    if deadline_epoch=$(date -j -f "%Y-%m-%d" "$deadline" "+%s" 2>/dev/null); then
+      :
+    elif deadline_epoch=$(date -d "$deadline" "+%s" 2>/dev/null); then
+      :
+    else
+      deadline_epoch=""
+    fi
+    if [ -n "$deadline_epoch" ]; then
+      days_left=$(( (deadline_epoch - $(date +%s)) / 86400 ))
+      if [ "$days_left" -le 2 ]; then
+        echo ""
+        echo "⏰ D-$days_left: Consider running \"가든\" (Procedure 7 doc-gardening scan)."
+        reminded=1
+      fi
+    fi
+  fi
+fi
+
+[ "$reminded" -eq 0 ] || echo ""
+exit 0

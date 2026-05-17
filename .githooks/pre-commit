@@ -17,10 +17,16 @@
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
-# ----- Bypass switch -----
+# ----- Bypass switches -----
 if [ "${SKIP_HOOK:-0}" = "1" ]; then
   echo "[pre-commit] SKIP_HOOK=1 — bypassing all gates (justify in commit body)"
   exit 0
+fi
+# TDD Red phase: skip Gate 2 only (tests expected to fail before implementation).
+# Usage: TDD_RED=1 git commit -m "test: failing test for <feature> [§N]"
+TDD_RED="${TDD_RED:-0}"
+if [ "$TDD_RED" = "1" ]; then
+  echo "[pre-commit] TDD_RED=1 — Gate 2 (tests) will be skipped (Red phase)"
 fi
 
 # ----- Docs-only detection (Phase A escape) -----
@@ -56,7 +62,9 @@ run_gates_123() {
         npm run -s lint || { echo "[gate1] FAIL: lint"; exit 1; }
       else echo "[gate1] (skipped: no lint script)"
       fi
-      if grep -q '"test:run"' package.json; then
+      if [ "$TDD_RED" = "1" ]; then
+        echo "[gate2] (skipped: TDD_RED=1 — Red phase, tests expected to fail)"
+      elif grep -q '"test:run"' package.json; then
         npm run -s test:run || { echo "[gate2] FAIL: tests"; exit 2; }
       elif grep -q '"test"' package.json; then
         npm test --silent || { echo "[gate2] FAIL: tests"; exit 2; }
@@ -72,7 +80,9 @@ run_gates_123() {
         ruff check . || { echo "[gate1] FAIL: ruff"; exit 1; }
       else echo "[gate1] (skipped: ruff not installed)"
       fi
-      if command -v pytest >/dev/null 2>&1; then
+      if [ "$TDD_RED" = "1" ]; then
+        echo "[gate2] (skipped: TDD_RED=1 — Red phase)"
+      elif command -v pytest >/dev/null 2>&1; then
         pytest -q || { echo "[gate2] FAIL: pytest"; exit 2; }
       else echo "[gate2] (skipped: pytest not installed)"
       fi
@@ -83,17 +93,25 @@ run_gates_123() {
       ;;
     rust)
       cargo clippy --all-targets -- -D warnings || { echo "[gate1] FAIL: clippy"; exit 1; }
-      cargo test --quiet                        || { echo "[gate2] FAIL: tests"; exit 2; }
+      if [ "$TDD_RED" = "1" ]; then
+        echo "[gate2] (skipped: TDD_RED=1 — Red phase)"
+      else
+        cargo test --quiet                      || { echo "[gate2] FAIL: tests"; exit 2; }
+      fi
       cargo build                                || { echo "[gate3] FAIL: build"; exit 3; }
       ;;
     go)
       go vet ./...    || { echo "[gate1] FAIL: vet"; exit 1; }
-      go test ./...   || { echo "[gate2] FAIL: tests"; exit 2; }
+      if [ "$TDD_RED" = "1" ]; then echo "[gate2] (skipped: TDD_RED=1 — Red phase)"
+      else go test ./... || { echo "[gate2] FAIL: tests"; exit 2; }
+      fi
       go build ./...  || { echo "[gate3] FAIL: build"; exit 3; }
       ;;
     java)
       if [ -f pom.xml ]; then
-        mvn -q test    || { echo "[gate2] FAIL: tests"; exit 2; }
+        if [ "$TDD_RED" = "1" ]; then echo "[gate2] (skipped: TDD_RED=1 — Red phase)"
+        else mvn -q test || { echo "[gate2] FAIL: tests"; exit 2; }
+        fi
         mvn -q -DskipTests package || { echo "[gate3] FAIL: build"; exit 3; }
       else
         ./gradlew check assemble || { echo "[gate2/3] FAIL: gradle check assemble"; exit 2; }
