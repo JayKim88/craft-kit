@@ -15,7 +15,6 @@
 | Design decisions (ADRs) | [DESIGN.md](docs/DESIGN.md) | Phase A + C |
 | Implementation order / deps | [PROCESS.md](docs/PROCESS.md) | Phase A only |
 | Task list / progress | [CHECKLIST.md](docs/CHECKLIST.md) | Phase C every commit |
-| AI usage history | [AI_USAGE.md](docs/AI_USAGE.md) | Phase C every commit |
 | Reviewer-facing output | [README.md](README.md) | Phase A + D |
 | Kit structure | [OVERVIEW.md](docs/OVERVIEW.md) | Kit releases |
 | Kit design rationale | [HARNESS.md](docs/HARNESS.md) | Kit releases |
@@ -97,8 +96,7 @@ Format: `<type>(<scope>): <subject> [§N]`
 | 5 | No debug logs | grep → 0 |
 | 6 | CHECKLIST `[x]` + exec-plan sync | manual |
 | 6b | No doc drift (DESIGN/PLAN/README) | Procedure 1 Gate 6b |
-| 7 | AI_USAGE.md row added | manual |
-| 8 | Commit message `[§N]` | manual |
+| 7 | Commit message `[§N]` | manual |
 
 Gates 1-5: also enforced by `.githooks/pre-commit` as safety net. Bypass: `SKIP_HOOK=1 git commit` (justify in body). Never `--no-verify`.
 
@@ -109,7 +107,7 @@ Gates 1-5: also enforced by `.githooks/pre-commit` as safety net. Bypass: `SKIP_
 - **Semantic-unit commits** — one commit = one unit. Align with [PROCESS.md](docs/PROCESS.md).
 - **No bulk dump** — explicit deduction if everything lands in one commit.
 - **User approval required** — AI must NOT auto-execute `git commit`.
-- **Every commit-approval request includes**: staged files · commit message · DoD gate results · doc-sync check (CHECKLIST / AI_USAGE / DESIGN / PLAN / README).
+- **Every commit-approval request includes**: staged files · commit message · DoD gate results · doc-sync check (CHECKLIST / DESIGN / PLAN / README).
 
 ---
 
@@ -133,7 +131,7 @@ Execute inline when triggered. Read the linked procedure file for full steps.
 
 | # | Trigger phrases | Action | Steps |
 |---|---|---|---|
-| **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 8-gate DoD check. No commit until gates 1-5 pass. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
+| **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 7-gate DoD check. No commit until gates 1-5 pass. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
 | **2** | "§N coverage" · "어디 부족" · "rubric trace" | Per-§N commit + CHECKLIST count; flag gaps. | → [proc-2-trace.md](docs/procedures/proc-2-trace.md) |
 | **3** | "SPEC updated" · "company changed spec" | Map SPEC change to PLAN/DESIGN/CHECKLIST impact zones. | → [proc-3-spec-drift.md](docs/procedures/proc-3-spec-drift.md) |
 | **4** | "리뷰" · "final review" · "제출 전 점검" · "self-eval" | Strict review: score sim + weakness + critical fixes. Fresh session preferred. | → [proc-4-review.md](docs/procedures/proc-4-review.md) |

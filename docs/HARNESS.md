@@ -163,7 +163,7 @@ The body is ~5 lines, pointing back to CLAUDE.md. Skills do not duplicate proced
 
 ### How it works
 
-Inside Procedure 1 (DoD verification), after gates 6/6b/7/8, a single advisory check:
+Inside Procedure 1 (DoD verification), after gates 6/6b/7, a single advisory check:
 
 ```
 Conditions:
@@ -303,7 +303,7 @@ The deadline is parsed from CLAUDE.md's "Assignment overview" line. macOS BSD `d
 |---|---|---|
 | **Constrain** | Absolute prohibitions (don't modify SPEC, don't commit without approval) | Pre-commit hook enforces gates 1-5 mechanically |
 | **Inform** | CLAUDE.md / AGENTS.md / HINT comments | SPEC origin field (provenance) + `.claude/skills/` (multi-vendor) |
-| **Verify** | 8-gate DoD + Procedures 1 / 2 / 3 (chat-time) | Procedure 5 (cadence sensor) |
+| **Verify** | 7-gate DoD + Procedures 1 / 2 / 3 (chat-time) | Procedure 5 (cadence sensor) |
 | **Correct** | Gate 6b doc-drift heuristic | Procedure 1 step 3b auto-corrective (advisory) |
 | **Human in loop** | User commit approval mandatory | Preserved — auto-corrective is advisory, never applies without consent |
 

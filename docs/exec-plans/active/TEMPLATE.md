@@ -44,7 +44,7 @@
 - [ ] 6. Integration / smoke test
         manual verify or add e2e test if rubric requires
 
-- [ ] 7. Update CHECKLIST.md `[x]` + AI_USAGE.md row
+- [ ] 7. Update CHECKLIST.md `[x]`
         include in final feat: commit or separate `docs:` commit
 
 ---

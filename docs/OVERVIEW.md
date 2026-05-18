@@ -23,8 +23,8 @@ flowchart TB
 
     subgraph BRAIN["🧠 CLAUDE.md — AI rules SSOT router"]
       direction TB
-      DOD["<b>8-gate DoD</b><br/>lint·test·build·no-escape<br/>no-debug·CHECKLIST·AI_USAGE·msg"]
-      PROCS["<b>6 procedures</b> (natural-language triggers)<br/>1 DoD · 2 §N trace · 3 SPEC drift<br/>4 pre-submit review · 5 cadence · 6 Phase-A fill"]
+      DOD["<b>7-gate DoD</b><br/>lint·test·build·no-escape<br/>no-debug·CHECKLIST·msg"]
+      PROCS["<b>8 procedures</b> (natural-language triggers)<br/>1 DoD · 2 §N trace · 3 SPEC drift · 4 review<br/>5 cadence · 6 Phase-A fill · 7 gardening · 8 code-review"]
     end
 
     subgraph DOCS["📚 docs/ — Single Source of Truth"]
@@ -34,7 +34,6 @@ flowchart TB
       DESIGN["<b>DESIGN.md</b> · ADRs + SPEC origin"]
       PROCESS["<b>PROCESS.md</b> · impl order/deps"]
       CHECK["<b>CHECKLIST.md</b> · tasks tagged [§N]"]
-      AIU["<b>AI_USAGE.md</b> · AI collab log"]
       HARN["HARNESS.md · design rationale"]
     end
 
@@ -92,7 +91,7 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-  CLAUDE["<b>CLAUDE.md</b><br/>AI rules · DoD · 6 procedures<br/>(SSOT router)"]
+  CLAUDE["<b>CLAUDE.md</b><br/>AI rules · DoD · 8 procedures<br/>(SSOT router)"]
   README["README.md<br/>reviewer-facing"]
   AGENTS["AGENTS.md<br/>env gotchas"]
   SRC["src/<br/>your code"]
@@ -104,7 +103,6 @@ flowchart LR
     DESIGN["DESIGN.md · ADRs + SPEC origin"]
     PROCESS["PROCESS.md · implementation order"]
     CHECK["CHECKLIST.md · tasks tagged §N"]
-    AIU["AI_USAGE.md · AI collab log"]
     HARN["HARNESS.md · design rationale"]
     OVW["OVERVIEW.md · structure guide"]
   end
@@ -142,7 +140,7 @@ sequenceDiagram
 
   U->>AI: implements feature in src/
   U->>AI: "ready to commit" / "커밋해도 돼"
-  Note over AI: Proc.1 DoD verify<br/>auto 1-5 (lint / test / build / no-escape / no-debug)<br/>manual 6-8 (CHECKLIST · AI_USAGE · msg fmt)<br/>6b doc drift · 3b README ↔ scripts
+  Note over AI: Proc.1 DoD verify<br/>auto 1-5 (lint / test / build / no-escape / no-debug)<br/>manual 6-7 (CHECKLIST · msg fmt)<br/>6b doc drift · 3b README ↔ scripts
   AI-->>U: result table (fix & retry on fail)
   U->>AI: approves commit message
   AI->>Git: git commit
@@ -160,7 +158,7 @@ sequenceDiagram
 ## Reading guide (3 lines)
 
 1. **Top time-axis** = work order — `A doc align → B toolchain → C implement × N → D polish → E submit`.
-2. **CLAUDE.md (center)** = brain — routes natural-language input ("ready to commit", "review", "progress check") into 6 procedures, enforces 8-gate DoD.
+2. **CLAUDE.md (center)** = brain — routes natural-language input ("ready to commit", "review", "progress check") into 8 procedures, enforces 7-gate DoD.
 3. **docs/ (SSOT)** = single info source · **.claude/skills/** = same procedures exposed to multi-vendor agents (Cursor / Codex / Aider) · **.githooks/pre-commit** = git-time safety net for commits that bypass chat.
 
 ---
@@ -192,7 +190,6 @@ takehome-kit/
 │   ├── DESIGN.md          ← §0 Core beliefs + ADRs with SPEC origin field
 │   ├── PROCESS.md         ← Implementation order, dependency graph
 │   ├── CHECKLIST.md       ← Quality grades + tasks tagged [§N], per-phase
-│   ├── AI_USAGE.md        ← AI collaboration log (rubric requirement)
 │   ├── HARNESS.md         ← Design rationale (WHY this kit shape)
 │   ├── OVERVIEW.md        ← This file (WHAT the kit does)
 │   ├── procedures/        ← Procedure details (read on demand — not loaded every turn)
@@ -222,6 +219,6 @@ takehome-kit/
 
 ## See also
 
-- [CLAUDE.md](../CLAUDE.md) — AI rules, DoD definition, 6 procedures (the actual SSOT the AI reads)
+- [CLAUDE.md](../CLAUDE.md) — AI rules, DoD definition, 8 procedures (the actual SSOT the AI reads)
 - [HARNESS.md](HARNESS.md) — *why* the kit is shaped this way (mapped to OpenAI harness engineering principles)
 - [README.md](../README.md) — bootstrap instructions + submission scaffold

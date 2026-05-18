@@ -72,7 +72,6 @@ Enter only after Phase 0~2 are complete. The emergency cut-line priority is the 
 
 - Manual smoke tests (the items in CHECKLIST.md "4. Wrap-up")
 - Fill README "Unimplemented / constraints"
-- Finalize AI_USAGE.md
 - Set repository public + submit
 
 ---
@@ -81,8 +80,8 @@ Enter only after Phase 0~2 are complete. The emergency cut-line priority is the 
 
 ```
 Implement → DoD gates (lint / test / build / no-type-escape / no-debug-log)
-          → CHECKLIST item [x] + AI_USAGE update (when AI used)
+          → CHECKLIST item [x]
           → User approval → commit
 ```
 
-DoD details → [CLAUDE.md](../CLAUDE.md). The AI agent runs the 8-gate procedure automatically when the user signals a commit is imminent (see CLAUDE.md "AI agent procedures § Procedure 1").
+DoD details → [CLAUDE.md](../CLAUDE.md). The AI agent runs the 7-gate procedure automatically when the user signals a commit is imminent (see CLAUDE.md "AI agent procedures § Procedure 1").

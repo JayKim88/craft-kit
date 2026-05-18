@@ -112,9 +112,9 @@ flowchart TD
         AG["1. Lint · 2. Tests · 3. Build · 4. No type · 5. No debug"]
     end
 
-    subgraph mg["Manual Gates 6-8"]
+    subgraph mg["Manual Gates 6-7"]
         direction LR
-        MG["6. CHECKLIST sync · 6b. Doc drift\n7. AI_USAGE row · 8. Commit message §N"]
+        MG["6. CHECKLIST sync · 6b. Doc drift\n7. Commit message §N"]
     end
 
     Fix["🤖 수정 제안\n👤 수정 후 재시도"]
@@ -195,7 +195,7 @@ flowchart TD
 
 | 상황 | 발화 | 실행되는 것 |
 |---|---|---|
-| 커밋하고 싶다 | `"커밋해도 돼"` | Procedure 1 DoD (self-review + 8 gates) |
+| 커밋하고 싶다 | `"커밋해도 돼"` | Procedure 1 DoD (self-review + 7 gates) |
 | 지금 진행 상황 | `"어디까지 왔어"` | Procedure 5 cadence.sh |
 | 약한 §N 찾기 | `"어디 부족"` | Procedure 2 §N trace |
 | 코드 품질 점검 | `"코드 리뷰해줘"` | Procedure 8 deep code review |

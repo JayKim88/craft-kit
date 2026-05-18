@@ -95,13 +95,12 @@ Stop on first FAIL and surface the file/line.
   - Go: skip
 - **Gate 5** No debug logs: `grep -rn 'console\.log\|print(\|dbg!\|fmt\.Println\|System\.out\.println' src/ | grep -v '// allow:'`
 
-### 3. Manual gates 6-8
+### 3. Manual gates 6-7
 
 - **Gate 6** CHECKLIST sync: compare `git diff --name-only HEAD` against `[ ]` items. Suggest `[x]`.
   - **Exec-plan sync**: if active exec-plan exists, check step correspondence. All `[x]` → suggest move to `completed/`.
 - **Gate 6b** Doc drift: scan diff for interface markers → grep DESIGN/PLAN/README. On mismatch offer (a)/(b)/(c).
-- **Gate 7** AI_USAGE sync: check timestamp vs latest commit. Propose row if stale.
-- **Gate 8** Commit message: validate `<type>(<scope>): <subject> [§N]`.
+- **Gate 7** Commit message: validate `<type>(<scope>): <subject> [§N]`.
 
 ### 3b. Optional auto-corrective (Node only)
 
@@ -122,8 +121,7 @@ Auto gates:
 Manual gates:
   6.  CHECKLIST sync    ⚠ items needing [x]: ...
   6b. Doc drift         ⚠ DESIGN ADR-002 stale / ✅ in sync
-  7.  AI_USAGE sync     ⚠ row missing
-  8.  Commit convention ⚠ proposed: <message>
+  7.  Commit convention ⚠ proposed: <message>
 ```
 
 ### 5. Gate rule

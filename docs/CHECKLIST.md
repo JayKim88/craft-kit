@@ -150,8 +150,7 @@
 - [ ] README "Requirements interpretation & assumptions"
 - [ ] README "Design decisions & rationale" — covers every Documentation rubric item
 - [ ] README "Unimplemented / constraints"
-- [ ] README "AI usage scope" — links to AI_USAGE.md
-- [ ] Finalize AI_USAGE.md
+- [ ] README "AI usage scope" — fill summary in README.md
 
 ### Submission
 

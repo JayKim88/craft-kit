@@ -127,7 +127,7 @@ Mapping where each rubric score gets earned.
      | §2 Design & code structure (25)    | DESIGN ADRs + actual code |
      | §3 Stability & exceptions (20)     | DESIGN error patterns / CHECKLIST stability / DoD gates |
      | §4 UI/UX (15)                      | DESIGN UX pattern + CHECKLIST readability |
-     | §5 Documentation (10)              | SPEC + PLAN + DESIGN + PROCESS + CLAUDE + AI_USAGE + README |
+     | §5 Documentation (10)              | SPEC + PLAN + DESIGN + PROCESS + CLAUDE + README |
      | §6 Git history (10)                | CLAUDE.md git policy + per-Phase commits + separate refactor/test commits |
 -->
 
@@ -157,7 +157,6 @@ Mapping where each rubric score gets earned.
 - Repository (public, with full commit history)
 - README.md — covers every section in SPEC's README template + Documentation rubric items
 - Every required implementation works (manual smoke passes)
-- AI_USAGE.md finalized
 - Honest "Unimplemented / constraints" section
 
 → The single source of truth for tracking is [CHECKLIST.md "4. Wrap-up"](CHECKLIST.md).

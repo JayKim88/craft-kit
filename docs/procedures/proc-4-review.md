@@ -18,7 +18,7 @@
 
 ### Read
 
-All of: `docs/SPEC.md`, `README.md`, `docs/CHECKLIST.md`, `docs/AI_USAGE.md`, `docs/DESIGN.md`, `docs/PLAN.md`, `git log --oneline | head -50`. Optionally `Glob "src/**/*"`, `Glob "**/*.test.*"`.
+All of: `docs/SPEC.md`, `README.md`, `docs/CHECKLIST.md`, `docs/DESIGN.md`, `docs/PLAN.md`, `git log --oneline | head -50`. Optionally `Glob "src/**/*"`, `Glob "**/*.test.*"`.
 
 ### Cross-check: SPEC origin coverage (v0.8)
 
