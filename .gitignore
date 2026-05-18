@@ -37,18 +37,6 @@ dist/
 # Per-session wrap-up logs (kit dev only — do not ship to user clones)
 wrap-up/
 
-# Local tooling — not part of submission
-.claude/
-.githooks/
-scripts/
-docs/procedures/
-docs/exec-plans/
-docs/HARNESS.md
-docs/OVERVIEW.md
-docs/GUIDE.md
-CLAUDE.md
-AGENTS.md
-
 # Per language/framework — uncomment or extend the lines you need:
 # Next.js:    .next/
 # Python:     .pytest_cache/, .venv/, *.egg-info/
