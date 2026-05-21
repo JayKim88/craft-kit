@@ -277,7 +277,7 @@ The deadline is parsed from CLAUDE.md's "Assignment overview" line. macOS BSD `d
 |---|---|---|
 | Verification | None — procedures lived only in chat | Hook runs regardless of how commit was triggered |
 
-### Scenario C: Company updates SPEC mid-assignment
+### Scenario C: Company updates SPEC mid-project
 
 | Stage | v0.7 | v0.8 |
 |---|---|---|
@@ -361,7 +361,7 @@ Five new components derived from OpenAI's harness engineering article.
 | Broader auto-correctives (function renames, schema migrations) | False-positive risk > value |
 | Skill marketplace external dependencies | Community-dependent, breaks the kit's single-source self-containment |
 
-### Out of scope for 3–7 day assignments (from OpenAI article)
+### Out of scope for 3–7 day projects (from OpenAI article)
 
 These patterns exist in production-scale harness engineering but are explicitly rejected because the 5-day timeline can't absorb the infrastructure cost:
 

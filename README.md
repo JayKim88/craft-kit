@@ -1,31 +1,41 @@
 <details>
 <summary><b>About craft-kit</b> — remove this entire block (including the <code>&lt;details&gt;</code> and <code>&lt;/details&gt;</code> tags) once you start filling the submission skeleton below</summary>
 
-This repository is a clone-and-edit template for short-scope engineering projects. It ships a 6-document SSOT workflow (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / README), a 7-gate Definition of Done in `CLAUDE.md`, `[§N]` rubric tagging, **eight AI agent procedures** (DoD verify, §N trace, SPEC drift, strict pre-submission review, cadence check, Phase A guided fill, doc-gardening, deep code review), and a **stack-aware pre-commit safety net** installed via `git config core.hooksPath`.
+A structured kit for shipping quality code under deadline pressure. Clone → fill in your spec → the kit handles workflow, DoD enforcement, and AI procedures automatically.
 
-**Bootstrap a new assignment:**
+- **6-document SSOT** — SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / README, each with a clear owner and update cadence
+- **7-gate Definition of Done** — enforced in `CLAUDE.md` and re-enforced by the pre-commit hook
+- **8 AI agent procedures** — triggered by natural language ("ready to commit", "리뷰해줘", "어디까지 왔어")
+- **Stack-aware pre-commit safety net** — auto-detects Node / Python / Rust / Go / Java via `git config core.hooksPath`
+
+> For a full mental model — phase timeline, file ownership, per-commit flow — see **[docs/OVERVIEW.md](docs/OVERVIEW.md)**.
+
+**Bootstrap a new project:**
 
 ```bash
-git clone https://github.com/JayKim88/craft-kit my-task
-cd my-task
+git clone https://github.com/JayKim88/craft-kit my-project
+cd my-project
 rm -rf .git
 git init
-git config core.hooksPath .githooks    # v0.8: enable DoD pre-commit hook
+git config core.hooksPath .githooks    # enable DoD pre-commit hook
 git add . && git commit -m "chore: bootstrap from craft-kit"
 ```
 
 After cloning:
-1. Edit headers in this `README.md`, [`CLAUDE.md`](CLAUDE.md), [`AGENTS.md`](AGENTS.md), and [`docs/PLAN.md`](docs/PLAN.md). Look for `<...>` brackets and `_TO FILL_` markers.
+1. Edit headers in `README.md`, [`CLAUDE.md`](CLAUDE.md), [`AGENTS.md`](AGENTS.md), and [`docs/PLAN.md`](docs/PLAN.md). Look for `<...>` brackets and `_TO FILL_` markers.
 2. Paste the company spec into [`docs/SPEC.md`](docs/SPEC.md) (then never edit it).
-3. Transcribe the rubric into `docs/SPEC.md` "Rubric (detail)" (6 placeholder categories — adjust to match the company's spec).
-4. Follow the **5-phase workflow** documented at the top of `CLAUDE.md` ("Workflow phases (D-N to D-0)"). The AI agent will auto-trigger eight procedures — DoD verification, §N coverage trace, SPEC drift check, strict pre-submission review, cadence check, Phase A guided fill, doc-gardening, and deep code review — based on natural-language cues described in `CLAUDE.md` "AI agent procedures".
-5. The pre-commit hook (`.githooks/pre-commit`) is now active. Lint / test / build / type-escape / debug-log checks run before each commit. Auto-skips on Phase A docs-only commits. Emergency bypass: `SKIP_HOOK=1 git commit ...` (justify in body). **Never** use `--no-verify`.
+3. Transcribe the rubric into `docs/SPEC.md` "Rubric (detail)".
+4. Follow the **5-phase workflow** in `CLAUDE.md` ("Workflow phases (D-N to D-0)"):
+   - Phase A: doc alignment (PLAN / DESIGN / PROCESS / CHECKLIST)
+   - Phase B: toolchain lock (lint / test / build scripts)
+   - Phase C: implementation — `code → DoD → user approval → commit` × N
+   - Phase D: polish — §N trace, sweep `_TO FILL_`
+   - Phase E: submit — fresh-session strict review, go public
+5. The pre-commit hook (`.githooks/pre-commit`) runs gates 1-5 automatically. Emergency bypass: `SKIP_HOOK=1 git commit ...`. **Never** `--no-verify`.
 
-Universal best practices in `CLAUDE.md` stay; project-specific zones marked `<!-- HINT -->` are yours to fill.
+Project-specific zones are marked `<!-- HINT -->` — yours to fill. Universal rules in `CLAUDE.md` stay as-is.
 
 **Forking:** edit `LICENSE` (copyright line) and the `git clone` URL above to point to your fork.
-
-**How it works:** [docs/OVERVIEW.md](docs/OVERVIEW.md) — unified diagram + 3-view breakdown (timeline / file map / per-commit flow).
 
 **Design rationale:** [docs/HARNESS.md](docs/HARNESS.md) — why this kit is shaped the way it is, mapped to OpenAI's harness engineering principles.
 
@@ -33,7 +43,7 @@ Universal best practices in `CLAUDE.md` stay; project-specific zones marked `<!-
 
 # `<Product Name>`
 
-> Submission for the `<Company>` `<Role>` assignment.
+> Submission for the `<Company>` `<Role>` project.
 
 <!-- HINT [One-line summary, write in Phase A]: user value + core challenge in one line.
      Example: "An SPA where students visually edit and save their weekly study schedule. Core: time-conflict detection + edit/save state separation." -->
@@ -116,16 +126,16 @@ _TO FILL — complete at end of Phase A._
      | 3. Integration | ... | N |
 -->
 
-### Mock-API setup (FE assignment only)
+### Mock-API setup (FE project only)
 
-<!-- HINT [FE only, Phase B-C]: Delete this section for BE assignments.
+<!-- HINT [FE only, Phase B-C]: Delete this section for BE projects.
      FE: state how you mocked (MSW / json-server / static JSON) + operational considerations (e.g. SW detach fallback). -->
 
 _TO FILL or DELETE if BE_
 
 ### Dev-scenario URL flags (FE only — delete for BE / ML / Mobile)
 
-<!-- HINT [FE only]: Provide URL flags so reviewers can reproduce error/edge cases easily. Delete this entire subsection if not applicable to your assignment.
+<!-- HINT [FE only]: Provide URL flags so reviewers can reproduce error/edge cases easily. Delete this entire subsection if not applicable to your project.
      Examples:
      - `?_seed=empty` — empty initial state
      - `?_seed=stress` — N+ items stress test

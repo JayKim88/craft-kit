@@ -12,7 +12,7 @@
 > Source: OpenAI harness engineering discipline — adapted for short-scope engineering projects.
 
 <!-- HINT: These defaults are intentionally generic. Override any line that conflicts with your
-     assignment's specific constraints (e.g. "framework is mandated by SPEC" overrides belief 1). -->
+     project's specific constraints (e.g. "framework is mandated by SPEC" overrides belief 1). -->
 
 1. **Agent legibility over human elegance** — prefer technologies with stable APIs, wide training-set
    coverage, and predictable behavior. The agent's ability to reason about a dependency matters more
@@ -191,9 +191,9 @@ For each key decision, follow the 5-step format: **context → options → decis
 
 ---
 
-## 7. UI/UX references (FE assignment only)
+## 7. UI/UX references (FE project only)
 
-<!-- HINT: Delete this section for BE/ML assignments.
+<!-- HINT: Delete this section for BE/ML projects.
      For FE: explicitly declare reference services per area — sends a "deliberate UX choice" signal to the reviewer.
      Principle: visual inspiration only; implementation follows SPEC. -->
 

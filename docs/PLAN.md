@@ -65,7 +65,7 @@
 
 **Principle**: implementing all is the **default plan**. The priority above only triggers in "the required scope is at risk" emergencies as a cut line.
 
-### Out of scope (not in this assignment)
+### Out of scope (not in this project)
 
 <!-- HINT: explicitly excluded by SPEC + things we explicitly drop. -->
 

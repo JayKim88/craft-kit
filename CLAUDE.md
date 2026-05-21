@@ -45,7 +45,7 @@ Phase A/B/C/D/E = workflow. PROCESS Phase 0-4 = implementation steps inside Phas
 
 - **Deadline**: `<YYYY-MM-DD HH:MM>`
 - **Type**: `<FE | BE | FS | ML | Mobile | Other>` — `<one-line product name>`
-- **Core challenge**: `<one-line of what this assignment is really testing>`
+- **Core challenge**: `<one-line of what this project is really testing>`
 
 ---
 
@@ -88,7 +88,7 @@ Phase A/B/C/D/E = workflow. PROCESS Phase 0-4 = implementation steps inside Phas
 
 ## Coding rules — project-specific
 
-_TO FILL — 3-5 rules specific to this assignment's domain_
+_TO FILL — 3-5 rules specific to this project's domain_
 
 ---
 
@@ -139,7 +139,7 @@ Gates 1-5: also enforced by `.githooks/pre-commit` as safety net. Bypass: `SKIP_
 
 ## Absolute prohibitions — project-specific
 
-_TO FILL — 2-4 risks specific to this assignment_
+_TO FILL — 2-4 risks specific to this project_
 
 ---
 
