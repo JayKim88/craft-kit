@@ -1,4 +1,4 @@
-# Overview — How takehome-kit Works at a Glance
+# Overview — How craft-kit Works at a Glance
 
 > Single-view structure + flow + enforcement. This is the **WHAT** — for the **WHY**, see [HARNESS.md](HARNESS.md).
 > Audience: someone who just cloned the kit and wants the full mental model in one page.
@@ -179,7 +179,7 @@ sequenceDiagram
 ## File map (flat view)
 
 ```
-takehome-kit/
+craft-kit/
 ├── CLAUDE.md              ← AI rules index ~140 lines (routing + rules + procedure trigger table)
 ├── README.md              ← Dual identity: kit-readme → submission-readme
 ├── AGENTS.md              ← Environment-specific gotchas

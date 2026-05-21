@@ -1,17 +1,17 @@
 <details>
-<summary><b>About takehome-kit</b> — remove this entire block (including the <code>&lt;details&gt;</code> and <code>&lt;/details&gt;</code> tags) once you start filling the submission skeleton below</summary>
+<summary><b>About craft-kit</b> — remove this entire block (including the <code>&lt;details&gt;</code> and <code>&lt;/details&gt;</code> tags) once you start filling the submission skeleton below</summary>
 
 This repository is a clone-and-edit template for corporate take-home assignments. It ships a 6-document SSOT workflow (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / README), a 7-gate Definition of Done in `CLAUDE.md`, `[§N]` rubric tagging, **eight AI agent procedures** (DoD verify, §N trace, SPEC drift, strict pre-submission review, cadence check, Phase A guided fill, doc-gardening, deep code review), and a **stack-aware pre-commit safety net** installed via `git config core.hooksPath`.
 
 **Bootstrap a new assignment:**
 
 ```bash
-git clone https://github.com/JayKim88/takehome-kit my-task
+git clone https://github.com/JayKim88/craft-kit my-task
 cd my-task
 rm -rf .git
 git init
 git config core.hooksPath .githooks    # v0.8: enable DoD pre-commit hook
-git add . && git commit -m "chore: bootstrap from takehome-kit"
+git add . && git commit -m "chore: bootstrap from craft-kit"
 ```
 
 After cloning:

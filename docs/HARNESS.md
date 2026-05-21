@@ -1,4 +1,4 @@
-# Harness Engineering — Design of takehome-kit
+# Harness Engineering — Design of craft-kit
 
 > Why this kit is shaped the way it is, mapped to OpenAI's *harness engineering* discipline.
 > Reference: [OpenAI — Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/).
@@ -24,7 +24,7 @@ In OpenAI's framing, **Agent = Model + Harness**. The harness is everything arou
 | 4 | **Correct** | Detect violations and trigger a response |
 | 5 | **Human in loop** | Keep humans at high-stakes decision points |
 
-takehome-kit v0.7 already implemented ~70% of this implicitly. v0.8 closes the remaining gaps with five concrete additions.
+craft-kit v0.7 already implemented ~70% of this implicitly. v0.8 closes the remaining gaps with five concrete additions.
 
 ---
 
