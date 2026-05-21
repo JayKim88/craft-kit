@@ -67,6 +67,24 @@ Phase A/B/C/D/E = workflow. PROCESS Phase 0-4 = implementation steps inside Phas
 - **Unidirectional data flow** — each piece of state has one owner; derived ≠ source-of-truth
 - **Check `[§N]` in [CHECKLIST.md](docs/CHECKLIST.md)** for every item you implement
 - **TDD for complex features** — when an exec-plan is created, domain logic steps follow Red → Green → Refactor. Simple CRUD / UI wiring steps skip TDD. Red commit uses `TDD_RED=1 git commit` (Gate 2 bypass).
+- **Named condition variables** — conditions with 2+ expressions must be extracted to a named `const` before the `if`. Never put compound boolean expressions directly inside `if(...)`.
+- **Extract shared logic** — functions or components used in 2+ locations go to `src/lib/` (utilities) or `src/components/` (shared UI). No copy-paste across files.
+- **One-liner arrow functions: no braces** — `const f = () => value` not `const f = () => { return value }`.
+- **Render & performance hygiene** — avoid inline object/array literals in JSX props; apply `useMemo`/`useCallback`/`React.memo` when re-render cost is real. Justify every optimization with a clear reason.
+- **Accessibility** — use semantic HTML (`<button>`, `<nav>`, `<main>`, etc.), `aria-*` for custom interactive elements, keyboard navigation support. No bare `<div onClick>`.
+- **Early return / guard clause** — validate at the top; happy path flows down. `if (!isValid) return` not `if (isValid) { ... }`. Nesting depth ≤ 2.
+- **Magic values → named constants** — no meaningful literals inline. `const MAX_OPTIONS = 4` not `if (answers.length === 4)`. Applies to numbers and string keys alike.
+- **Positive boolean naming** — `isLoaded`, `hasError`, `canSubmit`. Never `notLoading`, `noError`, `cantSubmit`.
+- **No silent catch** — `catch (e) {}` is forbidden. Rethrow, log, or handle explicitly. If silence is intentional, add a one-line comment explaining why.
+- **`const` by default** — use `let` only when reassignment is provably necessary. `let` is a signal that the value changes.
+- **Boolean trap prevention** — avoid positional boolean args: `fn(true, false)` → `fn({ strict: true, async: false })`. Use options objects or named constants.
+- **Import group ordering** — external libs → internal modules (`@/`) → relative paths (`./`). Blank line between groups.
+- **File-internal declaration order** — imports → types/interfaces → module-level constants → helper functions → main export (component / function / class).
+- **File naming convention** — `kebab-case.ts` for utilities/lib; `PascalCase.tsx` for React components.
+- **No type/interface prefix** — `User` not `IUser`; `Result` not `TResult`. Prefixes are noise in TypeScript.
+- **Constant naming by scope** — module-level (shared) constants: `SCREAMING_SNAKE_CASE`. Function-local constants: `camelCase`.
+- **Colocation** — types and helpers used only in one module stay in that module file. Extract only when shared across 2+ modules.
+- **Barrel export discipline** — `index.ts` only when the directory has a stable public API surface. Never auto-generate barrels; circular dependency risk.
 
 ## Coding rules — project-specific
 
