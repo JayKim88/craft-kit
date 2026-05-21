@@ -370,7 +370,7 @@ These patterns exist in production-scale harness engineering but are explicitly 
 | Chrome DevTools Protocol wiring | Requires app to be bootable per-worktree + local browser automation setup |
 | Local observability stack (Loki/Victoria) | Ephemeral per-worktree observability is a multi-day infrastructure investment |
 | Layered domain architecture enforcement via custom linters | Too project-specific; the kit is stack-neutral |
-| Background recurring garbage-collection agents | Requires persistent agent runtime; take-home sessions are ephemeral |
+| Background recurring garbage-collection agents | Requires persistent agent runtime; project sessions are ephemeral |
 | Multi-agent PR review (full Ralph Wiggum loop) | Assumes PR queue, CI triggers, and agent orchestration infrastructure |
 | MCP server integration | Assumes user infrastructure; violates tech-neutrality |
 | Multi-agent orchestration (Vera/Axel/etc. style) | 5-day projects don't warrant agent-team overhead |

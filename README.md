@@ -1,7 +1,7 @@
 <details>
 <summary><b>About craft-kit</b> — remove this entire block (including the <code>&lt;details&gt;</code> and <code>&lt;/details&gt;</code> tags) once you start filling the submission skeleton below</summary>
 
-This repository is a clone-and-edit template for corporate take-home assignments. It ships a 6-document SSOT workflow (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / README), a 7-gate Definition of Done in `CLAUDE.md`, `[§N]` rubric tagging, **eight AI agent procedures** (DoD verify, §N trace, SPEC drift, strict pre-submission review, cadence check, Phase A guided fill, doc-gardening, deep code review), and a **stack-aware pre-commit safety net** installed via `git config core.hooksPath`.
+This repository is a clone-and-edit template for short-scope engineering projects. It ships a 6-document SSOT workflow (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / README), a 7-gate Definition of Done in `CLAUDE.md`, `[§N]` rubric tagging, **eight AI agent procedures** (DoD verify, §N trace, SPEC drift, strict pre-submission review, cadence check, Phase A guided fill, doc-gardening, deep code review), and a **stack-aware pre-commit safety net** installed via `git config core.hooksPath`.
 
 **Bootstrap a new assignment:**
 
@@ -33,7 +33,7 @@ Universal best practices in `CLAUDE.md` stay; project-specific zones marked `<!-
 
 # `<Product Name>`
 
-> Submission for the `<Company>` `<Role>` take-home assignment.
+> Submission for the `<Company>` `<Role>` assignment.
 
 <!-- HINT [One-line summary, write in Phase A]: user value + core challenge in one line.
      Example: "An SPA where students visually edit and save their weekly study schedule. Core: time-conflict detection + edit/save state separation." -->

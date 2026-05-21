@@ -9,7 +9,7 @@
 
 > Permanent operating principles. Apply to every ADR below.
 > Violating one requires explicit justification in the ADR's **Trade-off** field.
-> Source: OpenAI harness engineering discipline — adapted for take-home assignments.
+> Source: OpenAI harness engineering discipline — adapted for short-scope engineering projects.
 
 <!-- HINT: These defaults are intentionally generic. Override any line that conflicts with your
      assignment's specific constraints (e.g. "framework is mandated by SPEC" overrides belief 1). -->
