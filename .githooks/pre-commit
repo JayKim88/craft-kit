@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# .githooks/pre-commit — DoD safety net (gates 1-5) for take-home assignment commits.
+# .githooks/pre-commit — DoD safety net (gates 1-5) for project commits.
 #
 # Activated via: git config core.hooksPath .githooks  (run once after `git init`).
 # Bypass:        SKIP_HOOK=1 git commit ...           (use sparingly, justify in commit body).

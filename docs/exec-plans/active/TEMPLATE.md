@@ -42,7 +42,7 @@
         `feat(<scope>): wire <feature> endpoint/component [§N]`
 
 - [ ] 6. Integration / smoke test
-        manual verify or add e2e test if rubric requires
+        manual verify or add e2e test if criteria requires
 
 - [ ] 7. Update CHECKLIST.md `[x]`
         include in final feat: commit or separate `docs:` commit

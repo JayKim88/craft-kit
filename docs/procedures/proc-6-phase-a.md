@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-- `docs/SPEC.md` `<!-- SPEC PASTE START -->` region must contain real content. If still `[[ paste original company spec here ]]`, **halt** — tell user to paste SPEC first.
+- `docs/SPEC.md` `<!-- SPEC PASTE START -->` region must contain real content. If still `[[ paste original project spec here ]]`, **halt** — tell user to paste SPEC first.
 - `docs/PLAN.md` exists.
 
 ---

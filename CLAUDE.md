@@ -1,7 +1,7 @@
 # AI Collaboration Context
 
 > Universal rules · DoD · prohibitions. Everything else lives in a pointed-to document.
-> <!-- HINT: Replace header → `# {Company} {Role} — {Product} / AI Collaboration Context` -->
+> <!-- HINT: Replace header → `# {Client} {Project} — {Product} / AI Collaboration Context` -->
 
 ---
 
@@ -9,13 +9,13 @@
 
 | What you're looking for | Where it lives | Updated when |
 |---|---|---|
-| External spec (immutable) | [SPEC.md](docs/SPEC.md) | 🔒 never |
-| **Rubric** | **[SPEC.md §"Rubric (detail)"](docs/SPEC.md) + `[§N]` in [CHECKLIST.md](docs/CHECKLIST.md)** | 🔒 never |
+| Project spec (immutable) | [SPEC.md](docs/SPEC.md) | 🔒 never |
+| **Requirements** | **[SPEC.md §"Requirements (detail)"](docs/SPEC.md) + `[§N]` in [CHECKLIST.md](docs/CHECKLIST.md)** | 🔒 never |
 | Planning · scope · schedule · §N map | [PLAN.md](docs/PLAN.md) | Phase A only |
 | Design decisions (ADRs) | [DESIGN.md](docs/DESIGN.md) | Phase A + C |
 | Implementation order / deps | [PROCESS.md](docs/PROCESS.md) | Phase A only |
 | Task list / progress | [CHECKLIST.md](docs/CHECKLIST.md) | Phase C every commit |
-| Reviewer-facing output | [README.md](README.md) | Phase A + D |
+| External-facing output | [README.md](README.md) | Phase A + D |
 | Kit structure | [OVERVIEW.md](docs/OVERVIEW.md) | Kit releases |
 | Kit design rationale | [HARNESS.md](docs/HARNESS.md) | Kit releases |
 | Active feature plans | [exec-plans/active/](docs/exec-plans/active/) | Phase C per feature |
@@ -29,19 +29,19 @@
 
 | Phase | When | Action |
 |---|---|---|
-| **A. Doc alignment** | D-N ~5h | Paste SPEC · Procedure 6 guided fill · fill PLAN/DESIGN/PROCESS/CHECKLIST |
+| **A. Doc alignment** | D-N ~5h | Paste spec · Procedure 6 guided fill · fill PLAN/DESIGN/PROCESS/CHECKLIST |
 | **B. Toolchain lock** | D-N+1 ~30m | Pin runtime · add lint/test/build scripts · verify hook + cadence.sh |
 | **C. Implementation** | D-N+1~D-1 ×30-60 | code → Procedure 1 DoD → user approval → `git commit [§N]` |
 | **D. Polish** | D-1 ~3h | Procedure 2 §N trace · sweep `_TO FILL_` · Procedure 7 doc-gardening |
-| **E. Submit** | D-0 ~2h | Fresh session → Procedure 4 strict review · 30-min fixes · go public |
+| **E. Ship** | D-0 ~2h | Fresh session → Procedure 4 strict review · fixes · ship / hand off |
 
 Phase A/B/C/D/E = workflow. PROCESS Phase 0-4 = implementation steps inside Phase C. See [PROCESS.md](docs/PROCESS.md).
 
 ---
 
-## Assignment overview
+## Project overview
 
-<!-- HINT [Phase A]: Fill once SPEC is read. 3 lines max. -->
+<!-- HINT [Phase A]: Fill once spec is read. 3 lines max. -->
 
 - **Deadline**: `<YYYY-MM-DD HH:MM>`
 - **Type**: `<FE | BE | FS | ML | Mobile | Other>` — `<one-line product name>`
@@ -99,7 +99,7 @@ Format: `<type>(<scope>): <subject> [§N]`
 - **type**: `feat | fix | refactor | test | chore | docs | style | perf`
 - **scope**: 5-10 project tokens locked at Phase A start
 - **subject**: English, imperative, ≤ 50 chars
-- **`[§N]`**: rubric number. Multiple → `[§2,§3]`. Infra/tooling → `[§-]`
+- **`[§N]`**: criterion number. Multiple → `[§2,§3]`. Infra/tooling → `[§-]`
 
 ---
 
@@ -123,7 +123,7 @@ Gates 1-5: also enforced by `.githooks/pre-commit` as safety net. Bypass: `SKIP_
 ## Git / Work trail
 
 - **Semantic-unit commits** — one commit = one unit. Align with [PROCESS.md](docs/PROCESS.md).
-- **No bulk dump** — explicit deduction if everything lands in one commit.
+- **No bulk dump** — a quality concern if everything lands in one commit.
 - **User approval required** — AI must NOT auto-execute `git commit`.
 - **Every commit-approval request includes**: staged files · commit message · DoD gate results · doc-sync check (CHECKLIST / DESIGN / PLAN / README).
 
@@ -150,9 +150,9 @@ Execute inline when triggered. Read the linked procedure file for full steps.
 | # | Trigger phrases | Action | Steps |
 |---|---|---|---|
 | **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 7-gate DoD check. No commit until gates 1-5 pass. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
-| **2** | "§N coverage" · "어디 부족" · "rubric trace" | Per-§N commit + CHECKLIST count; flag gaps. | → [proc-2-trace.md](docs/procedures/proc-2-trace.md) |
-| **3** | "SPEC updated" · "company changed spec" | Map SPEC change to PLAN/DESIGN/CHECKLIST impact zones. | → [proc-3-spec-drift.md](docs/procedures/proc-3-spec-drift.md) |
-| **4** | "리뷰" · "final review" · "제출 전 점검" · "self-eval" | Strict review: score sim + weakness + critical fixes. Fresh session preferred. | → [proc-4-review.md](docs/procedures/proc-4-review.md) |
+| **2** | "§N coverage" · "어디 부족" · "criteria trace" | Per-§N commit + CHECKLIST count; flag gaps. | → [proc-2-trace.md](docs/procedures/proc-2-trace.md) |
+| **3** | "SPEC updated" · "requirements changed" | Map SPEC change to PLAN/DESIGN/CHECKLIST impact zones. | → [proc-3-spec-drift.md](docs/procedures/proc-3-spec-drift.md) |
+| **4** | "리뷰" · "final review" · "완료 전 점검" · "self-eval" | Strict review: coverage check (+ score sim if SPEC defines scoring) + gaps + critical fixes. Fresh session preferred. | → [proc-4-review.md](docs/procedures/proc-4-review.md) |
 | **5** | "어디까지 왔어" · "cadence" · "progress check" · "진행 상황" | `bash scripts/cadence.sh` digest. Read-only — no recommendations. | → [proc-5-cadence.md](docs/procedures/proc-5-cadence.md) |
 | **6** | "fill PLAN" · "start Phase A" · "Phase A 시작" · "PLAN 채우자" | Surface SPEC ambiguities one-at-a-time; user picks A/B/C; append to PLAN.md §2. | → [proc-6-phase-a.md](docs/procedures/proc-6-phase-a.md) |
 | **7** | "stale docs" · "doc scan" · "가든" · "문서 점검" · Phase D start | Scan docs/ staleness vs recent src/ diff. Report only — no auto-edit. | → [proc-7-gardening.md](docs/procedures/proc-7-gardening.md) |

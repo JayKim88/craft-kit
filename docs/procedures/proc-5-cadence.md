@@ -13,7 +13,7 @@
    - Commits 7d: `git log --since='7 days ago' --oneline | wc -l`
    - §N dist: `git log --pretty=%s | grep -oE '\[§[0-9-]+(,§[0-9-]+)*\]' | tr -d '[]§' | tr ',' '\n' | sort | uniq -c | sort -rn`
    - CHECKLIST: `grep -c '^- \[ \]' docs/CHECKLIST.md` and `grep -c '^- \[x\]' docs/CHECKLIST.md`
-   - Deadline: parse `**Deadline**:` line in CLAUDE.md "Assignment overview"
+   - Deadline: parse `**Deadline**:` line in CLAUDE.md "Project overview"
    - Phase guess: `git log --pretty=%s | grep -E '^(feat|fix|refactor|test)' | head -1` — empty → Phase A
 
 3. **Output** (read-only digest):

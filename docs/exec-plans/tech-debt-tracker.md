@@ -3,7 +3,7 @@
 > Running catalog of known shortcuts and deferred improvements.
 > Updated by human or agent during Phase C. Reviewed at Phase D start.
 >
-> **Severity**: 🔴 Blocks submission / 🟡 Affects rubric score / 🟢 Polish only
+> **Severity**: 🔴 Blocks ship / 🟡 Affects criteria score / 🟢 Polish only
 > **Status**: [ ] open / [x] resolved / [~] accepted (won't fix before deadline)
 
 ---
@@ -17,7 +17,7 @@
 ## How to use
 
 - Add a row when you write `// TODO`, `// fix later`, or any intentional shortcut during Phase C.
-- Severity 🔴 items must be resolved before Phase E (submission). All others are judgment calls.
+- Severity 🔴 items must be resolved before Phase E (ship). All others are judgment calls.
 - At Phase D start, scan this file and promote 🔴 items to CHECKLIST.md "📌 Extra TODO".
 - Resolved items: mark `[x]` and record the fix commit hash in a comment.
 

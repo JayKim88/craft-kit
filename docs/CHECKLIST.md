@@ -1,8 +1,8 @@
 # Implementation Checklist
 
-> Progress tracking + rubric verification.
+> Progress tracking + requirements verification.
 > Item order aligns with the Phases of [PROCESS.md](PROCESS.md).
-> Each item's `[§N]` marker references the rubric category number in [SPEC.md "Rubric (detail)"](SPEC.md).
+> Each item's `[§N]` marker references the criterion number in [SPEC.md "Requirements (detail)"](SPEC.md).
 
 ---
 
@@ -27,13 +27,13 @@
 
 <!-- HINT: Verify every doc is aligned before starting work. -->
 
-- [ ] CLAUDE.md (DoD + commit convention + rubric reference)
-- [ ] CHECKLIST.md (rubric §N inline mapping — this document)
+- [ ] CLAUDE.md (DoD + commit convention + requirements reference)
+- [ ] CHECKLIST.md (requirements §N inline mapping — this document)
 - [ ] PROCESS.md (implementation order)
-- [ ] PLAN.md (scope · schedule · risk matrix · rubric mapping)
+- [ ] PLAN.md (scope · schedule · risk matrix · requirements mapping)
 - [ ] DESIGN.md (5-10 Decision Records)
-- [ ] SPEC.md (original company paste, rubric §1~§N)
-- [ ] README.md skeleton (SPEC template sections + Documentation rubric items)
+- [ ] SPEC.md (original spec paste, requirements §1~§N)
+- [ ] README.md skeleton (SPEC template sections + documentation criteria)
 - [ ] Free-library decisions (DESIGN.md §4)
 - [ ] UI/UX reference decisions (FE only, DESIGN.md §7)
 
@@ -148,15 +148,15 @@
 
 - [ ] README "Project overview / Tech stack / How to run / Structure"
 - [ ] README "Requirements interpretation & assumptions"
-- [ ] README "Design decisions & rationale" — covers every Documentation rubric item
+- [ ] README "Design decisions & rationale" — covers every documentation criterion
 - [ ] README "Unimplemented / constraints"
 - [ ] README "AI usage scope" — fill summary in README.md
 
-### Submission
+### Ship
 
-- [ ] Repository public
-- [ ] Public URL submitted
-- [ ] (Optional) `rubric-reviewer` subagent simulation
+- [ ] Repository accessible (public or shared)
+- [ ] URL / artifact shipped
+- [ ] (Optional) `requirements-reviewer` subagent simulation
 
 ---
 

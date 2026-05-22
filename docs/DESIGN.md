@@ -82,8 +82,8 @@ For each key decision, follow the 5-step format: **context → options → decis
 > - Write 5-10 ADRs. **Skip the trivial.** Only "things that genuinely could have gone differently".
 > - Copy the ADR-001 format below for ADR-002, ADR-003, ...
 > - Title format: "Subject + result" — e.g. `ADR-002: Time-conflict boundary policy (touching is not overlap)`
-> - **Spell out "why we did NOT pick the rejected options"** — this is where reviewers award the most credit.
-> - Recommend mapping one ADR to each sub-checkpoint of the Design rubric category.
+> - **Spell out "why we did NOT pick the rejected options"** — this is where readers gain the most trust in your decisions.
+> - Recommend mapping one ADR to each sub-checkpoint of the Design criteria category.
 > - **SPEC origin is mandatory.** Every ADR must cite the SPEC clause it derives from. If no direct SPEC clause exists, write `Inferred — no direct SPEC clause` and explain why in Rationale.
 
 ---
@@ -148,7 +148,7 @@ For each key decision, follow the 5-step format: **context → options → decis
 
 ### External library choices (free-choice areas)
 
-<!-- HINT: If SPEC says "library choice is free, justify in README", this section is heavyweight in the Design rubric.
+<!-- HINT: If SPEC says "library choice is free, justify in README", this section is heavyweight in the Design criteria.
      For each area, compare "build vs library", and only adopt a library where building is riskier. -->
 
 | Area | Selection | Rationale | Why we did not build it ourselves |
@@ -223,4 +223,4 @@ For each key decision, follow the 5-step format: **context → options → decis
 
 ## 9. Unimplemented / constraints
 
-> The reviewer-facing single source of truth lives in [README.md](../README.md) "Unimplemented / constraints". Not duplicated here.
+> The external-facing single source of truth lives in [README.md](../README.md) "Unimplemented / constraints". Not duplicated here.

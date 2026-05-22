@@ -1,9 +1,9 @@
 ---
 name: spec-drift
-description: Detect when company-provided SPEC.md changes and identify downstream docs that must be re-synced.
+description: Detect when SPEC.md / project requirements change and identify downstream docs that must be re-synced.
 triggers:
   - "SPEC updated"
-  - "company changed spec"
+  - "requirements changed"
   - "SPEC 바뀜"
 ---
 

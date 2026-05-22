@@ -17,7 +17,7 @@ flowchart TB
       PB["<b>B · Toolchain lock</b><br/>~30m · pin runtime<br/>lint/test/build scripts"]
       PC["<b>C · Implement</b><br/>30~60 cycles<br/>code → DoD → commit"]
       PD["<b>D · Polish</b><br/>~3h · §N trace<br/>_TO FILL_ sweep"]
-      PE["<b>E · Submit</b><br/>~2h · fresh session<br/>strict review"]
+      PE["<b>E · Ship</b><br/>~2h · fresh session<br/>strict review"]
       PA --> PB --> PC --> PD --> PE
     end
 
@@ -38,7 +38,7 @@ flowchart TB
     end
 
     subgraph SKILLS["⚡ .claude/skills/ — multi-vendor triggers"]
-      SK["cadence · checklist-trace<br/>dod-verify · phase-a-guide<br/>pre-submission-review · spec-drift"]
+      SK["cadence · checklist-trace<br/>dod-verify · phase-a-guide<br/>pre-ship-review · spec-drift"]
     end
 
     subgraph GUARD["🛡 Auto safety net (git-time)"]
@@ -46,7 +46,7 @@ flowchart TB
       CAD["scripts/cadence.sh<br/>commits/§N/CHECKLIST/D-day digest"]
     end
 
-    OUT["📤 Reviewer-facing<br/>README.md (submission)<br/>AGENTS.md (env)<br/>src/ (code)"]
+    OUT["📤 External-facing<br/>README.md (ship)<br/>AGENTS.md (env)<br/>src/ (code)"]
 
     User -- "natural language<br/>(ready to commit / review / progress)" --> BRAIN
     BRAIN -- "phase guidance" --> TIME
@@ -83,7 +83,7 @@ flowchart TD
   B["<b>Phase B · Toolchain lock</b> (D-N+1, ~30m)<br/>pin runtime + lint / test / build scripts<br/>smoke-test pre-commit hook · cadence.sh · skills"]
   C["<b>Phase C · Implementation</b> (D-N+1 ~ D-1, ×30-60)<br/>code → Proc.1 DoD verify → user approval → git commit<br/>any time: Proc.5 cadence · Proc.3 SPEC drift"]
   D["<b>Phase D · Polish</b> (D-1, ~3h)<br/>Proc.2 §N trace · sweep _TO FILL_ · manual smoke"]
-  E["<b>Phase E · Submit</b> (D-0, ~2h)<br/>fresh session → Proc.4 strict review<br/>30-min fixes · repo public · submit"]
+  E["<b>Phase E · Ship</b> (D-0, ~2h)<br/>fresh session → Proc.4 strict review<br/>fixes · ship / hand off"]
   Boot --> A --> B --> C --> D --> E
 ```
 
@@ -92,7 +92,7 @@ flowchart TD
 ```mermaid
 flowchart LR
   CLAUDE["<b>CLAUDE.md</b><br/>AI rules · DoD · 8 procedures<br/>(SSOT router)"]
-  README["README.md<br/>reviewer-facing"]
+  README["README.md<br/>external-facing"]
   AGENTS["AGENTS.md<br/>env gotchas"]
   SRC["src/<br/>your code"]
 
@@ -109,7 +109,7 @@ flowchart LR
 
   subgraph SKILLS[".claude/skills/ — multi-vendor triggers"]
     direction TB
-    SK["cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-submission-review · spec-drift"]
+    SK["cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-ship-review · spec-drift"]
   end
 
   subgraph EXEC["Enforcement + sensors"]
@@ -157,7 +157,7 @@ sequenceDiagram
 
 ## Reading guide (3 lines)
 
-1. **Top time-axis** = work order — `A doc align → B toolchain → C implement × N → D polish → E submit`.
+1. **Top time-axis** = work order — `A doc align → B toolchain → C implement × N → D polish → E ship`.
 2. **CLAUDE.md (center)** = brain — routes natural-language input ("ready to commit", "review", "progress check") into 8 procedures, enforces 7-gate DoD.
 3. **docs/ (SSOT)** = single info source · **.claude/skills/** = same procedures exposed to multi-vendor agents (Cursor / Codex / Aider) · **.githooks/pre-commit** = git-time safety net for commits that bypass chat.
 
@@ -181,15 +181,15 @@ sequenceDiagram
 ```
 craft-kit/
 ├── CLAUDE.md              ← AI rules index ~140 lines (routing + rules + procedure trigger table)
-├── README.md              ← Dual identity: kit-readme → submission-readme
+├── README.md              ← Dual identity: kit-readme → project-readme
 ├── AGENTS.md              ← Environment-specific gotchas
 ├── LICENSE
 ├── docs/
 │   ├── SPEC.md            ← Immutable external contract (paste, then never edit)
-│   ├── PLAN.md            ← Interpretation, scope, schedule, rubric (§N) map
+│   ├── PLAN.md            ← Interpretation, scope, schedule, requirements (§N) map
 │   ├── DESIGN.md          ← §0 Core beliefs + ADRs with SPEC origin field
 │   ├── PROCESS.md         ← Implementation order, dependency graph
-│   ├── CHECKLIST.md       ← Quality grades + tasks tagged [§N], per-phase
+│   ├── CHECKLIST.md       ← Quality grades + tasks tagged [§N] (criterion), per-phase
 │   ├── HARNESS.md         ← Design rationale (WHY this kit shape)
 │   ├── OVERVIEW.md        ← This file (WHAT the kit does)
 │   ├── procedures/        ← Procedure details (read on demand — not loaded every turn)
@@ -221,4 +221,4 @@ craft-kit/
 
 - [CLAUDE.md](../CLAUDE.md) — AI rules, DoD definition, 8 procedures (the actual SSOT the AI reads)
 - [HARNESS.md](HARNESS.md) — *why* the kit is shaped this way (mapped to OpenAI harness engineering principles)
-- [README.md](../README.md) — bootstrap instructions + submission scaffold
+- [README.md](../README.md) — bootstrap instructions + project scaffold

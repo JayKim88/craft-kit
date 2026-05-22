@@ -90,28 +90,28 @@ Every ADR template now starts with a mandatory **SPEC origin** field:
 **Trade-off**: ...
 ```
 
-If the decision is not derived from a SPEC clause, the candidate writes `Inferred — no direct SPEC clause` and explains the inference in Rationale.
+If the decision is not derived from a SPEC clause, the author writes `Inferred — no direct SPEC clause` and explains the inference in Rationale.
 
-Procedure 4 (pre-submission review) was extended in v0.8 to count `**SPEC origin**:` occurrences vs `### ADR-` headings; any gap is flagged as a critical Documentation-rubric issue.
+Procedure 4 (pre-ship review) was extended in v0.8 to count `**SPEC origin**:` occurrences vs `### ADR-` headings; any gap is flagged as a critical documentation-criteria issue.
 
 ### The problem it solves
 
 | Before | After |
 |---|---|
 | ADRs could end with "Decision: X, Rationale: Y" — disconnected from SPEC | Every decision is one citation away from its SPEC origin |
-| Reviewer's question "where in SPEC?" had no auto-answer | `grep "**SPEC origin**:" docs/DESIGN.md` answers it |
+| Reader's question "where in SPEC?" had no auto-answer | `grep "**SPEC origin**:" docs/DESIGN.md` answers it |
 | SPEC changes had no automatic impact map | SPEC change region → grep ADRs for that §section → list of affected decisions |
 
 ### Why it's good (Principle #2: Inform — data context provenance)
 
-1. **Reviewer signal** for the Documentation rubric: "this candidate distinguishes assumptions from facts".
+1. **Documentation signal**: "this author distinguishes assumptions from facts".
 2. **`Inferred — no direct SPEC clause` is itself a positive signal** — demonstrates metacognition ("I know this is inferred").
 3. **Couples with Procedure 3 (SPEC drift check)**: when SPEC changes, the citation field tells you exactly which ADRs to revisit.
 
 ### Trade-offs
 
-- ADR writing costs one more line per record. Reviewers prefer the cost.
-- For companies whose SPEC body is sparse (rubric-only), most ADRs may end up as `Inferred`. Still better than silent inference.
+- ADR writing costs one more line per record. Evaluators prefer the cost.
+- For sparse SPEC documents (criteria-only), most ADRs may end up as `Inferred`. Still better than silent inference.
 
 ---
 
@@ -228,7 +228,7 @@ Days to deadline       : 4  (deadline: 2026-05-17)
 Likely current phase   : Phase C+ (last impl commit: feat(api): login [§2,§3])
 ```
 
-The deadline is parsed from CLAUDE.md's "Assignment overview" line. macOS BSD `date -j -f` is tried first, then GNU `date -d` as fallback. If the placeholder `<YYYY-MM-DD>` is still present, the script prints `unknown` instead of crashing.
+The deadline is parsed from CLAUDE.md's "Project overview" line. macOS BSD `date -j -f` is tried first, then GNU `date -d` as fallback. If the placeholder `<YYYY-MM-DD>` is still present, the script prints `unknown` instead of crashing.
 
 ### The problem it solves
 
@@ -277,7 +277,7 @@ The deadline is parsed from CLAUDE.md's "Assignment overview" line. macOS BSD `d
 |---|---|---|
 | Verification | None — procedures lived only in chat | Hook runs regardless of how commit was triggered |
 
-### Scenario C: Company updates SPEC mid-project
+### Scenario C: SPEC / requirements updated mid-project
 
 | Stage | v0.7 | v0.8 |
 |---|---|---|
@@ -336,7 +336,7 @@ Five new components derived from OpenAI's harness engineering article.
 | **Quality grades table** (CHECKLIST.md §0) | `docs/CHECKLIST.md` | **Verify** — one-glance domain health map; surfaced by Procedure 5 cadence |
 | **Core beliefs** (DESIGN.md §0) | `docs/DESIGN.md` | **Inform** — permanent operating principles (agent legibility, boring tech, in-repo) applied to every ADR |
 | **Procedure 7: doc-gardening** | `CLAUDE.md` (new procedure) | **Correct** — proactive stale-doc detection between commits, not just at commit time |
-| **Procedure 4: self-review pass** | `CLAUDE.md` (Procedure 4 extension) | **Verify** — pre-submission review now includes a silent diff-against-rubric pass before producing the score simulation |
+| **Procedure 4: self-review pass** | `CLAUDE.md` (Procedure 4 extension) | **Verify** — pre-ship review now includes a silent diff-against-criteria pass before producing the score simulation |
 
 ### Principle coverage after v0.9
 

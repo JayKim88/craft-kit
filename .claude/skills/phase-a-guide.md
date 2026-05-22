@@ -20,7 +20,7 @@ Run [CLAUDE.md "Procedure 6 — Phase A guided fill"](../../CLAUDE.md).
 
 **Output**: For each SPEC ambiguity, present a 3-option A/B/C table (Strict / Lenient / Ask). After the user picks, append one row to `docs/PLAN.md` §2 (5-column Assumption-Map: ambiguity / decision / rationale / confidence / verified by).
 
-**Prerequisite**: `docs/SPEC.md` must contain a real spec, not the `[[ paste original company spec here ]]` placeholder.
+**Prerequisite**: `docs/SPEC.md` must contain a real spec, not the `[[ paste original project spec here ]]` placeholder.
 
 **Anti-patterns** (do not do):
 - Pitch one option as obviously correct

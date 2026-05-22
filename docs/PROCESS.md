@@ -1,7 +1,7 @@
 # PROCESS — Implementation order
 
 > Implement in the order of [SPEC.md](SPEC.md) "Implementation scope".
-> Per-phase items + rubric mapping → matching numbered section in [CHECKLIST.md](CHECKLIST.md)
+> Per-phase items + requirements mapping → matching numbered section in [CHECKLIST.md](CHECKLIST.md)
 > Working rules (commit convention · DoD · prohibitions) → [CLAUDE.md](../CLAUDE.md)
 > Every commit runs only after user approval.
 

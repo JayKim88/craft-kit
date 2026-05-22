@@ -20,7 +20,7 @@
 ### Core user scenarios
 
 <!-- HINT: Translate SPEC's "background scenario" or "usage flow" into 5-8 steps in our words.
-     The reviewer reads this to verify we accurately understood the spec. -->
+     The reader uses this to verify we accurately understood the spec. -->
 
 1. ...
 2. ...
@@ -39,9 +39,9 @@
 
 | SPEC ambiguity | Our decision | Rationale | Confidence | Verified by |
 |---|---|---|---|---|
-| <!-- "<verbatim quote from SPEC>" --> | <!-- chosen option --> | <!-- user's reason --> | <!-- High / Med / Low --> | <!-- Inferred / Asked company / Cross-checked sample --> |
+| <!-- "<verbatim quote from SPEC>" --> | <!-- chosen option --> | <!-- user's reason --> | <!-- High / Med / Low --> | <!-- Inferred / Asked stakeholder / Cross-checked sample --> |
 
-→ These decisions feed [DESIGN.md](DESIGN.md) as design rationale and the [README.md](../README.md) "Requirements interpretation & assumptions" section as reviewer-facing copy. The **Verified by** column is the strongest reviewer signal — `Asked company` > `Cross-checked sample` > `Inferred`. Distinguishing them honestly is itself a Documentation rubric signal.
+→ These decisions feed [DESIGN.md](DESIGN.md) as design rationale and the [README.md](../README.md) "Requirements interpretation & assumptions" section as external-facing copy. The **Verified by** column is the strongest documentation signal — `Asked stakeholder` > `Cross-checked sample` > `Inferred`. Distinguishing them honestly is itself a documentation quality signal.
 
 ---
 
@@ -93,7 +93,7 @@
 
 | Item | Date |
 |---|---|
-| **Assignment deadline** | `<YYYY-MM-DD HH:MM>` |
+| **Project deadline** | `<YYYY-MM-DD HH:MM>` |
 | **Today** (writing date) | `<YYYY-MM-DD>` |
 | **Time remaining** | ~`<N>` days |
 
@@ -105,7 +105,7 @@
      D-3: Required screens / endpoints — first pass
      D-2: Required — second pass + start bonus
      D-1: Polish + manual smoke
-     D-0: README polish + repo public + submit
+     D-0: README polish + ship
 
      Adjust to your actual remaining days.
 -->
@@ -113,25 +113,28 @@
 - D-N (`<today>`): ... ← **today**
 - D-N+1: ...
 - D-1: Polish + manual smoke
-- D-0 (`<deadline>`): README polish + repo public + submit
+- D-0 (`<deadline>`): README polish + ship
 
 ---
 
-## 5. Rubric mapping
+## 5. Requirements mapping
 
-Mapping where each rubric score gets earned.
+Mapping where each criterion is satisfied.
 
-<!-- HINT: For each §N category in [SPEC.md "Rubric (detail)"](SPEC.md), fill "where it's satisfied".
+<!-- HINT: For each §N category in [SPEC.md "Requirements (detail)"](SPEC.md), fill "where it's satisfied".
+     If SPEC defines scoring: include point weight in the header (e.g. "§1 Requirements understanding (20 pts)").
+     If no scoring defined: omit points — focus on which files/commits cover this criterion.
+
      Example shape:
-     | §1 Requirements understanding (20) | SPEC = input / PLAN §2 interpretation / CHECKLIST edge cases |
-     | §2 Design & code structure (25)    | DESIGN ADRs + actual code |
-     | §3 Stability & exceptions (20)     | DESIGN error patterns / CHECKLIST stability / DoD gates |
-     | §4 UI/UX (15)                      | DESIGN UX pattern + CHECKLIST readability |
-     | §5 Documentation (10)              | SPEC + PLAN + DESIGN + PROCESS + CLAUDE + README |
-     | §6 Git history (10)                | CLAUDE.md git policy + per-Phase commits + separate refactor/test commits |
+     | §1 Requirements understanding | PLAN §2 interpretation / CHECKLIST edge cases |
+     | §2 Design & code structure    | DESIGN ADRs + actual code |
+     | §3 Stability & exceptions     | DESIGN error patterns / CHECKLIST stability / DoD gates |
+     | §4 UI/UX                      | DESIGN UX pattern + CHECKLIST readability |
+     | §5 Documentation              | SPEC + PLAN + DESIGN + PROCESS + CLAUDE + README |
+     | §6 Git history                | CLAUDE.md git policy + per-Phase commits + separate refactor/test commits |
 -->
 
-| Criterion (points) | Where it is satisfied |
+| Criterion | Where it is satisfied |
 |---|---|
 | §1 ... | _TO FILL_ |
 | §2 ... | _TO FILL_ |
@@ -150,12 +153,12 @@ Mapping where each rubric score gets earned.
 
 ---
 
-## 7. What we must satisfy at submission (summary)
+## 7. Ship checklist (summary)
 
-<!-- HINT: SPEC "Required deliverables" verbatim + Documentation rubric items. -->
+<!-- HINT: SPEC "Required deliverables" verbatim + documentation criteria. -->
 
-- Repository (public, with full commit history)
-- README.md — covers every section in SPEC's README template + Documentation rubric items
+- Repository (accessible, with full commit history)
+- README.md — covers every section in SPEC's README template + documentation criteria
 - Every required implementation works (manual smoke passes)
 - Honest "Unimplemented / constraints" section
 

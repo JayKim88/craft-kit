@@ -1,6 +1,6 @@
-# Procedure 4 — Pre-Submission Review (Strict Reviewer Mode)
+# Procedure 4 — Pre-Ship Review (Strict Review Mode)
 
-**Trigger**: "리뷰" / "final review" / "rubric review" / "제출 전 점검" / "self-eval" / D-0 polish.
+**Trigger**: "리뷰" / "final review" / "requirements review" / "완료 전 점검" / "self-eval" / D-0 polish.
 
 **Recommended invocation**: open a **fresh Claude Code session**. If same session, explicitly clear prior assumptions.
 
@@ -8,13 +8,19 @@
 
 ## Stance (this procedure only)
 
-- Empathetic but no breaks. A miss is a miss. Never award points by inference.
+- Empathetic but no breaks. A miss is a miss. Never fill gaps by inference.
 - Cite specifically: `[DESIGN.md ADR-002]` + `[src/lib/billing/calculate.ts:42-58]`. Never "this is nice".
-- No off-rubric points. No time-pressure leniency.
+- No off-criteria coverage. No time-pressure leniency.
 
 ---
 
 ## Steps
+
+### 0. Detect mode
+
+Check if `docs/SPEC.md "Requirements (detail)"` sections contain numeric scores (`pts`):
+- **Yes → Score-simulation mode** — SPEC defines a grading rubric; produce per-§N point estimates.
+- **No → Coverage-check mode (default)** — SPEC defines requirements only; produce coverage status per §N.
 
 ### Read
 
@@ -22,23 +28,32 @@ All of: `docs/SPEC.md`, `README.md`, `docs/CHECKLIST.md`, `docs/DESIGN.md`, `doc
 
 ### Cross-check: SPEC origin coverage (v0.8)
 
-Count `**SPEC origin**:` occurrences in `docs/DESIGN.md` vs `### ADR-` headings. Gap → 🔴 critical Documentation-rubric issue.
+Count `**SPEC origin**:` occurrences in `docs/DESIGN.md` vs `### ADR-` headings. Gap → 🟡 potential documentation gap (🔴 critical only when SPEC defines explicit scoring criteria).
 
 ### Self-review pass (v0.9)
 
 Before producing output, perform one silent pass:
 1. Read `git diff main...HEAD -- src/` (or full diff if main is not base branch).
-2. Apply each rubric criterion from `docs/SPEC.md` "Rubric (detail)" to the diff directly.
+2. Apply each criterion from `docs/SPEC.md` "Requirements (detail)" to the diff directly.
 3. Note criteria with **zero** evidence in the diff (not just zero commits).
-4. Carry findings into Weakness analysis.
+4. Carry findings into gap / weakness analysis.
 
 ---
 
-## Output (4 sections)
+## Output — Coverage-check mode (default)
+
+1. **Coverage table**: per §N — commits / checklist items / status (✅ covered | ⚠ partial | ❌ missing)
+2. **Gap analysis** (gaps only, no praise): per §N, 1-3 bullets of what evidence is missing.
+3. **Critical risks**: 🔴 must fix before ship / 🟡 if time permits.
+4. **Next actions** (time-boxed): "1 hour to close §N gap: ..." / "Additional 2 hours for §N: ..."
+
+---
+
+## Output — Score-simulation mode
 
 1. **Score-simulation table**: per §N — max / sim score / 1-line rationale → `**Total** | | 100 | **NN/100**`
 2. **Weakness analysis** (weaknesses only, no praise): per §N, 1-3 bullets of what's needed for max.
-3. **Critical-omission risks**: 🔴 must fix before submission / 🟡 if time permits.
+3. **Critical risks**: 🔴 must fix before ship / 🟡 if time permits.
 4. **Next actions** (time-boxed): "1 hour for +N points: ..." / "Additional 2 hours for +M points: ..."
 
-End with: *"This is a simulation, not the real evaluation. Real reviewers may weight differently."*
+End with: *"This is a simulation, not the real evaluation. Results may vary depending on the evaluator."*

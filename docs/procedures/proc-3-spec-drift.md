@@ -1,6 +1,6 @@
 # Procedure 3 — SPEC Drift Check
 
-**Trigger**: "SPEC updated" / "company changed spec" / observed change to `docs/SPEC.md`.
+**Trigger**: "SPEC updated" / "requirements changed" / observed change to `docs/SPEC.md`.
 
 ---
 
@@ -13,7 +13,7 @@
 
 2. Map the changed region to impact zones:
    - Implementation scope → PLAN §3 + CHECKLIST Phase C
-   - Rubric → PLAN §5 + CHECKLIST `[§N]` tags
+   - Requirements → PLAN §5 + CHECKLIST `[§N]` tags
    - API schema → DESIGN ADRs
    - Constraints → PLAN §3 (out-of-scope) + DESIGN §6 (errors)
 

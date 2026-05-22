@@ -173,18 +173,18 @@ flowchart TD
 
 ---
 
-## 상태 5 — Phase E (제출, D-0)
+## 상태 5 — Phase E (출시, D-0)
 
 **판단 기준**: 마감 당일, 최종 검토
 
 ```mermaid
 flowchart TD
     E1["🗣 'final review' 발화\n새 Claude 세션 권장"]
-    E2["🤖 Procedure 4 (proc-4-review.md)\nSelf-review pass: git diff → rubric 직접 대조\nSPEC origin 커버리지 체크"]
+    E2["🤖 Procedure 4 (proc-4-review.md)\nSelf-review pass: git diff → requirements 직접 대조\nSPEC origin 커버리지 체크"]
     E3["출력: 점수 시뮬레이션 / weakness / 🔴🟡 액션"]
     E4["👤 🔴 항목 30분 내 수정"]
     E5["👤 grep -rn '_TO FILL_' README.md docs/ → 0 확인"]
-    E6["👤 repo public + URL 제출"]
+    E6["👤 ship — repo 공개 + URL / 결과물 전달"]
 
     E1 --> E2 --> E3 --> E4 --> E5 --> E6
 ```

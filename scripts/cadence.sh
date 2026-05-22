@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# scripts/cadence.sh — observability digest for take-home progress.
+# scripts/cadence.sh — observability digest for project progress.
 # Read-only. No recommendations. Triggered by Procedure 5 or run directly.
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
