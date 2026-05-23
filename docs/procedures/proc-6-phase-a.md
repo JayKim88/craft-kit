@@ -11,6 +11,22 @@
 
 ---
 
+## ⚠ Rationalization check — read before executing
+
+Each feels like a reasonable exception. None are.
+
+| If you think... | What actually happens |
+|---|---|
+| "SPEC is clear enough — skip Phase A" | Ambiguities surface mid-implementation; architecture shifts mid-flight |
+| "I'll pick the obvious interpretation for the user" | User loses ownership; wrong assumption bakes into the codebase |
+| "This ambiguity is minor — decide during implementation" | Deferred decision becomes an implicit assumption nobody agreed to |
+| "Let's handle multiple ambiguities at once to save time" | One gets resolved; the other receives an implicit default nobody agreed to |
+| "PLAN doesn't need §N tags yet — fill later" | CHECKLIST §N tagging never happens; coverage tracking breaks |
+
+**Iron law**: No `src/` file may be created or modified until PLAN §2–6, DESIGN ADRs, and CHECKLIST §N tags are complete and user-approved.
+
+---
+
 ## Steps
 
 ### 1. Read SPEC completely

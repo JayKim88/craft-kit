@@ -5,6 +5,28 @@
 
 ---
 
+## Session invariants — read first, every session
+
+- Never `git commit` without user approval
+- Never `--no-verify`
+- Run Procedure 1 DoD before every commit proposal
+- When in doubt: read the procedure file, don't infer
+
+<HARD-GATE>
+Do not create or modify any `src/` file until ALL of the following are confirmed:
+
+- [ ] `docs/SPEC.md` contains real spec content (not a placeholder)
+- [ ] `docs/PLAN.md` §2 Assumption-Map has at least 4 rows (all surfaced ambiguities resolved)
+- [ ] `docs/PLAN.md` §3 scope is filled (Required / Optional lists confirmed)
+- [ ] `docs/DESIGN.md` has at least 3 ADRs with SPEC origin fields
+- [ ] `docs/CHECKLIST.md` tasks are tagged with [§N]
+- [ ] User has explicitly approved the above
+
+If any box is unchecked: stop, surface what is missing, and run Procedure 6 (Phase A).
+</HARD-GATE>
+
+---
+
 ## Document routing
 
 | What you're looking for | Where it lives | Updated when |

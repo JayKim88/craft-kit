@@ -14,6 +14,22 @@
 
 ---
 
+## ⚠ Rationalization check — read before executing
+
+Each feels like a reasonable exception. None are.
+
+| If you think... | What actually happens |
+|---|---|
+| "Deadline is close — this gap is acceptable" | The gap ships; it cannot be unflagged after the fact |
+| "I saw good work in one area — it probably covers §N" | You filled a gap by inference; the criterion remains unmet |
+| "User worked hard — I should acknowledge the positives" | Praise dilutes the signal; user misses real risks |
+| "A commit exists for this §N — it's covered" | Coverage requires evidence in the diff, not just a commit message |
+| "Fresh session isn't necessary — I remember the context" | In-session bias inflates perceived quality; start clean |
+
+**Iron law**: No leniency for deadline pressure. No gap filled by inference. Cite specifically or mark ❌.
+
+---
+
 ## Steps
 
 ### 0. Detect mode

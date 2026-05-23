@@ -4,6 +4,22 @@
 
 ---
 
+## ⚠ Rationalization check — read before executing
+
+Each feels like a reasonable exception. None are.
+
+| If you think... | What actually happens |
+|---|---|
+| "Small change — tests can be skipped" | Gate 2 bypassed; regression goes undetected |
+| "No domain logic here — skip 0-C" | Layer violation accumulates silently |
+| "User wants this fast — DoD after" | AI submits without verification; user wastes time recovering from the rejected state |
+| "CHECKLIST sync is obvious — skip Gate 6" | §N coverage gaps persist through Phase D |
+| "Naming is fine, reader will understand" | Future reader must reverse-engineer intent from context; cognitive load compounds |
+
+**Iron law**: No commit proposal until Step 0 complete AND gates 1-5 pass. No exceptions.
+
+---
+
 ## Steps
 
 ### 0. Pre-DoD self-review (runs before gates 1-5)
