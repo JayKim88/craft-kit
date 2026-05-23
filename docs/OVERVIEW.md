@@ -91,7 +91,7 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-  CLAUDE["<b>CLAUDE.md</b><br/>AI rules · DoD · 8 procedures<br/>(SSOT router)"]
+  CLAUDE["<b>CLAUDE.md</b><br/>AI rules · DoD · 9 procedures<br/>(SSOT router)"]
   README["README.md<br/>external-facing"]
   AGENTS["AGENTS.md<br/>env gotchas"]
   SRC["src/<br/>your code"]
@@ -158,7 +158,7 @@ sequenceDiagram
 ## Reading guide (3 lines)
 
 1. **Top time-axis** = work order — `A doc align → B toolchain → C implement × N → D polish → E ship`.
-2. **CLAUDE.md (center)** = brain — routes natural-language input ("ready to commit", "review", "progress check") into 8 procedures, enforces 7-gate DoD.
+2. **CLAUDE.md (center)** = brain — routes natural-language input ("ready to commit", "review", "progress check") into 9 procedures, enforces 7-gate DoD.
 3. **docs/ (SSOT)** = single info source · **.claude/skills/** = same procedures exposed to multi-vendor agents (Cursor / Codex / Aider) · **.githooks/pre-commit** = git-time safety net for commits that bypass chat.
 
 ---
@@ -222,6 +222,6 @@ craft-kit/
 
 ## See also
 
-- [CLAUDE.md](../CLAUDE.md) — AI rules, DoD definition, 8 procedures (the actual SSOT the AI reads)
+- [CLAUDE.md](../CLAUDE.md) — AI rules, DoD definition, 9 procedures (the actual SSOT the AI reads)
 - [HARNESS.md](HARNESS.md) — *why* the kit is shaped this way (mapped to OpenAI harness engineering principles)
 - [README.md](../README.md) — bootstrap instructions + project scaffold
