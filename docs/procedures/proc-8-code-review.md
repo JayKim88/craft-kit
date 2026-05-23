@@ -13,9 +13,44 @@
 Default: all files in `git diff HEAD` (or staged diff).  
 If the user names specific files, review only those.
 
+> **Step 0 overrides this scope** for projects with source code: the blast-radius file list from code-review-graph replaces `git diff HEAD` as the review target.
+
+---
+
+## ⚠ Rationalization check — read before executing
+
+Each feels like a reasonable exception. None are.
+
+| If you think... | What actually happens |
+|---|---|
+| "Small file — a quick skim is enough" | Subtle bugs and layer violations survive; they compound later |
+| "It's the user's code — harsh feedback feels wrong" | Softened findings mislead; the user asked for a review, not approval |
+| "I reviewed similar code before — this is probably fine" | Prior context biases the read; every diff deserves fresh eyes |
+| "No obvious bugs — skip the architecture check" | Architecture rot is invisible at the line level; it needs a deliberate pass |
+| "Performance and security seem fine at a glance" | Glances miss N+1 queries and injection paths; run the checklist |
+
+**Iron law**: All 10 dimensions must be checked. Skipping one because it "looks fine" is not a review — it is an assumption.
+
 ---
 
 ## Steps
+
+### 0. Blast-radius scope
+
+Before reading any code, narrow the review scope to files actually affected:
+
+```bash
+# skip if already running `code-review-graph watch`
+code-review-graph build
+```
+
+Query the MCP for the blast-radius of files in `git diff HEAD` — use the returned file list as the review scope instead of reading all changed files.
+
+> **Required** for projects with source code (`src/` exists).
+> If not installed, set up first → [docs/tools.md](../tools.md).
+> Kit-only work (docs + scripts only, no `src/`) may skip this step.
+
+---
 
 ### 1. Read the relevant SPEC clause
 

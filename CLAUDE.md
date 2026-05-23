@@ -44,6 +44,7 @@ If any box is unchecked: stop, surface what is missing, and run Procedure 6 (Pha
 | Known tech debt | [tech-debt-tracker.md](docs/exec-plans/tech-debt-tracker.md) | Phase C per shortcut |
 | Domain health grades | [CHECKLIST.md "Quality grades"](docs/CHECKLIST.md) | Phase C per cycle |
 | Procedure details | [docs/procedures/](docs/procedures/) | Kit releases |
+| Recommended dev tools (MCP, env) | [tools.md](docs/tools.md) | Kit releases |
 
 ---
 
@@ -52,7 +53,7 @@ If any box is unchecked: stop, surface what is missing, and run Procedure 6 (Pha
 | Phase | When | Action |
 |---|---|---|
 | **A. Doc alignment** | D-N ~5h | Paste spec · Procedure 6 guided fill · fill PLAN/DESIGN/PROCESS/CHECKLIST |
-| **B. Toolchain lock** | D-N+1 ~30m | Pin runtime · add lint/test/build scripts · verify hook + cadence.sh |
+| **B. Toolchain lock** | D-N+1 ~30m | Pin runtime · add lint/test/build scripts · verify hook + cadence.sh · install dev tools (context-mode, code-review-graph) |
 | **C. Implementation** | D-N+1~D-1 ×30-60 | code → Procedure 1 DoD → user approval → `git commit [§N]` |
 | **D. Polish** | D-1 ~3h | Procedure 2 §N trace · sweep `_TO FILL_` · Procedure 7 doc-gardening |
 | **E. Ship** | D-0 ~2h | Fresh session → Procedure 4 strict review · fixes · ship / hand off |

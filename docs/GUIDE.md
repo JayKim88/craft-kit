@@ -51,11 +51,12 @@ flowchart TD
     B3["⚙️ git config core.hooksPath .githooks\n훅 활성화 — 최초 1회"]
     B4["👤 bash scripts/cadence.sh 실행\n'deadline placeholder' 뜨면 CLAUDE.md 채우기"]
     B5["👤 docs-only commit으로 pre-commit hook smoke test"]
+    B6["👤 개발 도구 설치 → docs/tools.md\n• context-mode MCP — 필수 (긴 세션 컨텍스트 절감)\n• code-review-graph — src/ 있는 프로젝트 필수 / kit 단독 생략 가능\n설치 후: ctx_index docs/ · crg build"]
 
-    B1 --> B2 --> B3 --> B4 --> B5
+    B1 --> B2 --> B3 --> B4 --> B5 --> B6
 ```
 
-**→ 완료 기준**: lint/test/build 모두 PASS, cadence.sh 정상 출력
+**→ 완료 기준**: lint/test/build 모두 PASS · cadence.sh 정상 출력 · context-mode doctor PASS · (src/ 있으면) crg build 성공
 
 ---
 
