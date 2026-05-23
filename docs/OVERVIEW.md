@@ -24,7 +24,7 @@ flowchart TB
     subgraph BRAIN["🧠 CLAUDE.md — AI rules SSOT router"]
       direction TB
       DOD["<b>7-gate DoD</b><br/>lint·test·build·no-escape<br/>no-debug·CHECKLIST·msg"]
-      PROCS["<b>8 procedures</b> (natural-language triggers)<br/>1 DoD · 2 §N trace · 3 SPEC drift · 4 review<br/>5 cadence · 6 Phase-A fill · 7 gardening · 8 code-review"]
+      PROCS["<b>9 procedures</b> (natural-language triggers)<br/>1 DoD · 2 §N trace · 3 SPEC drift · 4 review<br/>5 cadence · 6 Phase-A fill · 7 gardening · 8 code-review · 9 security"]
     end
 
     subgraph DOCS["📚 docs/ — Single Source of Truth"]
@@ -38,7 +38,7 @@ flowchart TB
     end
 
     subgraph SKILLS["⚡ .claude/skills/ — multi-vendor triggers"]
-      SK["cadence · checklist-trace<br/>dod-verify · phase-a-guide<br/>pre-ship-review · spec-drift"]
+      SK["cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-ship-review · spec-drift<br/>doc-gardening · code-review · security-audit"]
     end
 
     subgraph GUARD["🛡 Auto safety net (git-time)"]
@@ -83,7 +83,7 @@ flowchart TD
   B["<b>Phase B · Toolchain lock</b> (D-N+1, ~30m)<br/>pin runtime + lint / test / build scripts<br/>smoke-test pre-commit hook · cadence.sh · skills"]
   C["<b>Phase C · Implementation</b> (D-N+1 ~ D-1, ×30-60)<br/>code → Proc.1 DoD verify → user approval → git commit<br/>any time: Proc.5 cadence · Proc.3 SPEC drift"]
   D["<b>Phase D · Polish</b> (D-1, ~3h)<br/>Proc.2 §N trace · sweep _TO FILL_ · manual smoke"]
-  E["<b>Phase E · Ship</b> (D-0, ~2h)<br/>fresh session → Proc.4 strict review<br/>fixes · ship / hand off"]
+  E["<b>Phase E · Ship</b> (D-0, ~2h)<br/>fresh session → Proc.4 strict review<br/>Proc.9 security audit · fixes · ship / hand off"]
   Boot --> A --> B --> C --> D --> E
 ```
 
@@ -109,7 +109,7 @@ flowchart LR
 
   subgraph SKILLS[".claude/skills/ — multi-vendor triggers"]
     direction TB
-    SK["cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-ship-review · spec-drift"]
+    SK["cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-ship-review · spec-drift<br/>doc-gardening · code-review · security-audit"]
   end
 
   subgraph EXEC["Enforcement + sensors"]
@@ -192,6 +192,7 @@ craft-kit/
 │   ├── CHECKLIST.md       ← Quality grades + tasks tagged [§N] (criterion), per-phase
 │   ├── HARNESS.md         ← Design rationale (WHY this kit shape)
 │   ├── OVERVIEW.md        ← This file (WHAT the kit does)
+│   ├── tools.md           ← Recommended dev tools: context-mode + code-review-graph (install once per machine)
 │   ├── procedures/        ← Procedure details (read on demand — not loaded every turn)
 │   │   ├── proc-1-dod.md
 │   │   ├── proc-2-trace.md
@@ -199,7 +200,9 @@ craft-kit/
 │   │   ├── proc-4-review.md
 │   │   ├── proc-5-cadence.md
 │   │   ├── proc-6-phase-a.md
-│   │   └── proc-7-gardening.md
+│   │   ├── proc-7-gardening.md
+│   │   ├── proc-8-code-review.md
+│   │   └── proc-9-security.md
 │   └── exec-plans/
 │       ├── active/
 │       │   └── TEMPLATE.md  ← Copy + rename for each complex feature (3+ files)

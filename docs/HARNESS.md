@@ -119,7 +119,7 @@ Procedure 4 (pre-ship review) was extended in v0.8 to count `**SPEC origin**:` o
 
 ### How it works
 
-Six `SKILL.md` files in `.claude/skills/`. Each has frontmatter declaring trigger keywords:
+Nine `SKILL.md` files in `.claude/skills/`. Each has frontmatter declaring trigger keywords:
 
 ```markdown
 ---

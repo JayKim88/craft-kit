@@ -73,3 +73,15 @@ Before producing output, perform one silent pass:
 4. **Next actions** (time-boxed): "1 hour for +N points: ..." / "Additional 2 hours for +M points: ..."
 
 End with: *"This is a simulation, not the real evaluation. Results may vary depending on the evaluator."*
+
+---
+
+## After output — auto-proceed to Procedure 9
+
+**Only when triggered by "final review" or "완료 전 점검"** (Phase E context): immediately run Procedure 9 (security audit) without waiting for a separate trigger.
+
+When triggered by "리뷰", "self-eval", or other mid-session phrases: skip auto-proceed — Proc.9 is Phase E only.
+
+Use default mode (confidence ≥8/10). Announce: `"Proc.4 complete → running security audit (Proc.9) automatically."`
+
+If 🚨 Critical findings are found in Proc.9: block ship and surface them to the user before proceeding.

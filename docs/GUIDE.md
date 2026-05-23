@@ -184,10 +184,15 @@ flowchart TD
     E2["🤖 Procedure 4 (proc-4-review.md)\nSelf-review pass: git diff → requirements 직접 대조\nSPEC origin 커버리지 체크"]
     E3["출력: 점수 시뮬레이션 / weakness / 🔴🟡 액션"]
     E4["👤 🔴 항목 30분 내 수정"]
-    E5["👤 grep -rn '_TO FILL_' README.md docs/ → 0 확인"]
-    E6["👤 ship — repo 공개 + URL / 결과물 전달"]
+    E5["⚙️ Procedure 9 자동 실행 (proc-9-security.md)\nProc.4 완료 즉시 · default 모드 (confidence ≥8/10)"]
+    E6{{"🚨 Critical 발견?"}}
+    Ea["👤 수정 후 재감사"]
+    Eb["👤 grep -rn '_TO FILL_' README.md docs/ → 0 확인"]
+    E7["👤 ship — repo 공개 + URL / 결과물 전달"]
 
     E1 --> E2 --> E3 --> E4 --> E5 --> E6
+    E6 -- "있음" --> Ea --> E5
+    E6 -- "없음" --> Eb --> E7
 ```
 
 ---
@@ -200,6 +205,7 @@ flowchart TD
 | 지금 진행 상황 | `"어디까지 왔어"` | Procedure 5 cadence.sh |
 | 약한 §N 찾기 | `"어디 부족"` | Procedure 2 §N trace |
 | 코드 품질 점검 | `"코드 리뷰해줘"` | Procedure 8 deep code review |
+| 보안 감사 | `"보안 감사"` | Procedure 9 security audit (secrets / deps / OWASP) |
 | 문서 신선도 확인 | `"가든"` | Procedure 7 stale docs |
 | 최종 리뷰 | `"final review"` | Procedure 4 strict review |
 | SPEC 해석 | `"Phase A 시작"` | Procedure 6 guided fill |

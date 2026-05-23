@@ -206,7 +206,7 @@ Flag only:
 
 ---
 
-### 12. Security (obvious only)
+### 12. Security (surface scan only)
 
 **Question**: "Is there an obvious vulnerability that a reviewer would catch without a scanner?"
 
@@ -216,7 +216,7 @@ Flag only:
 - Missing authentication/authorization check on a sensitive route
 - XSS: user content rendered as raw HTML without sanitization
 
-**Do NOT attempt a full security audit.** This is a heuristic scan.
+**This is a surface scan only.** For a full audit (secrets archaeology, dependency CVEs, CI/CD pipeline, OWASP Top 10) → trigger **Procedure 9**: "보안 감사"
 
 **Flag format**: `🚨 Security — <vulnerability type> at <file>:<line>. Fix: <direct action>`
 

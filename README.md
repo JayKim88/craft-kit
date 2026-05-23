@@ -5,7 +5,7 @@ A structured kit for shipping quality code under deadline pressure. Clone → fi
 
 - **6-document SSOT** — SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / README, each with a clear owner and update cadence
 - **7-gate Definition of Done** — enforced in `CLAUDE.md` and re-enforced by the pre-commit hook
-- **8 AI agent procedures** — triggered by natural language ("ready to commit", "리뷰해줘", "어디까지 왔어")
+- **9 AI agent procedures** — triggered by natural language ("ready to commit", "리뷰해줘", "보안 감사", "어디까지 왔어")
 - **Stack-aware pre-commit safety net** — auto-detects Node / Python / Rust / Go / Java via `git config core.hooksPath`
 
 > For a full mental model — phase timeline, file ownership, per-commit flow — see **[docs/OVERVIEW.md](docs/OVERVIEW.md)**.
