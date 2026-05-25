@@ -2,7 +2,7 @@
 
 > Why this kit is shaped the way it is, mapped to OpenAI's *harness engineering* discipline.
 > Reference: [OpenAI — Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/).
-> **Version history**: v0.8 — pre-commit hook, SPEC origin, skills, auto-corrective, cadence. v0.9 — exec-plans, quality grades, core beliefs, doc-gardening, self-review.
+> For version history, see [HISTORY.md](HISTORY.md).
 
 ---
 
@@ -23,8 +23,6 @@ In OpenAI's framing, **Agent = Model + Harness**. The harness is everything arou
 | 3 | **Verify** | Observe and validate agent behavior |
 | 4 | **Correct** | Detect violations and trigger a response |
 | 5 | **Human in loop** | Keep humans at high-stakes decision points |
-
-craft-kit v0.7 already implemented ~70% of this implicitly. v0.8 closes the remaining gaps with five concrete additions.
 
 ---
 
@@ -52,7 +50,7 @@ Activation is opt-in: the bootstrap adds `git config core.hooksPath .githooks` o
 
 ### The problem it solves
 
-| Before (v0.7) | After (v0.8) |
+| Without this | With this |
 |---|---|
 | AI agent had to *consciously* run Procedure 1 | git enforces gates 1-5 mechanically |
 | User typing `git commit` directly (bypassing chat) skipped all verification | Hook fires regardless of how commit was triggered |
@@ -76,7 +74,7 @@ Activation is opt-in: the bootstrap adds `git config core.hooksPath .githooks` o
 
 ### How it works
 
-Every ADR template now starts with a mandatory **SPEC origin** field:
+Every ADR template starts with a mandatory **SPEC origin** field:
 
 ```markdown
 ### ADR-001: <decision title>
@@ -92,11 +90,11 @@ Every ADR template now starts with a mandatory **SPEC origin** field:
 
 If the decision is not derived from a SPEC clause, the author writes `Inferred — no direct SPEC clause` and explains the inference in Rationale.
 
-Procedure 4 (pre-ship review) was extended in v0.8 to count `**SPEC origin**:` occurrences vs `### ADR-` headings; any gap is flagged as a critical documentation-criteria issue.
+Procedure 4 (pre-ship review) counts `**SPEC origin**:` occurrences vs `### ADR-` headings; any gap is flagged as a critical issue.
 
 ### The problem it solves
 
-| Before | After |
+| Without this | With this |
 |---|---|
 | ADRs could end with "Decision: X, Rationale: Y" — disconnected from SPEC | Every decision is one citation away from its SPEC origin |
 | Reader's question "where in SPEC?" had no auto-answer | `grep "**SPEC origin**:" docs/DESIGN.md` answers it |
@@ -119,7 +117,7 @@ Procedure 4 (pre-ship review) was extended in v0.8 to count `**SPEC origin**:` o
 
 ### How it works
 
-Nine `SKILL.md` files in `.claude/skills/`. Each has frontmatter declaring trigger keywords:
+`SKILL.md` files in `.claude/skills/` each declare trigger keywords in frontmatter:
 
 ```markdown
 ---
@@ -137,15 +135,15 @@ triggers:
 Run [CLAUDE.md "Procedure 5 — Cadence check"](../../CLAUDE.md).
 ```
 
-The body is ~5 lines, pointing back to CLAUDE.md. Skills do not duplicate procedure content — they expose trigger keywords to compatible agents that auto-discover SKILL.md files (Codex, Cursor, Aider, Claude Code).
+The body is ~5 lines pointing back to CLAUDE.md. Skills do not duplicate procedure content — they expose trigger keywords to compatible agents that auto-discover SKILL.md files (Codex, Cursor, Aider, Claude Code).
 
 ### The problem it solves
 
-| Before | After |
+| Without this | With this |
 |---|---|
 | Procedures lived only in `CLAUDE.md` | Procedures are also auto-discoverable via the `SKILL.md` convention |
 | Only Claude Code agents could route on the procedures | Codex / Cursor / Aider / other AGENTS.md-compatible agents now route too |
-| Natural-language triggers were defined informally in CLAUDE.md prose | Triggers are declared explicitly in frontmatter — router precision improves |
+| Natural-language triggers were defined informally in prose | Triggers are declared explicitly in frontmatter — router precision improves |
 
 ### Why it's good (Principle #2: Inform — multi-vendor reach)
 
@@ -155,7 +153,7 @@ The body is ~5 lines, pointing back to CLAUDE.md. Skills do not duplicate proced
 
 ### Trade-offs
 
-- v0.7 deleted `.claude/` entirely. v0.8 partially reverses this. Different concern, though — v0.7 was about `.claude/settings.json` (per-user, never-commit). v0.8's `.claude/skills/` is shared, version-controlled, deliberately tracked. The `.gitignore` continues to ignore settings; skills are tracked.
+- `.claude/skills/` is shared, version-controlled, and deliberately tracked. (Note: as of v1.0, `.claude/settings.json` is also tracked — see Component 6 below for the settings split.)
 
 ---
 
@@ -187,7 +185,7 @@ Disposition (user picks):
 
 ### The problem it solves
 
-| Before | After |
+| Without this | With this |
 |---|---|
 | User renames `dev` → `start` in package.json. Forgets to update README. Reviewer runs `npm run dev` → command not found → bad first impression. | AI proactively spots the drift and offers a one-keystroke fix. |
 
@@ -203,7 +201,7 @@ Function renames, DB schema migrations, HTTP route renames, environment variable
 
 ### Trade-offs
 
-- The corrective fires inside chat-time Procedure 1. If the user runs `git commit` directly (bypassing the chat assistant), the corrective never fires. The hook still runs gates 1-5, so silent failure is impossible — just no proactive doc patch.
+- Fires only inside chat-time Procedure 1. If the user runs `git commit` directly, the corrective never fires. The hook still runs gates 1-5, so silent failure is impossible — just no proactive doc patch.
 
 ---
 
@@ -211,7 +209,7 @@ Function renames, DB schema migrations, HTTP route renames, environment variable
 
 ### How it works
 
-User says any of "어디까지 왔어" / "cadence" / "progress check" / "진행 상황" → AI runs `bash scripts/cadence.sh` (or implements its logic inline if the script is missing) → 8-line digest:
+User says any of "어디까지 왔어" / "cadence" / "progress check" / "진행 상황" → AI runs `bash scripts/cadence.sh` → 8-line digest:
 
 ```
 === Cadence check (2026-05-13) ===
@@ -232,7 +230,7 @@ The deadline is parsed from CLAUDE.md's "Project overview" line. macOS BSD `date
 
 ### The problem it solves
 
-| Before | After |
+| Without this | With this |
 |---|---|
 | User estimated "are we on track?" by stale intuition | Objective 8-line digest in 1 second |
 | §5 (Documentation) often had 0 commits silently until D-1 polish | `cadence` exposes coverage gaps continuously |
@@ -246,113 +244,167 @@ The deadline is parsed from CLAUDE.md's "Project overview" line. macOS BSD `date
 
 ### Trade-offs
 
-- Deadline parsing requires the user to fill the CLAUDE.md placeholder during Phase A (this is already a Phase A obligation, so not a new burden).
+- Deadline parsing requires the user to fill the CLAUDE.md placeholder during Phase A (already a Phase A obligation).
 - The "Likely current phase" heuristic is just that — a heuristic. Don't over-interpret.
 
 ---
 
-## Supporting changes
+## Component 6 — Exec-plan templates (`docs/exec-plans/`)
 
-| Change | Purpose |
+**Principle**: Inform
+
+Per-feature execution plans in `docs/exec-plans/active/` give the agent an explicit "what am I working on now" artifact, eliminating context re-derivation each turn. Completed plans move to `completed/`; shortcuts land in `tech-debt-tracker.md`.
+
+**Trade-off**: Only worth creating for complex features (3+ files, non-obvious logic). Simple CRUD steps don't need a plan file.
+
+---
+
+## Component 7 — Quality grades table (CHECKLIST.md §0)
+
+**Principle**: Verify
+
+A domain-level health table at the top of CHECKLIST.md (A–F grades per domain: correctness, architecture, types, etc.) gives a one-glance health map. Surfaced by Procedure 5 cadence output.
+
+**Trade-off**: Grades are self-assessed — no automated grader. Accuracy depends on the user's honest judgment.
+
+---
+
+## Component 8 — Core beliefs (DESIGN.md §0)
+
+**Principle**: Inform
+
+Permanent operating principles codified at the top of DESIGN.md (agent legibility, boring tech, in-repo, etc.) applied to every ADR. Unlike coding rules (which govern implementation), core beliefs govern architectural decisions.
+
+**Trade-off**: Beliefs can become stale if the project's constraints change. Revisit at Phase D polish.
+
+---
+
+## Component 9 — Procedure 7: doc-gardening
+
+**Principle**: Correct
+
+Proactive stale-doc scan triggered by "stale docs" / "가든" / "문서 점검". Compares recent `src/` diff against `docs/` content to surface likely drift. Report-only — no auto-edit.
+
+**Trade-off**: False-positive risk when code changes are cosmetic. The user filters the report.
+
+---
+
+## Component 10 — Procedure 4: self-review pass
+
+**Principle**: Verify
+
+Pre-ship review (Procedure 4) includes a silent diff-against-criteria pass before producing the score simulation. The agent checks its own output against SPEC requirements before presenting the review.
+
+**Trade-off**: Only as good as the SPEC coverage. A sparse SPEC produces a shallow self-review.
+
+---
+
+## Component 11 — Stop hook + session reflection
+
+**Principle**: Correct
+
+`scripts/hooks/session-reflect.sh` fires on every assistant turn end (`Stop` event). For sessions with kit-file edits, it writes a structured improvement proposal to `docs/kit/improvements/pending/YYYY-MM-DD.md`. Idempotent: same-day re-fires are no-ops.
+
+```
+Session with kit-file edits
+       ↓
+Stop hook → docs/kit/improvements/pending/YYYY-MM-DD.md
+       ↓ (next session)
+Start hook → "⚠ 1 improvement proposal pending"
+       ↓ (user triggers kit-improve)
+Review → Accept / Reject / Defer
+       ↓ (Accept path)
+Apply to CLAUDE.md → log in HISTORY.md → archive → commit
+```
+
+**Design decision — why Stop fires every turn**: Claude Code's `Stop` event fires at end of each assistant turn, not only at conversation close. Date-based filename makes re-fires idempotent; the proposal is written once.
+
+**Trade-off**: Proposals are unfiltered — not every session produces a useful improvement. The kit-improve review gate is the quality filter.
+
+---
+
+## Component 12 — Start hook (dynamic context injection)
+
+**Principle**: Inform
+
+`scripts/hooks/session-start.sh` fires once per session (`UserPromptSubmit` event) and injects current branch, active exec-plans, and pending improvement count as system context.
+
+**Design decision — why once per session**: A session-ID marker file prevents repeated injection on every user message. Without it, context would be injected on every turn, making it noisy.
+
+**Trade-off**: Requires session-ID to be available from the hook environment. Falls back to no-op if unavailable.
+
+---
+
+## Component 13 — PostToolUse lint advisory
+
+**Principle**: Verify
+
+`scripts/hooks/post-edit-lint.sh` fires after every Write/Edit to `src/` files and runs fast language-specific lint. Non-blocking (exit 0 always) — surfaces errors as an early signal without interrupting the implementation flow.
+
+**Design decision — why non-blocking**: Blocking edit-time lint would interrupt flow for cosmetic warnings. The pre-commit hook (gates 1-3) is authoritative; this is early-warning only.
+
+**Trade-off**: Advisory output can be ignored. The pre-commit hook is the hard gate.
+
+---
+
+## Component 14 — kit-improve + history
+
+**Principle**: Correct
+
+`docs/kit/improvements/kit-improve.md` closes the self-improvement loop: review pending proposals → accept/reject/defer → apply to CLAUDE.md → log in `HISTORY.md` → archive. Every accepted change requires explicit user approval.
+
+**Trade-off**: Requires the user to actively trigger kit-improve. The Start hook nudges with the pending count, but follow-through is voluntary.
+
+---
+
+## Component 15 — code-review-mapper subagent (Proc 8 Step 0b)
+
+**Principle**: Inform + Verify
+
+`.claude/agents/code-review-mapper.md` is a read-only subagent spawned by Procedure 8 when blast-radius > 10 files. It maps exports, imports, call sites, and anomalies across the affected file list, writes a compact summary to `/tmp/review-map.md`, then stops. The main agent reviews using the map rather than opening all files raw.
+
+**Why narrow, not full orchestration**: single subagent, sequential handoff, no file edits, no git writes — one `Agent` tool call, no infrastructure required.
+
+**Trade-off**: Adds ~30–90 seconds per large-scope review. grep-based call-site detection misses dynamic dispatch.
+
+---
+
+## Component 16 — `.claude/settings` shared/local split
+
+**Principle**: Inform (project-shared config) + Human in loop (user-local permissions stay local)
+
+v1.0 introduced project-shared hooks (Stop / UserPromptSubmit / PostToolUse) that **must** be tracked in git so every cloner gets the same agent behavior. Pre-v1.0, `.claude/settings.json` was gitignored because it mixed user-specific permission allowlists with the only shared item at the time (PreToolUse Bash block).
+
+Claude Code's two-file pattern resolves the conflict:
+
+| File | Scope | Tracked | Contents |
+|---|---|---|---|
+| `.claude/settings.json` | Project-shared | ✅ tracked | `hooks` block only (PreToolUse Bash block + v1.0 Stop/UserPromptSubmit/PostToolUse) |
+| `.claude/settings.local.json` | User-local | ❌ gitignored | `permissions.allow`, `permissions.additionalDirectories` — accumulate per user |
+
+Claude Code automatically merges both at startup; `.local` overrides `.json`.
+
+**Bootstrap implication**: cloning the kit now gives every user the same hook behavior immediately. No manual hook registration step required.
+
+**Trade-off**: when Claude Code auto-records a newly approved permission, it can land in `settings.json` instead of `settings.local.json` depending on which exists. Maintainers should periodically move user-specific entries out of `settings.json` to keep the shared file hook-only.
+
+---
+
+## Current principle coverage
+
+| Principle | How the kit implements it |
 |---|---|
-| **README.md bootstrap** gains `git config core.hooksPath .githooks` | Activates the hook with explicit user consent (git refuses silent hook activation by design) |
-| **CLAUDE.md edits M1–M5 + R6** | Wires v0.8 capabilities into the SSOT that the AI agent reads as context |
-| **docs/CHECKLIST.md Phase B** gains 4 verification items | Phase B (toolchain lock) now includes hook + cadence + skills smoke tests |
-| **.gitignore comment** clarifying `.claude/skills/` is tracked | Prevents future confusion ("should skill files be committed?") |
-
----
-
-## Scenarios — v0.7 vs v0.8
-
-### Scenario A: AI forgets to run DoD verification
-
-| Stage | v0.7 | v0.8 |
-|---|---|---|
-| Pre-commit | AI didn't autonomously trigger Procedure 1 | Hook fires automatically on `git commit` |
-| Bad code (`console.log`) | Slips through → reviewer catches → −1 to −3 pts | Gate 5 blocks → user fixes and retries |
-
-### Scenario B: User runs `git commit -m "..."` directly (bypassing chat)
-
-| Stage | v0.7 | v0.8 |
-|---|---|---|
-| Verification | None — procedures lived only in chat | Hook runs regardless of how commit was triggered |
-
-### Scenario C: SPEC / requirements updated mid-project
-
-| Stage | v0.7 | v0.8 |
-|---|---|---|
-| Identifying affected ADRs | Manual — re-read every ADR vs SPEC diff | `grep "**SPEC origin**:" docs/DESIGN.md` extracts every ADR with the affected §section |
-
-### Scenario D: D-2 self-assessment
-
-| Stage | v0.7 | v0.8 |
-|---|---|---|
-| Progress check | `git log | wc -l` + manual checklist scan + days-to-deadline mental math | `cadence` → one 8-line digest |
-
-### Scenario E: Non-Claude user clones the kit
-
-| Stage | v0.7 | v0.8 |
-|---|---|---|
-| Procedure auto-discovery | Claude Code only | Codex / Cursor / Aider auto-route on trigger keywords via SKILL.md |
-
----
-
-## Five-principle coverage map
-
-| Principle | v0.7 coverage | v0.8 addition |
-|---|---|---|
-| **Constrain** | Absolute prohibitions (don't modify SPEC, don't commit without approval) | Pre-commit hook enforces gates 1-5 mechanically |
-| **Inform** | CLAUDE.md / AGENTS.md / HINT comments | SPEC origin field (provenance) + `.claude/skills/` (multi-vendor) |
-| **Verify** | 7-gate DoD + Procedures 1 / 2 / 3 (chat-time) | Procedure 5 (cadence sensor) |
-| **Correct** | Gate 6b doc-drift heuristic | Procedure 1 step 3b auto-corrective (advisory) |
-| **Human in loop** | User commit approval mandatory | Preserved — auto-corrective is advisory, never applies without consent |
-
-All five principles covered. None weakened.
-
----
-
----
-
-## v0.9 additions
-
-Five new components derived from OpenAI's harness engineering article.
-
-### Context — v0.8 gaps that motivated v0.9
-
-| Pattern (OpenAI article) | v0.8 status | Gap |
-|---|---|---|
-| Execution plans as versioned artifacts | PROCESS.md covers phase order | No active/completed separation; no decision log per task |
-| Quality grades per domain | CHECKLIST.md tracks `[x]`/`[ ]` only | No domain-level health scores visible at a glance |
-| Core beliefs document | Implied in coding rules | Never codified as explicit, permanent design principles |
-| Doc-gardening scan | Gate 6b fires at commit time only | No proactive stale-doc detection between commits |
-| Short entry point (~100 lines) | CLAUDE.md was ~450 lines | Excess context load every turn |
-| Active/completed plan split | Flat PLAN.md only | No per-feature state tracking; agent re-derives context each turn |
-
-### Components
-
-| Component | File(s) changed | Principle |
-|---|---|---|
-| **Exec-plan templates** (`docs/exec-plans/`) | New dir: `active/TEMPLATE.md`, `completed/`, `tech-debt-tracker.md` | **Inform** — agent gets explicit "what am I working on now" artifact; no context re-derivation per turn |
-| **Quality grades table** (CHECKLIST.md §0) | `docs/CHECKLIST.md` | **Verify** — one-glance domain health map; surfaced by Procedure 5 cadence |
-| **Core beliefs** (DESIGN.md §0) | `docs/DESIGN.md` | **Inform** — permanent operating principles (agent legibility, boring tech, in-repo) applied to every ADR |
-| **Procedure 7: doc-gardening** | `CLAUDE.md` (new procedure) | **Correct** — proactive stale-doc detection between commits, not just at commit time |
-| **Procedure 4: self-review pass** | `CLAUDE.md` (Procedure 4 extension) | **Verify** — pre-ship review now includes a silent diff-against-criteria pass before producing the score simulation |
-
-### Principle coverage after v0.9
-
-| Principle | v0.8 | v0.9 addition |
-|---|---|---|
-| **Constrain** | Pre-commit hook gates 1-5 | (no change) |
-| **Inform** | SPEC origin field + `.claude/skills/` | Core beliefs in DESIGN.md + exec-plan active artifacts |
-| **Verify** | Procedure 5 cadence sensor | Quality grades in cadence output + self-review pass in Procedure 4 |
-| **Correct** | Procedure 1 step 3b (README↔scripts) | Procedure 7 doc-gardening (broader stale-doc scan) + exec-plan step sync in Gate 6 |
-| **Human in loop** | All correctves advisory | Preserved — Procedure 7 never auto-edits |
+| **Constrain** | Absolute prohibitions in CLAUDE.md · Pre-commit hook gates 1–5 · `PreToolUse` hook blocks destructive commands |
+| **Inform** | CLAUDE.md (rules SSOT) · SPEC origin field · `.claude/skills/` (multi-vendor) · Exec-plans (active task context) · Core beliefs (DESIGN.md §0) · Start hook (live context per session) · code-review-mapper map (large-scope reviews) |
+| **Verify** | 7-gate DoD (Proc 1) · Cadence + quality grades (Proc 5) · Self-review pass (Proc 4) · PostToolUse lint (edit-time advisory) · code-review-mapper (independent call-graph map) |
+| **Correct** | Auto-corrective (Proc 1 step 3b) · Doc-gardening (Proc 7) · Stop hook → kit-improve (CLAUDE.md feedback loop) |
+| **Human in loop** | User approval required before every commit · All correctves advisory, never auto-apply · kit-improve requires explicit approval per accepted change |
 
 ---
 
 ## What the kit deliberately does NOT do
 
-### Permanent rejections (any version)
+### Permanent rejections
 
 | Rejected pattern | Why |
 |---|---|
@@ -361,7 +413,7 @@ Five new components derived from OpenAI's harness engineering article.
 | Broader auto-correctives (function renames, schema migrations) | False-positive risk > value |
 | Skill marketplace external dependencies | Community-dependent, breaks the kit's single-source self-containment |
 
-### Out of scope for 3–7 day projects (from OpenAI article)
+### Out of scope for 3–7 day projects
 
 These patterns exist in production-scale harness engineering but are explicitly rejected because the 5-day timeline can't absorb the infrastructure cost:
 
@@ -373,16 +425,17 @@ These patterns exist in production-scale harness engineering but are explicitly 
 | Background recurring garbage-collection agents | Requires persistent agent runtime; project sessions are ephemeral |
 | Multi-agent PR review (full Ralph Wiggum loop) | Assumes PR queue, CI triggers, and agent orchestration infrastructure |
 | MCP server integration | Assumes user infrastructure; violates tech-neutrality |
-| Multi-agent orchestration (Vera/Axel/etc. style) | 5-day projects don't warrant agent-team overhead |
+| Multi-agent orchestration (Vera/Axel/etc. style) | Full orchestration pipelines don't fit 5-day scope; narrow single-subagent in Proc 8 is the approved exception |
 | Production-scale thinking (1,500 PRs / ~100M LoC) | Kit targets 50–200 commits, 5k–20k LoC; different threat model |
 
 ---
 
 ## See also
 
-- [`CLAUDE.md`](../CLAUDE.md) — universal AI rules, DoD definition, and the 5 procedures
-- [`README.md`](../README.md) — user-facing bootstrap and usage
-- [`docs/PROCESS.md`](PROCESS.md) — implementation phase order
+- [`CLAUDE.md`](../../CLAUDE.md) — universal AI rules, DoD definition, and procedures 1–10
+- [`README.md`](../../README.md) — user-facing bootstrap and usage
+- [`docs/PROCESS.md`](../PROCESS.md) — implementation phase order
+- [`docs/kit/HISTORY.md`](HISTORY.md) — version history and improvement log
 - [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/) — the upstream concept
 - [agents.md](https://agents.md/) — the AGENTS.md / SKILL.md convention spec
 - [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering) — curated patterns

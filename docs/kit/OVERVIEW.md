@@ -34,11 +34,26 @@ flowchart TB
       DESIGN["<b>DESIGN.md</b> · ADRs + SPEC origin"]
       PROCESS["<b>PROCESS.md</b> · impl order/deps"]
       CHECK["<b>CHECKLIST.md</b> · tasks tagged [§N]"]
-      HARN["HARNESS.md · design rationale"]
     end
 
-    subgraph SKILLS["⚡ .claude/skills/ — multi-vendor triggers"]
-      SK["cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-ship-review · spec-drift<br/>doc-gardening · code-review · security-audit"]
+    subgraph KIT["📦 docs/kit/ — Kit-meta (reference + maintainer)"]
+      direction TB
+      HARN["HARNESS.md · design rationale"]
+      OVW2["OVERVIEW.md · structure (this file)"]
+      TOOLS["TOOLS.md · dev tool recommendations"]
+      HIST["HISTORY.md · v0.7→v1.x changelog"]
+      IMPR["improvements/ · self-improvement loop<br/>(Stop hook writes here · kit-improve processes)"]
+    end
+
+    subgraph CLAUDE_DIR["⚡ .claude/ — agent configuration"]
+      SK["skills/ — multi-vendor triggers<br/>cadence · code-review · security-audit · …"]
+      AG["agents/ — subagent definitions<br/>code-review-mapper (read-only mapper)"]
+    end
+
+    subgraph CHOOKS["🪝 scripts/hooks/ — Claude Code event hooks (chat-time)"]
+      SREF["session-reflect.sh<br/>Stop → kit improvement proposal"]
+      SSTA["session-start.sh<br/>UserPromptSubmit → context injection"]
+      PEL["post-edit-lint.sh<br/>PostToolUse → instant lint"]
     end
 
     subgraph GUARD["🛡 Auto safety net (git-time)"]
@@ -96,20 +111,35 @@ flowchart LR
   AGENTS["AGENTS.md<br/>env gotchas"]
   SRC["src/<br/>your code"]
 
-  subgraph SSOT["docs/ — single source of truth"]
+  subgraph SSOT["docs/ — single source of truth (project)"]
     direction TB
     SPEC["SPEC.md · immutable"]
     PLAN["PLAN.md · scope / schedule / §N map"]
     DESIGN["DESIGN.md · ADRs + SPEC origin"]
     PROCESS["PROCESS.md · implementation order"]
     CHECK["CHECKLIST.md · tasks tagged §N"]
-    HARN["HARNESS.md · design rationale"]
-    OVW["OVERVIEW.md · structure guide"]
   end
 
-  subgraph SKILLS[".claude/skills/ — multi-vendor triggers"]
+  subgraph KITDOC["docs/kit/ — kit-meta"]
     direction TB
-    SK["cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-ship-review · spec-drift<br/>doc-gardening · code-review · security-audit"]
+    HARN["HARNESS.md · design rationale"]
+    OVW["OVERVIEW.md · structure guide"]
+    TOOLS["TOOLS.md · dev tools"]
+    HIST["HISTORY.md · changelog"]
+    IMPR["improvements/ · self-improvement loop"]
+  end
+
+  subgraph CLAUDE_DIR[".claude/ — agent configuration"]
+    direction TB
+    SK["skills/ — multi-vendor triggers<br/>cadence · checklist-trace · dod-verify<br/>phase-a-guide · pre-ship-review · spec-drift<br/>doc-gardening · code-review · security-audit"]
+    AG["agents/ — subagent definitions<br/>code-review-mapper (read-only mapper, Proc 8)"]
+  end
+
+  subgraph CHOOKS["scripts/hooks/ — Claude Code event hooks"]
+    direction TB
+    SREF["session-reflect.sh · Stop"]
+    SSTA["session-start.sh · UserPromptSubmit"]
+    PEL["post-edit-lint.sh · PostToolUse"]
   end
 
   subgraph EXEC["Enforcement + sensors"]
@@ -120,12 +150,15 @@ flowchart LR
   end
 
   CLAUDE --> SSOT
+  CLAUDE --> KITDOC
   CLAUDE --> SKILLS
+  CLAUDE --> CHOOKS
   CLAUDE --> EXEC
   CLAUDE --> README
   CLAUDE --> AGENTS
   HOOK -. reads staged blobs .-> SRC
   CAD -. reads git log .-> SRC
+  SREF -. writes .-> IMPR
 ```
 
 **3. Per-commit flow — chat-time + git-time double safety net**
@@ -155,11 +188,12 @@ sequenceDiagram
 
 ---
 
-## Reading guide (3 lines)
+## Reading guide (4 lines)
 
 1. **Top time-axis** = work order — `A doc align → B toolchain → C implement × N → D polish → E ship`.
-2. **CLAUDE.md (center)** = brain — routes natural-language input ("ready to commit", "review", "progress check") into 9 procedures, enforces 7-gate DoD.
-3. **docs/ (SSOT)** = single info source · **.claude/skills/** = same procedures exposed to multi-vendor agents (Cursor / Codex / Aider) · **.githooks/pre-commit** = git-time safety net for commits that bypass chat.
+2. **CLAUDE.md (center)** = brain — routes natural-language input ("ready to commit", "review", "progress check") into 9 project procedures, enforces 7-gate DoD.
+3. **docs/ (SSOT)** = project info · **docs/kit/** = kit-meta (reference + maintainer area) · **.claude/skills/** = procedures exposed to multi-vendor agents · **.claude/agents/** = subagent definitions (read-only explorers) · **.githooks/pre-commit** = git-time safety net for commits that bypass chat.
+4. **scripts/hooks/** = Claude Code event hooks — chat-time companions: instant lint on edit (PostToolUse), session context injection on start (UserPromptSubmit), and kit self-improvement reflection on stop (Stop) feeding `docs/kit/improvements/` for `kit-improve` review.
 
 ---
 
@@ -171,6 +205,7 @@ sequenceDiagram
 | **Natural-language triggers** | CLAUDE.md "AI agent procedures" table | No slash commands required — "커밋해도 돼" → Proc.1 |
 | **SSOT separation** | CLAUDE.md routing table | Each fact lives in exactly one document; duplicates get consolidated |
 | **Multi-vendor reach** | `.claude/skills/SKILL.md` frontmatter | Codex / Cursor / Aider auto-discover via the SKILL.md convention |
+| **Subagent exploration** | `.claude/agents/code-review-mapper.md` | Large-scope reviews spawn a read-only subagent to map the subsystem before the main agent edits |
 | **Read-only observability** | `scripts/cadence.sh` + Procedure 5 | Shows numbers, never recommends — user retains agency |
 | **Stack-neutral** | Pre-commit hook auto-detects Node / Python / Rust / Go / Java | One kit, any stack |
 
@@ -180,20 +215,18 @@ sequenceDiagram
 
 ```
 craft-kit/
-├── CLAUDE.md              ← AI rules index ~140 lines (routing + rules + procedure trigger table)
+├── CLAUDE.md              ← AI rules index (routing + rules + procedure trigger table + self-improvement loop)
 ├── README.md              ← Dual identity: kit-readme → project-readme
 ├── AGENTS.md              ← Environment-specific gotchas
 ├── LICENSE
 ├── docs/
-│   ├── SPEC.md            ← Immutable external contract (paste, then never edit)
-│   ├── PLAN.md            ← Interpretation, scope, schedule, requirements (§N) map
-│   ├── DESIGN.md          ← §0 Core beliefs + ADRs with SPEC origin field
-│   ├── PROCESS.md         ← Implementation order, dependency graph
-│   ├── CHECKLIST.md       ← Quality grades + tasks tagged [§N] (criterion), per-phase
-│   ├── HARNESS.md         ← Design rationale (WHY this kit shape)
-│   ├── OVERVIEW.md        ← This file (WHAT the kit does)
-│   ├── tools.md           ← Recommended dev tools: context-mode + code-review-graph (install once per machine)
-│   ├── procedures/        ← Procedure details (read on demand — not loaded every turn)
+│   ├── SPEC.md            ← (Project) Immutable external contract — paste, then never edit
+│   ├── PLAN.md            ← (Project) Interpretation, scope, schedule, requirements (§N) map
+│   ├── DESIGN.md          ← (Project) §0 Core beliefs + ADRs with SPEC origin field
+│   ├── PROCESS.md         ← (Project) Implementation order, dependency graph
+│   ├── CHECKLIST.md       ← (Project) Quality grades + tasks tagged [§N] (criterion), per-phase
+│   ├── GUIDE.md           ← (Project) Read-this-first walkthrough for new users
+│   ├── procedures/        ← (Project) Procedure details — Proc 1-9, read on demand
 │   │   ├── proc-1-dod.md
 │   │   ├── proc-2-trace.md
 │   │   ├── proc-3-spec-drift.md
@@ -203,18 +236,35 @@ craft-kit/
 │   │   ├── proc-7-gardening.md
 │   │   ├── proc-8-code-review.md
 │   │   └── proc-9-security.md
-│   └── exec-plans/
-│       ├── active/
-│       │   └── TEMPLATE.md  ← Copy + rename for each complex feature (3+ files)
-│       ├── completed/       ← Finished exec-plans (history)
-│       └── tech-debt-tracker.md  ← Running catalog of known shortcuts
+│   ├── exec-plans/
+│   │   ├── active/
+│   │   │   └── TEMPLATE.md  ← Copy + rename for each complex feature (3+ files)
+│   │   ├── completed/       ← Finished exec-plans (history)
+│   │   └── tech-debt-tracker.md  ← Running catalog of known shortcuts
+│   └── kit/               ← (Kit-meta) About craft-kit itself — reference + maintainer area
+│       ├── HARNESS.md         ← Design rationale (WHY this kit shape) — useful reference
+│       ├── OVERVIEW.md        ← This file (WHAT the kit does) — useful reference
+│       ├── TOOLS.md           ← Recommended dev tools: context-mode + code-review-graph
+│       ├── HISTORY.md         ← Kit version history (v0.7 → v1.x changelog)
+│       └── improvements/      ← Kit self-improvement loop — Stop hook writes here
+│           ├── kit-improve.md   ← Process for reviewing pending proposals (no number — not a project procedure)
+│           ├── pending/         ← Auto-generated by Stop hook
+│           ├── accepted/        ← Archived after kit-improve approves
+│           └── rejected/        ← Archived after kit-improve rejects (with reason)
 ├── .claude/
-│   └── skills/            ← Multi-vendor SKILL.md triggers (Codex/Cursor/Aider)
+│   ├── settings.json       ← Shared hook config: PreToolUse / Stop / UserPromptSubmit / PostToolUse (tracked)
+│   ├── settings.local.json ← User-local permissions + additionalDirectories (gitignored — see Component 16)
+│   ├── agents/             ← Subagent definitions (e.g., code-review-mapper)
+│   └── skills/             ← Multi-vendor SKILL.md triggers (Codex/Cursor/Aider)
 ├── .githooks/
 │   ├── pre-commit         ← DoD gates 1-5 enforcement (stack-auto, blocks bad commits)
 │   └── post-commit        ← Exec-plan sync reminder + inline TODO scan (advisory only)
 ├── scripts/
-│   └── cadence.sh         ← Progress digest: commits / §N / quality grades / tech-debt / stale docs / D-day
+│   ├── cadence.sh         ← Progress digest: commits / §N / quality grades / tech-debt / stale docs / D-day
+│   └── hooks/             ← Claude Code event hooks (chat-time, complement git-time pre-commit)
+│       ├── session-reflect.sh   ← Stop hook  → writes to docs/kit/improvements/pending/ (kit-scoped)
+│       ├── session-start.sh     ← UserPromptSubmit → injects branch / active plans / pending count
+│       └── post-edit-lint.sh    ← PostToolUse → instant lint advisory after Write/Edit on src/
 └── wrap-up/               ← Per-session work logs (gitignored)
 ```
 

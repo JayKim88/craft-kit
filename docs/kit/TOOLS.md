@@ -68,6 +68,6 @@ code-review-graph build     # parse project once — creates .code-review-graph/
 code-review-graph watch     # background daemon; incremental updates on save
 ```
 
-> **Required for projects with source code** (`src/` exists). Skip only for kit-only work (docs + scripts, no `src/`).
+> **Required for projects with source code** (`src/` exists). Skip only for kit-only work (`docs/` + `scripts/` + `.claude/` only, no `src/`).
 
 **Does NOT need to be added to the project repo** — add `.code-review-graph/` to `.gitignore` manually. Runs as a global MCP server pointed at the current project directory.

@@ -38,13 +38,15 @@ If any box is unchecked: stop, surface what is missing, and run Procedure 6 (Pha
 | Implementation order / deps | [PROCESS.md](docs/PROCESS.md) | Phase A only |
 | Task list / progress | [CHECKLIST.md](docs/CHECKLIST.md) | Phase C every commit |
 | External-facing output | [README.md](README.md) | Phase A + D |
-| Kit structure | [OVERVIEW.md](docs/OVERVIEW.md) | Kit releases |
-| Kit design rationale | [HARNESS.md](docs/HARNESS.md) | Kit releases |
+| Kit structure | [OVERVIEW.md](docs/kit/OVERVIEW.md) | Kit releases |
+| Kit design rationale | [HARNESS.md](docs/kit/HARNESS.md) | Kit releases |
 | Active feature plans | [exec-plans/active/](docs/exec-plans/active/) | Phase C per feature |
 | Known tech debt | [tech-debt-tracker.md](docs/exec-plans/tech-debt-tracker.md) | Phase C per shortcut |
 | Domain health grades | [CHECKLIST.md "Quality grades"](docs/CHECKLIST.md) | Phase C per cycle |
-| Procedure details | [docs/procedures/](docs/procedures/) | Kit releases |
-| Recommended dev tools (MCP, env) | [tools.md](docs/tools.md) | Kit releases |
+| Procedure details (project) | [docs/procedures/](docs/procedures/) | Kit releases |
+| Recommended dev tools (MCP, env) | [TOOLS.md](docs/kit/TOOLS.md) | Kit releases |
+| Kit version history | [docs/kit/HISTORY.md](docs/kit/HISTORY.md) | kit-improve (post-acceptance) |
+| Kit improvement proposals + kit-improve | [kit/improvements/](docs/kit/improvements/) | Stop hook (auto) + kit-improve |
 
 ---
 
@@ -181,3 +183,18 @@ Execute inline when triggered. Read the linked procedure file for full steps.
 | **7** | "stale docs" · "doc scan" · "가든" · "문서 점검" · Phase D start | Scan docs/ staleness vs recent src/ diff. Report only — no auto-edit. | → [proc-7-gardening.md](docs/procedures/proc-7-gardening.md) |
 | **8** | "코드 리뷰해줘" · "code review" · "리뷰해줘" · "review this code" | Deep code quality review: correctness vs SPEC, architecture, simplicity, duplication, naming, error handling, types, security. No auto-fix — user owns all decisions. | → [proc-8-code-review.md](docs/procedures/proc-8-code-review.md) |
 | **9** | "보안 감사" · "security audit" · "취약점 확인" · "cso" | Dedicated security audit: secrets, dependencies, CI/CD, OWASP Top 10. Exploit scenario required per finding. No auto-fix. | → [proc-9-security.md](docs/procedures/proc-9-security.md) |
+| **10** | "kit improve" · "개선 반영" · "improvement review" | Review `docs/kit/improvements/pending/`, decide accept/reject/defer per proposal, apply to CLAUDE.md, log in docs/kit/HISTORY.md, archive. No auto-apply — user approval required per change. | → [kit-improve.md](docs/kit/improvements/kit-improve.md) |
+
+---
+
+## Self-improvement loop
+
+The kit improves itself through three hook-driven mechanisms. No manual trigger needed for collection — only **kit-improve** requires user action.
+
+| Hook | Event | What it does |
+|---|---|---|
+| `scripts/hooks/session-reflect.sh` | `Stop` (end of each turn) | If src/ files were edited this session, writes a structured review prompt to `docs/kit/improvements/pending/YYYY-MM-DD.md`. Idempotent — one file per day. |
+| `scripts/hooks/session-start.sh` | `UserPromptSubmit` (first message) | Injects current branch, active exec-plans, and pending-improvement count as system context. Runs once per session via session-ID marker. |
+| `scripts/hooks/post-edit-lint.sh` | `PostToolUse` (Write/Edit) | Runs fast lint on modified src/ file. Surfaces errors only (non-blocking). Pre-commit gate 1 remains authoritative. |
+
+**When proposals accumulate** → trigger **kit-improve**. Accepted improvements are logged in [docs/kit/HISTORY.md](docs/kit/HISTORY.md) and archived; rejected proposals are archived with a reason.

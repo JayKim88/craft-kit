@@ -1,0 +1,142 @@
+# Kit History — craft-kit
+
+Chronological record of accepted kit improvements. Newest first.
+Each entry was processed through kit-improve and approved by the user.
+
+> **Rejected proposals** are archived in `docs/kit/improvements/rejected/` with a reason.
+> **Pending proposals** are staged in `docs/kit/improvements/pending/`.
+
+---
+
+## Improvement log (post-v1.0)
+
+_Entries added here by kit-improve as improvements are accepted._
+
+<!-- Format:
+### YYYY-MM-DD — short description
+- **Source**: `docs/kit/improvements/pending/<filename>`
+- **Change**: what was added or amended (one sentence)
+- **Target**: `CLAUDE.md §"<section>"`
+-->
+
+---
+
+## v1.1 — Proc 8 subagent map
+*Date: 2026-05-25*
+
+Separated exploration from editing in large-scope code reviews, based on the subagent pattern in the agent harness engineering article:
+
+- **`code-review-mapper` subagent** (`.claude/agents/code-review-mapper.md`): read-only agent that maps exports, imports, call sites, and anomalies across the blast-radius file list, then writes a compact summary to `/tmp/review-map.md`
+- **Proc 8 Step 0b**: when blast-radius > 10 files, spawns `code-review-mapper` before the main review begins — main agent reads the map instead of opening all files raw
+- **`.claude/skills/code-review.md`**: updated to mention the subagent path for large-scope reviews
+- **Out-of-scope update**: "Multi-agent orchestration" row in HARNESS.md narrowed — full orchestration remains rejected; single read-only subagent in Proc 8 is the approved exception
+
+**Why narrow**: single subagent, sequential handoff, read-only, no infrastructure required — not a full orchestration pipeline.
+
+### Five-principle coverage after v1.1
+
+| Principle | v1.0 | v1.1 addition |
+|---|---|---|
+| **Constrain** | Pre-commit hook gates 1–5 | (no change) |
+| **Inform** | Start hook + skills + exec-plans | Subagent map gives main agent full subsystem picture before reviewing |
+| **Verify** | Cadence + quality grades + PostToolUse lint | Subagent independently maps call graph — cross-check against main agent's assumptions |
+| **Correct** | Stop hook + kit-improve | (no change) |
+| **Human in loop** | All correctves advisory | Preserved — subagent only reads; main agent presents findings; user decides |
+
+---
+
+## v1.0 — Self-improving loop
+*Date: 2026-05-25*
+
+Shifted hooks from pure guard-rails to active self-improvement, based on the insight:
+> *"Hooks make the setup self-improving. A stop hook can reflect on what happened during a session and propose CLAUDE.md updates while the context is fresh."*
+> — Claude, "How Claude Code Works in Large Codebases"
+
+Prior versions (v0.7–v0.9) used only `PreToolUse` hooks to block dangerous commands.
+v1.0 adds two new hook roles and a full improvement feedback loop:
+
+- **Stop hook** (`scripts/hooks/session-reflect.sh`): On session end with kit-file edits, generates a structured improvement proposal in `docs/kit/improvements/pending/`. Scope-guarded by `docs/kit/improvements/` presence; reads `/tmp/cc-files-all.txt` filtered by current session_id.
+- **Start hook** (`scripts/hooks/session-start.sh`): On first user message per session, injects current branch, active exec-plans, and pending improvement count as system context
+- **PostToolUse lint** (`scripts/hooks/post-edit-lint.sh`): After Write/Edit to src/ files, runs fast language-specific lint and surfaces errors immediately (non-blocking advisory; gate 1 in pre-commit remains authoritative)
+- **kit-improve** (`docs/kit/improvements/kit-improve.md`): Structured review process for pending proposals — read, decide (accept/reject/defer), apply, log, archive
+- **Kit improvements staging** (`docs/kit/improvements/pending|accepted|rejected/`): Three-state artifact lifecycle for improvement proposals
+- **Kit history** (`docs/kit/HISTORY.md`): This document — authoritative log of what changed and why
+
+### Structural: `docs/kit/` separation
+
+To make the kit-vs-project boundary self-evident, kit-meta documents moved into a dedicated `docs/kit/` directory:
+
+| Before | After |
+|---|---|
+| `docs/HARNESS.md` | `docs/kit/HARNESS.md` |
+| `docs/OVERVIEW.md` | `docs/kit/OVERVIEW.md` |
+| `docs/tools.md` | `docs/kit/TOOLS.md` |
+| `docs/kit-history.md` | `docs/kit/HISTORY.md` (prefix dropped — redundant inside `kit/`) |
+| `docs/kit-improvements/` | `docs/kit/improvements/` (same) |
+| `docs/procedures/proc-10-kit-improve.md` | `docs/kit/improvements/kit-improve.md` (no longer a numbered project procedure) |
+
+Project documents (SPEC / PLAN / DESIGN / PROCESS / CHECKLIST / GUIDE / exec-plans / procedures) stayed at `docs/` root. Naming convention: numbered `proc-N-*.md` reserved for project procedures (1–9); kit workflows use descriptive names without numbers.
+
+### Five-principle coverage after v1.0
+
+| Principle | v0.9 | v1.0 addition |
+|---|---|---|
+| **Constrain** | Pre-commit hook gates 1–5 | (no change) |
+| **Inform** | SPEC origin + skills + exec-plans + core beliefs | Start hook injects live branch/plan context every session |
+| **Verify** | Cadence + quality grades + self-review | PostToolUse lint surfaces errors before pre-commit |
+| **Correct** | Procedure 7 doc-gardening + Proc 1 auto-corrective | Stop hook + kit-improve close the CLAUDE.md improvement loop |
+| **Human in loop** | All correctves advisory | Preserved — kit-improve requires explicit user approval for every change |
+
+---
+
+## v0.9 — Active observability
+*Date: pre-history*
+
+Added proactive detection and per-feature state tracking:
+
+- **Exec-plan templates** (`docs/exec-plans/active/`) — explicit "what am I working on now" artifact; agent no longer re-derives context each turn
+- **Quality grades table** in CHECKLIST.md — one-glance domain health map surfaced by cadence
+- **Core beliefs** in DESIGN.md — permanent operating principles applied to every ADR
+- **Procedure 7: doc-gardening** — proactive stale-doc detection between commits (not only at commit time)
+- **Procedure 4: self-review pass** — pre-ship review includes a silent diff-against-criteria pass before score simulation
+
+---
+
+## v0.8 — Mechanical enforcement
+*Date: pre-history*
+
+Closed the gap between "Claude knows the rules" and "the rules are mechanically enforced":
+
+- **Pre-commit hook** (`.githooks/pre-commit`): Gates 1–5 (lint / test / build / type-escape / debug-log) fire on every `git commit`, regardless of whether the user went through chat
+- **SPEC origin field** in DESIGN.md ADRs — every ADR traces back to a SPEC clause
+- **`.claude/skills/` SKILL.md packaging** — procedures auto-discoverable by non-Claude agents (Codex, Cursor, Aider)
+- **Procedure 5 (Cadence)** + `scripts/cadence.sh` — 8-line progress digest on demand
+- **Auto-corrective in Procedure 1 step 3b** — detects README ↔ package.json script drift and proposes a one-command fix
+
+---
+
+## Origin (v0.1 – v0.6)
+
+Earlier iterations under different names — not part of the current craft-kit identity but preserved here for traceability (see `git log` for detail):
+
+| Version | What changed |
+|---|---|
+| v0.1.0 | `recruit-kit` — initial cookiecutter for recruitment assignments |
+| v0.1.1 | post-review fixes |
+| v0.2.0–0.2.1 | address deferred review issues, add walkthrough.md |
+| v0.3.0 | translate all docs/templates/prompts to English |
+| v0.4.0 | rename `recruit-kit` → `takehome-kit` |
+| v0.5, v0.6 | (skipped — no releases) |
+
+v0.7 is the major redesign that established the current shape (clone-and-edit template). Later, `takehome-kit` was renamed to `craft-kit` (kit identity, not a version bump).
+
+---
+
+## v0.7 — Baseline
+*Date: pre-history*
+
+Core kit established:
+- `CLAUDE.md` with coding rules, 7-gate DoD, absolute prohibitions
+- Procedures 1–4: DoD, §N trace, SPEC drift, pre-ship review
+- Workflow phases A–E (Doc alignment → Ship)
+- SPEC-immutable rule, user-approval-before-commit invariant

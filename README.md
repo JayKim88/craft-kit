@@ -8,7 +8,7 @@ A structured kit for shipping quality code under deadline pressure. Clone → fi
 - **9 AI agent procedures** — triggered by natural language ("ready to commit", "리뷰해줘", "보안 감사", "어디까지 왔어")
 - **Stack-aware pre-commit safety net** — auto-detects Node / Python / Rust / Go / Java via `git config core.hooksPath`
 
-> For a full mental model — phase timeline, file ownership, per-commit flow — see **[docs/OVERVIEW.md](docs/OVERVIEW.md)**.
+> For a full mental model — phase timeline, file ownership, per-commit flow — see **[docs/kit/OVERVIEW.md](docs/kit/OVERVIEW.md)**.
 
 **Bootstrap a new project:**
 
@@ -37,7 +37,7 @@ Project-specific zones are marked `<!-- HINT -->` — yours to fill. Universal r
 
 **Forking:** edit `LICENSE` (copyright line) and the `git clone` URL above to point to your fork.
 
-**Design rationale:** [docs/HARNESS.md](docs/HARNESS.md) — why this kit is shaped the way it is, mapped to OpenAI's harness engineering principles.
+**Design rationale:** [docs/kit/HARNESS.md](docs/kit/HARNESS.md) — why this kit is shaped the way it is, mapped to OpenAI's harness engineering principles.
 
 </details>
 

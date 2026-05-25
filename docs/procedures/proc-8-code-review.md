@@ -47,8 +47,31 @@ code-review-graph build
 Query the MCP for the blast-radius of files in `git diff HEAD` — use the returned file list as the review scope instead of reading all changed files.
 
 > **Required** for projects with source code (`src/` exists).
-> If not installed, set up first → [docs/tools.md](../tools.md).
+> If not installed, set up first → [docs/kit/TOOLS.md](../kit/TOOLS.md).
 > Kit-only work (docs + scripts only, no `src/`) may skip this step.
+
+---
+
+### 0b. Subsystem map — subagent exploration (large scope only)
+
+**Condition**: blast-radius from Step 0 returns **> 10 files**.  
+Skip this step when: ≤ 10 files, Step 0 was skipped (kit-only work — `docs/` + `scripts/` + `.claude/` only, no `src/`), or user named specific files manually.
+
+**Why**: Reading 10+ files raw floods the main context window before the review begins. A read-only subagent maps the subsystem first; the main agent then reviews with the full picture instead of reading blind.
+
+Spawn the [`code-review-mapper`](../../.claude/agents/code-review-mapper.md) subagent with the blast-radius file list from Step 0 as input:
+
+```
+Task for code-review-mapper:
+Map the following files (blast-radius from code-review-graph):
+<paste file list from Step 0>
+```
+
+After the subagent writes `/tmp/review-map.md`:
+- Read the map before opening any source file.
+- Use it as navigation context for Steps 1–12.
+- Open individual source files only when the map reveals something requiring closer inspection.
+- Do not re-read files the map covers adequately — trust the map.
 
 ---
 
