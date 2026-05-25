@@ -30,7 +30,6 @@ dist/
 .cache/
 
 # Claude Code per-user state — never commit (these specific files only)
-.claude/settings.json
 .claude/settings.local.json
 # Note: .claude/skills/ IS tracked — it ships with the template.
 
