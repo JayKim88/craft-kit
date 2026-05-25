@@ -21,4 +21,6 @@ Run [CLAUDE.md "Procedure 8 — Deep Code Review"](../../CLAUDE.md).
 
 **10 review dimensions** (per procedure): Correctness · Architecture · Simplicity · Domain isolation · Duplication · Size/Complexity · Naming · Error handling · Type safety · Performance · Security.
 
+**Large scope (> 10 files)**: Procedure 8 Step 0b spawns the [`code-review-mapper`](../agents/code-review-mapper.md) subagent to map the subsystem before the main review begins.
+
 **Never auto-rename** — flag location + suggestion, require explicit approval per item.
