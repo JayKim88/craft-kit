@@ -1,7 +1,7 @@
 # Harness Engineering — Design of craft-kit
 
-> Why this kit is shaped the way it is, mapped to OpenAI's *harness engineering* discipline.
-> Reference: [OpenAI — Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/).
+> Why this kit is shaped the way it is, mapped to the *agent harness engineering* discipline.
+> References: [OpenAI — Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) · [Addy Osmani — Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/).
 > For version history, see [HISTORY.md](HISTORY.md).
 
 ---
@@ -397,7 +397,7 @@ Claude Code automatically merges both at startup; `.local` overrides `.json`.
 | **Constrain** | Absolute prohibitions in CLAUDE.md · Pre-commit hook gates 1–5 · `PreToolUse` hook blocks destructive commands |
 | **Inform** | CLAUDE.md (rules SSOT) · SPEC origin field · `.claude/skills/` (multi-vendor) · Exec-plans (active task context) · Core beliefs (DESIGN.md §0) · Start hook (live context per session) · code-review-mapper map (large-scope reviews) |
 | **Verify** | 7-gate DoD (Proc 1) · Cadence + quality grades (Proc 5) · Self-review pass (Proc 4) · PostToolUse lint (edit-time advisory) · code-review-mapper (independent call-graph map) |
-| **Correct** | Auto-corrective (Proc 1 step 3b) · Doc-gardening (Proc 7) · Stop hook → kit-improve (CLAUDE.md feedback loop) |
+| **Correct** | Auto-corrective (Proc 1 step 3b) · Doc-gardening (Proc 7) · Stop hook → kit-improve (CLAUDE.md feedback loop) · Proc 8 Step 13 harness gaps → kit-improve (recurring patterns → rules/hooks) |
 | **Human in loop** | User approval required before every commit · All correctves advisory, never auto-apply · kit-improve requires explicit approval per accepted change |
 
 ---
@@ -436,6 +436,7 @@ These patterns exist in production-scale harness engineering but are explicitly 
 - [`README.md`](../../README.md) — user-facing bootstrap and usage
 - [`docs/PROCESS.md`](../PROCESS.md) — implementation phase order
 - [`docs/kit/HISTORY.md`](HISTORY.md) — version history and improvement log
-- [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/) — the upstream concept
+- [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/) — five-principle framework (Constrain/Inform/Verify/Correct/Human in loop)
+- [Addy Osmani — Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/) — harness patterns and concept overview
 - [agents.md](https://agents.md/) — the AGENTS.md / SKILL.md convention spec
 - [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering) — curated patterns

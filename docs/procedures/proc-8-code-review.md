@@ -245,6 +245,34 @@ Flag only:
 
 ---
 
+### 13. Harness gaps
+
+**Question**: "Does this finding reveal a gap in the harness — a missing rule or missing enforcement?"
+
+Run this step after Steps 2–12. Look at the findings already collected — identify which are **systemic** vs one-off:
+
+| Condition | Qualifies as harness gap |
+|---|---|
+| Same pattern in **2+ files** | Yes — the harness didn't prevent recurrence |
+| CLAUDE.md rule exists but **no hook enforces it** | Yes — rule can be silently violated |
+
+For each harness gap, classify:
+
+- **📋 CLAUDE.md gap** — pattern not covered by any coding rule → add to CLAUDE.md
+- **🔧 Hook gap** — rule exists in CLAUDE.md but pre-commit / PostToolUse doesn't catch it → add grep
+
+**Flag format**:
+```
+📋 CLAUDE.md gap — <pattern>. Suggested rule: "<rule text>"
+🔧 Hook gap     — "<existing rule>" has no grep enforcement. Suggested: grep -rEn '<pattern>' src/
+```
+
+**Skip this step** when: ≤ 3 files in scope, OR kit-only scope (no `src/`).
+
+**If gaps found** → surface to user and offer: "Trigger kit-improve to add these to `docs/kit/improvements/pending/`."
+
+---
+
 ## Output format
 
 ```
@@ -296,6 +324,14 @@ Decisions needed from you:
   1. Rename `flag` → `isExpired`? (UserService.ts:23)
   2. Rename `data` → `orderDraft`? (api/orders.ts:55)
   3. Split processOrder() now or log to tech-debt-tracker?
+
+── Harness gaps ──  (omit section if none)
+  📋 CLAUDE.md gap — guard clause missing from 3 handlers. Suggested rule:
+       "validate at entry point; return early on invalid input — never pass invalid state inward"
+  🔧 Hook gap — "No silent catch" rule in CLAUDE.md but catch({}) not grepped in pre-commit.
+       Suggested: grep -rEn 'catch\s*\(\w*\)\s*\{\s*\}' src/
+
+  → Trigger kit-improve to add the 2 proposals above to pending/.
 ```
 
 ---
@@ -308,5 +344,6 @@ Decisions needed from you:
 - **Never mark something as a problem when it's not** — false positives erode trust
 - **Never auto-rename** — flag for user decision, include the exact location
 - **Do NOT propose refactors outside the reviewed scope** — scope creep in review is noise
+- **Harness gaps are separate from code findings** — they go to kit-improve, not the user's fix list. One-off mistakes are not harness gaps; recurring patterns are.
 
 After the review, if the user says "fix it" for an auto-fixable item (duplication extraction, domain isolation move): execute it and report what changed. For naming and structural changes, require explicit approval per item.

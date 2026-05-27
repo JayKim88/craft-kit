@@ -21,10 +21,42 @@ _Entries added here by kit-improve as improvements are accepted._
 
 ---
 
+## v1.2 — Proc 8 harness gap analysis
+*Date: 2026-05-27*
+
+Connected code review findings to the harness self-improvement loop, based on the **Sensors (Feedback Controls)** concept from Martin Fowler's harness engineering article:
+
+> *"Sensors observe post-action outputs and enable self-correction. The goal is not to fix this instance — it's to prevent the next one."*
+> — [Martin Fowler — Harness Engineering for Coding Agents](https://martinfowler.com/articles/harness-engineering.html)
+
+- **Proc 8 Step 13** (`proc-8-code-review.md`): after the 11 review dimensions, identifies systemic findings (same pattern in 2+ files, or CLAUDE.md rule with no hook enforcement) and classifies them as 📋 CLAUDE.md gap or 🔧 Hook gap — surfaced as kit-improve candidates
+- **Output format**: added `── Harness gaps ──` section (omitted when none found); AI offers to trigger kit-improve if gaps are present
+- **Output rules**: "Harness gaps are separate from code findings — they go to kit-improve, not the user's fix list"
+- **`.claude/skills/code-review.md`**: fixed dimension count (10 → 11); added Step 13 description
+- **`CLAUDE.md` Proc 8 description**: updated to mention harness gap output
+- **`docs/kit/HARNESS.md` Correct principle**: added "Proc 8 Step 13 → kit-improve" to coverage table
+
+**Why**: Proc 8 findings previously ended at the review session. Step 13 closes the loop — recurring patterns discovered in review become permanent harness improvements rather than being rediscovered each cycle.
+
+### Five-principle coverage after v1.2
+
+| Principle | v1.1 | v1.2 addition |
+|---|---|---|
+| **Constrain** | Pre-commit hook gates 1–5 | (no change) |
+| **Inform** | Start hook + skills + exec-plans + subagent map | (no change) |
+| **Verify** | Cadence + quality grades + PostToolUse lint + subagent map | (no change) |
+| **Correct** | Stop hook + kit-improve + doc-gardening | Proc 8 Step 13 — code review findings feed harness improvement loop |
+| **Human in loop** | All correctves advisory | Preserved — harness gaps surfaced for user decision, never auto-applied |
+
+---
+
 ## v1.1 — Proc 8 subagent map
 *Date: 2026-05-25*
 
-Separated exploration from editing in large-scope code reviews, based on the subagent pattern in the agent harness engineering article:
+Separated exploration from editing in large-scope code reviews, based on the **Tool-call offloading / subagent exploration** pattern from Addy Osmani's agent harness engineering article:
+
+> *"A read-only subagent maps the subsystem first; the main agent then reviews with the full picture instead of reading blind."*
+> — [Addy Osmani — Agent Harness Engineering](https://addyosmani.com/blog/agent-harness-engineering/)
 
 - **`code-review-mapper` subagent** (`.claude/agents/code-review-mapper.md`): read-only agent that maps exports, imports, call sites, and anomalies across the blast-radius file list, then writes a compact summary to `/tmp/review-map.md`
 - **Proc 8 Step 0b**: when blast-radius > 10 files, spawns `code-review-mapper` before the main review begins — main agent reads the map instead of opening all files raw
@@ -50,7 +82,7 @@ Separated exploration from editing in large-scope code reviews, based on the sub
 
 Shifted hooks from pure guard-rails to active self-improvement, based on the insight:
 > *"Hooks make the setup self-improving. A stop hook can reflect on what happened during a session and propose CLAUDE.md updates while the context is fresh."*
-> — Claude, "How Claude Code Works in Large Codebases"
+> — Source: Anthropic internal documentation on Claude Code session hooks *(URL not recorded — verify if re-citing)*
 
 Prior versions (v0.7–v0.9) used only `PreToolUse` hooks to block dangerous commands.
 v1.0 adds two new hook roles and a full improvement feedback loop:

@@ -19,7 +19,9 @@ Run [CLAUDE.md "Procedure 8 — Deep Code Review"](../../CLAUDE.md).
 - `⚠ Important` — architecture, domain isolation, error handling → fix before next sprint
 - `ℹ Minor` — naming, minor complexity → user decision
 
-**10 review dimensions** (per procedure): Correctness · Architecture · Simplicity · Domain isolation · Duplication · Size/Complexity · Naming · Error handling · Type safety · Performance · Security.
+**11 review dimensions** (per procedure): Correctness · Architecture · Simplicity · Domain isolation · Duplication · Size/Complexity · Naming · Error handling · Type safety · Performance · Security.
+
+**Harness gaps** (Step 13): after the 11 dimensions, flag systemic patterns (2+ files) as 📋 CLAUDE.md gap or 🔧 Hook gap — kit-improve candidates, separate from the user's fix list.
 
 **Large scope (> 10 files)**: Procedure 8 Step 0b spawns the [`code-review-mapper`](../agents/code-review-mapper.md) subagent to map the subsystem before the main review begins.
 

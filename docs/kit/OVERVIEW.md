@@ -74,7 +74,6 @@ flowchart TB
     PB -. registers scripts .-> OUT
     PC -- "Proc.1 DoD" --> DOD
     PC -. updates .-> CHECK
-    PC -. updates .-> AIU
     PC -- "git commit" --> HOOK
     PD -- "Proc.2 §N trace" --> PROCS
     PE -- "Proc.4 strict review" --> PROCS
@@ -82,7 +81,7 @@ flowchart TB
     PROCS -. same logic .- SK
     HOOK -- "PASS → record / FAIL → reject" --> GIT[(git repo)]
     CAD -. reads .-> GIT
-    User -. "/cadence /dod-verify …" .-> SKILLS
+    User -. "/cadence /dod-verify …" .-> CLAUDE_DIR
 ```
 
 ---
@@ -151,7 +150,7 @@ flowchart LR
 
   CLAUDE --> SSOT
   CLAUDE --> KITDOC
-  CLAUDE --> SKILLS
+  CLAUDE --> CLAUDE_DIR
   CLAUDE --> CHOOKS
   CLAUDE --> EXEC
   CLAUDE --> README
