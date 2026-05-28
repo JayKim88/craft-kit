@@ -21,6 +21,29 @@ _Entries added here by kit-improve as improvements are accepted._
 
 ---
 
+## v1.3 — Start hook cadence injection
+*Date: 2026-05-28*
+
+Extended the session-start hook to inject live project health metrics at the top of every session, closing the gap identified in `docs/kit/plans/done/2026-05-28-harness-evaluation.md` Improvement 1.
+
+- **`scripts/hooks/session-start.sh`**: added CHECKLIST progress (`done / total (pct%)`), days to deadline (derived from CLAUDE.md), and last commit summary — all appended after the existing branch / active-plans / pending output
+- **Guard clauses**: graceful handling of missing CHECKLIST.md, unfilled `<YYYY-MM-DD>` deadline placeholder, and projects with no commits yet
+- **`docs/kit/plans/done/2026-05-28-harness-evaluation.md`**: Improvement 1 marked as implemented; last-evaluated date updated
+
+**Why**: The start hook previously answered "where am I?" (branch, plans) but not "how far along am I?" or "what's my time pressure?". Adding CHECKLIST % and days-to-deadline converts a manual Procedure 5 (`cadence.sh`) lookup into automatic session context — strengthening the **Verify** principle without any user action.
+
+### Five-principle coverage after v1.3
+
+| Principle | v1.2 | v1.3 addition |
+|---|---|---|
+| **Constrain** | Pre-commit hook gates 1–5 | (no change) |
+| **Inform** | Start hook + skills + exec-plans + subagent map | (no change) |
+| **Verify** | Cadence + quality grades + PostToolUse lint + subagent map | Start hook now auto-surfaces CHECKLIST %, deadline, last commit — no manual trigger needed |
+| **Correct** | Stop hook + kit-improve + Proc 8 Step 13 | (no change) |
+| **Human in loop** | All correctves advisory | Preserved — injected context is read-only; no actions taken |
+
+---
+
 ## v1.2 — Proc 8 harness gap analysis
 *Date: 2026-05-27*
 

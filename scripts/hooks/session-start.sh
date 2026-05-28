@@ -3,7 +3,8 @@
 # Fires before every user message. Uses a session-ID marker to run exactly once
 # per session. Outputs context to stdout → Claude sees it as prepended system context.
 #
-# Injected: current branch, active exec-plans, pending kit improvement count.
+# Injected: current branch, active exec-plans, pending kit improvement count,
+#           CHECKLIST progress, days to deadline, last commit summary.
 
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || exit 0
@@ -32,7 +33,39 @@ active_plans=$(
 
 pending=$(ls docs/kit/improvements/pending/*.md 2>/dev/null | wc -l | tr -d ' ')
 
+checklist_line="not found"
+if [ -f docs/CHECKLIST.md ]; then
+  done_count=$(grep -cE '^- \[x\]' docs/CHECKLIST.md 2>/dev/null) || done_count=0
+  open_count=$(grep -cE '^- \[ \]' docs/CHECKLIST.md 2>/dev/null) || open_count=0
+  total=$((done_count + open_count))
+  if [ "$total" -gt 0 ]; then
+    pct=$((done_count * 100 / total))
+    checklist_line="${done_count} / ${total} (${pct}%) done"
+  else
+    checklist_line="empty"
+  fi
+fi
+
+deadline_line="unknown (placeholder in CLAUDE.md)"
+if [ -f CLAUDE.md ]; then
+  deadline=$(grep -oE '\*\*Deadline\*\*: `?<?[0-9]{4}-[0-9]{2}-[0-9]{2}' CLAUDE.md \
+    | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1 || true)
+  if [ -n "$deadline" ]; then
+    if deadline_epoch=$(date -j -f "%Y-%m-%d" "$deadline" "+%s" 2>/dev/null) || \
+       deadline_epoch=$(date -d "$deadline" "+%s" 2>/dev/null); then
+      today_epoch=$(date "+%s")
+      days_left=$(( (deadline_epoch - today_epoch) / 86400 ))
+      deadline_line="${days_left}d (${deadline})"
+    fi
+  fi
+fi
+
+last_commit=$(git log -1 --pretty="%s — %ar" 2>/dev/null || echo "no commits")
+
 echo "[Session Context — craft-kit]"
 echo "Branch        : ${branch}"
 echo "Active plans  : ${active_plans}"
+echo "CHECKLIST     : ${checklist_line}"
+echo "Deadline      : ${deadline_line}"
+echo "Last commit   : ${last_commit}"
 [ "${pending}" -gt 0 ] && echo "⚠ Kit improvement proposals pending: ${pending} — trigger kit-improve to review"
