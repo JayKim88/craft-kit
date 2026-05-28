@@ -11,6 +11,7 @@
 #   3. Build OK           (per-stack)
 #   4. No type-escape     (per-language grep of staged blobs)
 #   5. No debug logs      (per-language grep of staged blobs)
+#   5b. Architecture      (domain dirs must not import from UI/endpoint layers)
 #
 # Gates 6 / 6b / 7 / 8 (CHECKLIST sync / doc drift / AI_USAGE / commit message)
 # remain in chat-time Procedure 1 — the hook does NOT enforce them.
@@ -225,6 +226,49 @@ EOF
   fi
 }
 
+# ----- Gate 5b — Architecture: domain dirs must not import from UI/endpoint layers -----
+run_gate_5b() {
+  local ui_pattern='from ['"'"'"][^'"'"'"]*/(components|pages|api|routes|views|app)[/'"'"'"]'
+  local domain_dirs="src/lib src/utils src/helpers src/shared"
+  local violations=0
+  local staged
+  staged=$(git diff --cached --name-only --diff-filter=AM)
+
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    [ ! -f "$f" ] && continue
+    case "$f" in
+      *.ts|*.tsx|*.js|*.jsx|*.py) ;;
+      *) continue ;;
+    esac
+    local in_domain=0
+    for dir in $domain_dirs; do
+      case "$f" in "$dir"/*) in_domain=1; break ;; esac
+    done
+    [ "$in_domain" = "0" ] && continue
+
+    if git show ":$f" 2>/dev/null \
+        | grep -nE "$ui_pattern" \
+        | grep -v '// allow:\|# allow:' > /tmp/.pc-gate5b 2>/dev/null; then
+      if [ -s /tmp/.pc-gate5b ]; then
+        echo "[gate5b] $f:"
+        sed 's/^/    /' /tmp/.pc-gate5b
+        violations=$((violations+1))
+      fi
+    fi
+  done <<EOF
+$staged
+EOF
+
+  rm -f /tmp/.pc-gate5b
+
+  if [ "$violations" -gt 0 ]; then
+    echo "[gate5b] FAIL: domain/utility layer imports from UI/endpoint layer"
+    echo "         Add '// allow:' comment to permit an intentional exception."
+    exit 6
+  fi
+}
+
 # ----- Run gates -----
 if [ "$DOCS_ONLY" = "1" ]; then
   echo "[pre-commit] docs-only commit — running gate 5 only (cheap scan of any staged code)"
@@ -235,4 +279,5 @@ fi
 
 run_gates_123
 run_gates_45
+run_gate_5b
 echo "[pre-commit] all auto gates passed"

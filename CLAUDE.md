@@ -45,6 +45,7 @@ If any box is unchecked: stop, surface what is missing, and run Procedure 6 (Pha
 | Domain health grades | [CHECKLIST.md "Quality grades"](docs/CHECKLIST.md) | Phase C per cycle |
 | Procedure details (project) | [docs/procedures/](docs/procedures/) | Kit releases |
 | Recommended dev tools (MCP, env) | [TOOLS.md](docs/kit/TOOLS.md) | Kit releases |
+| Coding style (full standard + lint template) | [CODING-STYLE.md](docs/kit/CODING-STYLE.md) + [templates/eslint.config.mjs](docs/kit/templates/eslint.config.mjs) | Kit releases |
 | Kit version history | [docs/kit/HISTORY.md](docs/kit/HISTORY.md) | kit-improve (post-acceptance) |
 | Kit improvement proposals + kit-improve | [kit/improvements/](docs/kit/improvements/) | Stop hook (auto) + kit-improve |
 | Kit planning docs (harness evaluations, initiatives) | [kit/plans/](docs/kit/plans/) `done/` · `in-progress/` · `todo/` | Manual — per evaluation cycle |
@@ -85,32 +86,19 @@ Phase A/B/C/D/E = workflow. PROCESS Phase 0-4 = implementation steps inside Phas
 
 ---
 
-## Coding rules — universal
+## Coding rules
 
-- **No type escapes** — no `any` / `as any` / `cast()` / `# type: ignore`
-- **No debug code** — no `console.log` / `print()` / `dbg!()` / `System.out.println`
-- **Domain logic isolated** — pure functions in `lib/<domain>/`, not in components/endpoints
-- **Unidirectional data flow** — each piece of state has one owner; derived ≠ source-of-truth
-- **Check `[§N]` in [CHECKLIST.md](docs/CHECKLIST.md)** for every item you implement
-- **TDD for complex features** — when an exec-plan is created, domain logic steps follow Red → Green → Refactor. Simple CRUD / UI wiring steps skip TDD. Red commit uses `TDD_RED=1 git commit` (Gate 2 bypass).
-- **Named condition variables** — conditions with 2+ expressions must be extracted to a named `const` before the `if`. Never put compound boolean expressions directly inside `if(...)`.
-- **Extract shared logic** — functions or components used in 2+ locations go to `src/lib/` (utilities) or `src/components/` (shared UI). No copy-paste across files.
-- **One-liner arrow functions: no braces** — `const f = () => value` not `const f = () => { return value }`.
-- **Render & performance hygiene** — avoid inline object/array literals in JSX props; apply `useMemo`/`useCallback`/`React.memo` when re-render cost is real. Justify every optimization with a clear reason.
-- **Accessibility** — use semantic HTML (`<button>`, `<nav>`, `<main>`, etc.), `aria-*` for custom interactive elements, keyboard navigation support. No bare `<div onClick>`.
-- **Early return / guard clause** — validate at the top; happy path flows down. `if (!isValid) return` not `if (isValid) { ... }`. Nesting depth ≤ 2.
-- **Magic values → named constants** — no meaningful literals inline. `const MAX_OPTIONS = 4` not `if (answers.length === 4)`. Applies to numbers and string keys alike.
-- **Positive boolean naming** — `isLoaded`, `hasError`, `canSubmit`. Never `notLoading`, `noError`, `cantSubmit`.
-- **No silent catch** — `catch (e) {}` is forbidden. Rethrow, log, or handle explicitly. If silence is intentional, add a one-line comment explaining why.
-- **`const` by default** — use `let` only when reassignment is provably necessary. `let` is a signal that the value changes.
-- **Boolean trap prevention** — avoid positional boolean args: `fn(true, false)` → `fn({ strict: true, async: false })`. Use options objects or named constants.
-- **Import group ordering** — external libs → internal modules (`@/`) → relative paths (`./`). Blank line between groups.
-- **File-internal declaration order** — imports → types/interfaces → module-level constants → helper functions → main export (component / function / class).
-- **File naming convention** — `kebab-case.ts` for utilities/lib; `PascalCase.tsx` for React components.
-- **No type/interface prefix** — `User` not `IUser`; `Result` not `TResult`. Prefixes are noise in TypeScript.
-- **Constant naming by scope** — module-level (shared) constants: `SCREAMING_SNAKE_CASE`. Function-local constants: `camelCase`.
-- **Colocation** — types and helpers used only in one module stay in that module file. Extract only when shared across 2+ modules.
-- **Barrel export discipline** — `index.ts` only when the directory has a stable public API surface. Never auto-generate barrels; circular dependency risk.
+Full standard → **[CODING-STYLE.md](docs/kit/CODING-STYLE.md)**. Two layers:
+
+- **Tool-enforced (auto)** — type escapes, debug code, import order, naming, `const`, `import type`, `interface` for object shapes, a11y, etc. Encoded in `eslint.config.mjs` (copied at Phase B from [templates/eslint.config.mjs](docs/kit/templates/eslint.config.mjs)). DoD Gate 1 + post-edit-lint enforce these — **you do not need to recall them**.
+- **Judgment (read before writing `src/`)** — layering (`lib/` vs `utils/`), state ownership, test strategy, when-to-extract, prop typing. These can't be linted. Read [CODING-STYLE.md §2](docs/kit/CODING-STYLE.md).
+
+Non-negotiables (apply even if the doc wasn't read):
+- No type escapes (`any` / `as any` / `# type: ignore`) · No debug code (`console.log` / `print()`)
+- Domain logic in `lib/<domain>/`, never inlined in components/endpoints
+- Unidirectional data flow — one owner per state; derived ≠ source-of-truth
+- Check `[§N]` in [CHECKLIST.md](docs/CHECKLIST.md) for every item you implement
+- **TDD for complex features** — exec-plan domain steps follow Red → Green → Refactor. Red commit uses `TDD_RED=1 git commit` (Gate 2 bypass).
 
 ## Coding rules — project-specific
 
@@ -138,11 +126,12 @@ Format: `<type>(<scope>): <subject> [§N]`
 | 3 | Build OK | `<build command>` |
 | 4 | No type-escape | language grep → 0 |
 | 5 | No debug logs | grep → 0 |
+| 5b | Architecture — domain dirs (`lib/` `utils/`) must not import from UI/endpoint layers | grep of staged blobs in domain dirs |
 | 6 | CHECKLIST `[x]` + exec-plan sync | manual |
 | 6b | No doc drift (DESIGN/PLAN/README) | Procedure 1 Gate 6b |
 | 7 | Commit message `[§N]` | manual |
 
-Gates 1-5: also enforced by `.githooks/pre-commit` as safety net. Bypass: `SKIP_HOOK=1 git commit` (justify in body). Never `--no-verify`.
+Gates 1-5b: also enforced by `.githooks/pre-commit` as safety net. Bypass: `SKIP_HOOK=1 git commit` (justify in body). Never `--no-verify`.
 
 ---
 

@@ -21,6 +21,31 @@ _Entries added here by kit-improve as improvements are accepted._
 
 ---
 
+## v1.5 — Architecture fitness gate (Gate 5b)
+*Date: 2026-05-28*
+
+Added Gate 5b to `.githooks/pre-commit`, converting the "domain logic isolated" rule in CLAUDE.md from a guide-only rule into a mechanically enforced sensor.
+
+- **`.githooks/pre-commit` Gate 5b**: checks staged files in `src/lib/`, `src/utils/`, `src/helpers/`, `src/shared/` for imports from UI/endpoint layers (`components|pages|api|routes|views|app`). Covers TS/JS/Python files. Exit 6 on violation. Bypass: `// allow:` or `# allow:` comment on the offending import line.
+- **`CLAUDE.md` DoD table**: Gate 5b row added between Gate 5 and Gate 6. Gate footnote updated from "Gates 1-5" to "Gates 1-5b".
+- **`docs/kit/plans/done/2026-05-28-harness-evaluation.md`**: Improvement 3 marked as implemented.
+
+**Why**: CLAUDE.md stated "domain logic in `lib/<domain>/`, never inlined in components/endpoints" but no sensor enforced it — violations were only caught in Proc 8 (manual, skippable). Gate 5b closes this as a computational sensor: same pattern in all repos, zero configuration, fires at commit time.
+
+**Scope decision — why `src/utils/` is included**: craft-kit's convention places both domain logic and shared utilities under `src/lib/`. Real projects frequently create `src/utils/` separately. The same architectural principle applies — utility code must not depend on UI layers.
+
+### Five-principle coverage after v1.5
+
+| Principle | v1.4 | v1.5 addition |
+|---|---|---|
+| **Constrain** | Pre-commit hook gates 1–5 | Gate 5b — architecture violation blocks commit |
+| **Inform** | Start hook + skills + exec-plans + subagent map + cadence metrics | (no change) |
+| **Verify** | PostToolUse lint + cadence injection + pre-commit-reviewer | Gate 5b is a computational sensor — deterministic, automatic, zero user action |
+| **Correct** | Stop hook + kit-improve + Proc 8 Step 13 | (no change) |
+| **Human in loop** | All correctives advisory | Preserved — `// allow:` provides intentional exception path |
+
+---
+
 ## v1.4 — Pre-commit independent critical review
 *Date: 2026-05-28*
 

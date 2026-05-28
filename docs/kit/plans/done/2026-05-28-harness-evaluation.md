@@ -157,16 +157,16 @@ Ordered by impact / effort ratio:
 Now injects: branch, active plans, pending count, CHECKLIST %, days to deadline, last commit summary.
 Effect: Verify principle strengthened without any user action.
 
-**2. Phase C Stop hook expansion** [ESTIMATE: high impact / medium effort]
-Currently: fires on kit file edits only.
-Proposed: fires on significant src/ edits too — generate a lightweight
-"did this session follow CLAUDE.md rules?" checklist (not a kit improvement proposal).
-Effect: closes the Phase C silence gap; reduces indeterminate Ratchet latency.
+**2. Phase C Stop hook expansion** ✅ Implemented differently (2026-05-28)
+~~Proposed: Stop hook expansion for src/ edits.~~
+Implemented as: `pre-commit-reviewer` subagent in Proc 1 Step 0b — independent
+fresh-context agent checks Correctness vs SPEC + Security before every commit.
+Rationale: per-commit independent review is stronger than per-session lightweight checklist.
 
-**3. Architecture fitness grep (one rule)** [ESTIMATE: medium impact / low effort]
-Add one grep to pre-commit for the most common architecture violation:
-`grep -rEn 'import.*from.*(components|pages|api)' src/lib/` → exit 1 if found.
-Imperfect (false positives possible) but converts a guide-only rule into a guide + sensor.
+**3. Architecture fitness grep** ✅ Implemented (2026-05-28)
+Gate 5b added to `.githooks/pre-commit`: staged files in `src/lib/`, `src/utils/`,
+`src/helpers/`, `src/shared/` are checked for imports from UI/endpoint layers
+(`components|pages|api|routes|views|app`). Exit 6 on violation. Bypass: `// allow:`.
 
 *Note: HARD-GATE provisional mode was evaluated earlier and excluded — checkbox risk
 outweighs benefit. Not listed here. See conversation context 2026-05-27.*
