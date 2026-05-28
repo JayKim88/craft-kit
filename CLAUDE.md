@@ -47,6 +47,7 @@ If any box is unchecked: stop, surface what is missing, and run Procedure 6 (Pha
 | Recommended dev tools (MCP, env) | [TOOLS.md](docs/kit/TOOLS.md) | Kit releases |
 | Kit version history | [docs/kit/HISTORY.md](docs/kit/HISTORY.md) | kit-improve (post-acceptance) |
 | Kit improvement proposals + kit-improve | [kit/improvements/](docs/kit/improvements/) | Stop hook (auto) + kit-improve |
+| Kit planning docs (harness evaluations, initiatives) | [kit/plans/](docs/kit/plans/) `done/` · `in-progress/` · `todo/` | Manual — per evaluation cycle |
 
 ---
 
