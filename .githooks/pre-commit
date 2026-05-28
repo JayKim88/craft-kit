@@ -61,14 +61,17 @@ run_gates_123() {
     node)
       if grep -q '"lint"' package.json; then
         npm run -s lint || { echo "[gate1] FAIL: lint"; exit 1; }
-      else echo "[gate1] (skipped: no lint script)"
+      elif echo "$staged_files" | grep -q '^src/'; then
+        echo "[gate1] FAIL: src/ code but no lint script — add one (or SKIP_HOOK=1)"; exit 1
+      else echo "[gate1] ⚠ no lint script — coding-style NOT enforced"
       fi
+      # CI=true makes vitest/jest/CRA run once and exit instead of entering watch mode (commit would hang).
       if [ "$TDD_RED" = "1" ]; then
         echo "[gate2] (skipped: TDD_RED=1 — Red phase, tests expected to fail)"
       elif grep -q '"test:run"' package.json; then
-        npm run -s test:run || { echo "[gate2] FAIL: tests"; exit 2; }
+        CI=true npm run -s test:run || { echo "[gate2] FAIL: tests"; exit 2; }
       elif grep -q '"test"' package.json; then
-        npm test --silent || { echo "[gate2] FAIL: tests"; exit 2; }
+        CI=true npm test --silent || { echo "[gate2] FAIL: tests"; exit 2; }
       else echo "[gate2] (skipped: no test script)"
       fi
       if grep -q '"build"' package.json; then
