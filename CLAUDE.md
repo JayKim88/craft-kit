@@ -175,7 +175,7 @@ Execute inline when triggered. Read the linked procedure file for full steps.
 
 | # | Trigger phrases | Action | Steps |
 |---|---|---|---|
-| **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 7-gate DoD check. No commit until gates 1-5 pass. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
+| **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 7-gate DoD check + independent subagent critical review (Correctness vs SPEC, Security). No commit until gates 1-5 pass and no 🚨 findings. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
 | **2** | "§N coverage" · "어디 부족" · "criteria trace" | Per-§N commit + CHECKLIST count; flag gaps. | → [proc-2-trace.md](docs/procedures/proc-2-trace.md) |
 | **3** | "SPEC updated" · "requirements changed" | Map SPEC change to PLAN/DESIGN/CHECKLIST impact zones. | → [proc-3-spec-drift.md](docs/procedures/proc-3-spec-drift.md) |
 | **4** | "리뷰" · "final review" · "완료 전 점검" · "self-eval" | Strict review: coverage check (+ score sim if SPEC defines scoring) + gaps + critical fixes. Fresh session preferred. **Automatically runs Procedure 9 after output — Phase E only ("final review" / "완료 전 점검").** | → [proc-4-review.md](docs/procedures/proc-4-review.md) |

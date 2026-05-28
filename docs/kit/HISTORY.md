@@ -21,6 +21,30 @@ _Entries added here by kit-improve as improvements are accepted._
 
 ---
 
+## v1.4 — Pre-commit independent critical review
+*Date: 2026-05-28*
+
+Added an independent subagent review as Proc 1 Step 0b, addressing the rationalization bias in the existing self-review (Step 0).
+
+- **`.claude/agents/pre-commit-reviewer.md`**: new read-only subagent — checks staged diff for Critical issues only: Correctness vs SPEC (stated requirement with zero implementation evidence) and Security surface scan (injection, exposed credentials, missing auth, XSS). Passes silently when clean; reports 🚨 findings only. No auto-fix.
+- **`docs/procedures/proc-1-dod.md` Step 0b**: spawns `pre-commit-reviewer` after self-review (Step 0) and before auto gates (Step 1). Skipped for kit-only work (no src/ in staged diff). 🚨 finding stops DoD immediately.
+- **Output table**: added `Pre-commit review` row between Self-review and Auto gates.
+- **`CLAUDE.md` Proc 1 description**: updated to mention subagent critical review.
+
+**Why**: Step 0 (self-review) is performed by the same agent that wrote the code — rationalization bias is unavoidable. A separate subagent with no session context catches Correctness and Security blockers with fresh eyes. Non-blocking for all other dimensions — Proc 8 remains the deliberate deep review.
+
+### Five-principle coverage after v1.4
+
+| Principle | v1.3 | v1.4 addition |
+|---|---|---|
+| **Constrain** | Pre-commit hook gates 1–5 | (no change) |
+| **Inform** | Start hook + skills + exec-plans + subagent map + cadence metrics | (no change) |
+| **Verify** | PostToolUse lint + cadence injection | Independent subagent verifies Correctness + Security before every commit |
+| **Correct** | Stop hook + kit-improve + Proc 8 Step 13 | (no change) |
+| **Human in loop** | All correctives advisory | Preserved — subagent reports only; user resolves 🚨 findings |
+
+---
+
 ## v1.3 — Start hook cadence injection
 *Date: 2026-05-28*
 

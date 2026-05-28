@@ -26,11 +26,9 @@ Each feels like a reasonable exception. None are.
 
 Read `git diff HEAD` (or staged diff if nothing committed yet). For each changed `src/` file, evaluate the following dimensions. **Fix issues silently before proceeding to gates.** Report only what was found and changed.
 
-#### 0-A. Correctness — "SPEC 요구사항을 구현했나?"
-- Read the SPEC clause for this feature (from exec-plan **SPEC clause** field, or CHECKLIST `[§N]`).
-- Verify every stated requirement is present in the diff.
-- Check edge cases explicitly listed in SPEC (empty input, null, boundary values, error codes).
-- **Flag**: any requirement with zero evidence in the diff.
+#### 0-A. Correctness — delegated to Step 0b
+Correctness vs SPEC is checked by the independent `pre-commit-reviewer` subagent in Step 0b.
+Skip this dimension here to avoid rationalization bias.
 
 #### 0-B. Simplicity — "더 단순하게 쓸 수 있나?"
 - Is there a 5-line version of something written in 20 lines?
@@ -69,8 +67,7 @@ Read `git diff HEAD` (or staged diff if nothing committed yet). For each changed
 
 ```
 === Self-Review (pre-DoD) ===
-0-A Correctness   ✅ all §2 requirements present
-                  ⚠ empty-input case unhandled — fixing...
+0-A Correctness   → Step 0b (subagent)
 0-B Simplicity    ✅ clean
 0-C Domain iso.   ⚠ validation logic in UserController — extracting to lib/user/validate.ts
 0-D Duplication   ⚠ same date-format block in 3 files — extracting to lib/util/date.ts
@@ -83,6 +80,29 @@ Needs your decision: 0-F (rename) — approve or reject?
 ```
 
 If all dimensions are ✅: skip the self-review block in output, proceed directly to gates.
+
+---
+
+### 0b. Critical review — independent subagent
+
+**Condition**: skip when staged diff contains no `src/` files (kit-only work — docs / scripts / .claude only).
+
+Spawn the [`pre-commit-reviewer`](../../.claude/agents/pre-commit-reviewer.md) subagent:
+
+```
+Task for pre-commit-reviewer:
+Review the staged diff for critical issues.
+```
+
+The subagent reads `git diff --cached` and locates the SPEC clause itself via `docs/exec-plans/active/` and `docs/CHECKLIST.md`.
+
+The subagent runs with no knowledge of what this session wrote — fresh context.
+It checks two dimensions only:
+- **Correctness vs SPEC**: stated requirements with zero implementation evidence
+- **Security**: obvious injection, exposed credentials, missing auth, XSS
+
+**If subagent returns 🚨**: stop DoD immediately. Surface findings to user. Do not proceed to gates until resolved.
+**If subagent returns ✅**: continue to Step 1 silently.
 
 ---
 
@@ -128,6 +148,7 @@ Detect renamed scripts → grep README "How to run" → propose `sed` patch (nev
 ```
 === DoD Check ===
 Self-review:      ✅ clean / ⚠ N issues found, M fixed automatically
+Pre-commit review: ✅ no critical issues / 🚨 N critical issue(s) — <summary>
 Auto gates:
   1. Lint clean         ✅ PASS / ❌ FAIL (location)
   2. Tests green        ✅ PASS (N/N) / ⏭ SKIPPED (TDD Red)

@@ -327,7 +327,7 @@ Apply to CLAUDE.md → log in HISTORY.md → archive → commit
 
 **Principle**: Inform
 
-`scripts/hooks/session-start.sh` fires once per session (`UserPromptSubmit` event) and injects current branch, active exec-plans, and pending improvement count as system context.
+`scripts/hooks/session-start.sh` fires once per session (`UserPromptSubmit` event) and injects current branch, active exec-plans, pending improvement count, CHECKLIST %, days to deadline, and last commit summary as system context.
 
 **Design decision — why once per session**: A session-ID marker file prevents repeated injection on every user message. Without it, context would be injected on every turn, making it noisy.
 
@@ -396,7 +396,7 @@ Claude Code automatically merges both at startup; `.local` overrides `.json`.
 |---|---|
 | **Constrain** | Absolute prohibitions in CLAUDE.md · Pre-commit hook gates 1–5 · `PreToolUse` hook blocks destructive commands |
 | **Inform** | CLAUDE.md (rules SSOT) · SPEC origin field · `.claude/skills/` (multi-vendor) · Exec-plans (active task context) · Core beliefs (DESIGN.md §0) · Start hook (live context per session) · code-review-mapper map (large-scope reviews) |
-| **Verify** | 7-gate DoD (Proc 1) · Cadence + quality grades (Proc 5) · Self-review pass (Proc 4) · PostToolUse lint (edit-time advisory) · code-review-mapper (independent call-graph map) |
+| **Verify** | 7-gate DoD (Proc 1) · Cadence + quality grades (Proc 5) · Self-review pass (Proc 4) · PostToolUse lint (edit-time advisory) · code-review-mapper (independent call-graph map) · pre-commit-reviewer (independent Correctness + Security check per commit) |
 | **Correct** | Auto-corrective (Proc 1 step 3b) · Doc-gardening (Proc 7) · Stop hook → kit-improve (CLAUDE.md feedback loop) · Proc 8 Step 13 harness gaps → kit-improve (recurring patterns → rules/hooks) |
 | **Human in loop** | User approval required before every commit · All correctves advisory, never auto-apply · kit-improve requires explicit approval per accepted change |
 
