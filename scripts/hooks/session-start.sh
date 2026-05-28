@@ -4,7 +4,8 @@
 # per session. Outputs context to stdout → Claude sees it as prepended system context.
 #
 # Injected: current branch, active exec-plans, pending kit improvement count,
-#           CHECKLIST progress, days to deadline, last commit summary.
+#           CHECKLIST progress, days to deadline, last commit summary,
+#           coding-style read-nudge (only when src/ exists).
 
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || exit 0
@@ -68,4 +69,5 @@ echo "Active plans  : ${active_plans}"
 echo "CHECKLIST     : ${checklist_line}"
 echo "Deadline      : ${deadline_line}"
 echo "Last commit   : ${last_commit}"
+[ -d src ] && echo "Coding style  : read docs/kit/CODING-STYLE.md §2 before editing src/ (§1 rules auto-enforced by eslint)"
 [ "${pending}" -gt 0 ] && echo "⚠ Kit improvement proposals pending: ${pending} — trigger kit-improve to review"

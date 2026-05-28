@@ -52,7 +52,7 @@ Activation is opt-in: the bootstrap adds `git config core.hooksPath .githooks` o
 
 | Without this | With this |
 |---|---|
-| AI agent had to *consciously* run Procedure 1 | git enforces gates 1-5 mechanically |
+| AI agent had to *consciously* run Procedure 1 | git enforces gates 1-5b mechanically |
 | User typing `git commit` directly (bypassing chat) skipped all verification | Hook fires regardless of how commit was triggered |
 | Working-tree debug logs could slip through if staged content was clean | Hook reads `git show :$f` — staged blob only |
 
@@ -201,7 +201,7 @@ Function renames, DB schema migrations, HTTP route renames, environment variable
 
 ### Trade-offs
 
-- Fires only inside chat-time Procedure 1. If the user runs `git commit` directly, the corrective never fires. The hook still runs gates 1-5, so silent failure is impossible — just no proactive doc patch.
+- Fires only inside chat-time Procedure 1. If the user runs `git commit` directly, the corrective never fires. The hook still runs gates 1-5b, so silent failure is impossible — just no proactive doc patch.
 
 ---
 
@@ -394,7 +394,7 @@ Claude Code automatically merges both at startup; `.local` overrides `.json`.
 
 | Principle | How the kit implements it |
 |---|---|
-| **Constrain** | Absolute prohibitions in CLAUDE.md · Pre-commit hook gates 1–5 · `PreToolUse` hook blocks destructive commands |
+| **Constrain** | Absolute prohibitions in CLAUDE.md · Pre-commit hook gates 1–5b · Coding-style ESLint template (primary-stack default; other stacks map the intent — CODING-STYLE.md §1) · `PreToolUse` hook blocks destructive commands |
 | **Inform** | CLAUDE.md (rules SSOT) · SPEC origin field · `.claude/skills/` (multi-vendor) · Exec-plans (active task context) · Core beliefs (DESIGN.md §0) · Start hook (live context per session) · code-review-mapper map (large-scope reviews) |
 | **Verify** | 7-gate DoD (Proc 1) · Cadence + quality grades (Proc 5) · Self-review pass (Proc 4) · PostToolUse lint (edit-time advisory) · code-review-mapper (independent call-graph map) · pre-commit-reviewer (independent Correctness + Security check per commit) |
 | **Correct** | Auto-corrective (Proc 1 step 3b) · Doc-gardening (Proc 7) · Stop hook → kit-improve (CLAUDE.md feedback loop) · Proc 8 Step 13 harness gaps → kit-improve (recurring patterns → rules/hooks) |

@@ -258,7 +258,7 @@ Run this step after Steps 2–12. Look at the findings already collected — ide
 
 For each harness gap, classify:
 
-- **📋 CLAUDE.md gap** — pattern not covered by any coding rule → add to CLAUDE.md
+- **📋 CLAUDE.md gap** — pattern not covered by any coding rule → add to `docs/kit/CODING-STYLE.md` (judgment) or `templates/eslint.config.mjs` (if lint-enforceable); CLAUDE.md only for a non-negotiable
 - **🔧 Hook gap** — rule exists in CLAUDE.md but pre-commit / PostToolUse doesn't catch it → add grep
 
 **Flag format**:

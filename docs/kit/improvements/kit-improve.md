@@ -33,7 +33,7 @@ Show the user a summary. User picks one of:
 
 | Choice | Action |
 |---|---|
-| **(A) Accept** | Incorporate into CLAUDE.md coding rules, procedures, or prohibitions |
+| **(A) Accept** | Incorporate into the right home: `CODING-STYLE.md` / `templates/eslint.config.mjs` (coding rules), CLAUDE.md (non-negotiables / procedures), or prohibitions |
 | **(B) Reject** | Move to `rejected/` with a one-line reason appended to the file |
 | **(C) Defer** | Leave in `pending/` — revisit next session |
 

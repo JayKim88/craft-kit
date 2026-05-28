@@ -57,7 +57,7 @@ If any box is unchecked: stop, surface what is missing, and run Procedure 6 (Pha
 | Phase | When | Action |
 |---|---|---|
 | **A. Doc alignment** | D-N ~5h | Paste spec · Procedure 6 guided fill · fill PLAN/DESIGN/PROCESS/CHECKLIST |
-| **B. Toolchain lock** | D-N+1 ~30m | Pin runtime · add lint/test/build scripts · verify hook + cadence.sh · install dev tools (context-mode, code-review-graph) |
+| **B. Toolchain lock** | D-N+1 ~30m | Pin runtime · copy coding-style template ([CODING-STYLE.md §3](docs/kit/CODING-STYLE.md)) · add lint/test/build scripts · verify hook + cadence.sh · install dev tools (context-mode, code-review-graph) |
 | **C. Implementation** | D-N+1~D-1 ×30-60 | code → Procedure 1 DoD → user approval → `git commit [§N]` |
 | **D. Polish** | D-1 ~3h | Procedure 2 §N trace · sweep `_TO FILL_` · Procedure 7 doc-gardening |
 | **E. Ship** | D-0 ~2h | Fresh session → Procedure 4 strict review · fixes · ship / hand off |
@@ -90,7 +90,7 @@ Phase A/B/C/D/E = workflow. PROCESS Phase 0-4 = implementation steps inside Phas
 
 Full standard → **[CODING-STYLE.md](docs/kit/CODING-STYLE.md)**. Two layers:
 
-- **Tool-enforced (auto)** — type escapes, debug code, import order, naming, `const`, `import type`, `interface` for object shapes, a11y, etc. Encoded in `eslint.config.mjs` (copied at Phase B from [templates/eslint.config.mjs](docs/kit/templates/eslint.config.mjs)). DoD Gate 1 + post-edit-lint enforce these — **you do not need to recall them**.
+- **Tool-enforced (auto)** — type escapes, debug code, naming (no `I`/`T` prefix), `const`, `import type`, magic numbers, a11y, etc. Encoded in `eslint.config.mjs` (copied at Phase B from [templates/eslint.config.mjs](docs/kit/templates/eslint.config.mjs)). DoD Gate 1 + post-edit-lint enforce these — **you do not need to recall them**.
 - **Judgment (read before writing `src/`)** — layering (`lib/` vs `utils/`), state ownership, test strategy, when-to-extract, prop typing. These can't be linted. Read [CODING-STYLE.md §2](docs/kit/CODING-STYLE.md).
 
 Non-negotiables (apply even if the doc wasn't read):
@@ -164,7 +164,7 @@ Execute inline when triggered. Read the linked procedure file for full steps.
 
 | # | Trigger phrases | Action | Steps |
 |---|---|---|---|
-| **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 7-gate DoD check + independent subagent critical review (Correctness vs SPEC, Security). No commit until gates 1-5 pass and no 🚨 findings. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
+| **1** | "ready to commit" · "DoD check" · "커밋해도 돼" | 7-gate DoD check + independent subagent critical review (Correctness vs SPEC, Security). No commit until gates 1-5b pass and no 🚨 findings. | → [proc-1-dod.md](docs/procedures/proc-1-dod.md) |
 | **2** | "§N coverage" · "어디 부족" · "criteria trace" | Per-§N commit + CHECKLIST count; flag gaps. | → [proc-2-trace.md](docs/procedures/proc-2-trace.md) |
 | **3** | "SPEC updated" · "requirements changed" | Map SPEC change to PLAN/DESIGN/CHECKLIST impact zones. | → [proc-3-spec-drift.md](docs/procedures/proc-3-spec-drift.md) |
 | **4** | "리뷰" · "final review" · "완료 전 점검" · "self-eval" | Strict review: coverage check (+ score sim if SPEC defines scoring) + gaps + critical fixes. Fresh session preferred. **Automatically runs Procedure 9 after output — Phase E only ("final review" / "완료 전 점검").** | → [proc-4-review.md](docs/procedures/proc-4-review.md) |

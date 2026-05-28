@@ -31,7 +31,7 @@ After cloning:
    - Phase C: implementation — `code → DoD → user approval → commit` × N
    - Phase D: polish — §N trace, sweep `_TO FILL_`
    - Phase E: ship — fresh-session strict review, ship / hand off
-5. The pre-commit hook (`.githooks/pre-commit`) runs gates 1-5 automatically. Emergency bypass: `SKIP_HOOK=1 git commit ...`. **Never** `--no-verify`.
+5. The pre-commit hook (`.githooks/pre-commit`) runs gates 1-5b automatically. Emergency bypass: `SKIP_HOOK=1 git commit ...`. **Never** `--no-verify`.
 
 Project-specific zones are marked `<!-- HINT -->` — yours to fill. Universal rules in `CLAUDE.md` stay as-is.
 

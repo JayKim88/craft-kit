@@ -79,7 +79,7 @@ Enter only after Phase 0~2 are complete. The emergency cut-line priority is the 
 ## Work cycle (repeated each Phase)
 
 ```
-Implement → DoD gates (lint / test / build / no-type-escape / no-debug-log)
+Implement → DoD gates (lint / test / build / no-type-escape / no-debug-log / arch-iso 5b)
           → CHECKLIST item [x]
           → User approval → commit
 ```

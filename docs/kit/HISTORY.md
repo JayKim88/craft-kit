@@ -21,6 +21,34 @@ _Entries added here by kit-improve as improvements are accepted._
 
 ---
 
+## v1.6 — Coding-style externalization (CODING-STYLE.md + lint template)
+*Date: 2026-05-28*
+
+Moved the coding standard out of CLAUDE.md's always-loaded body into a dedicated two-layer reference, applying the tools-over-prose principle: deterministic rules become a linter config, judgment rules become an on-demand doc.
+
+- **`docs/kit/CODING-STYLE.md`** (new): §1 tool-enforced rules (table → ESLint), §2 judgment rules (9 patterns with inline examples), §3 Phase B setup + verified Prettier import-ordering route.
+- **`docs/kit/templates/eslint.config.mjs`** (new): Bucket A/B style rules layered on `eslint-config-next`. Three rules removed after empirical failure on a real toolchain: `import/no-cycle` + `import/order` (broken resolver → opt-in Prettier route instead), boolean-name prefix (needs typed linting → judgment rule).
+- **`docs/kit/templates/.prettierrc`** (new): formatter defaults.
+- **`CLAUDE.md`**: 24-bullet "Coding rules — universal" block replaced with a pointer + 5 non-negotiables; routing-table row + Phase B workflow row added.
+- **`scripts/hooks/session-start.sh`**: injects a "read CODING-STYLE.md §2 before editing src/" nudge when `src/` exists.
+- **`docs/kit/OVERVIEW.md` / `proc-8` / `kit-improve.md` / `HARNESS.md` / `GUIDE.md`**: synced to point coding-rule changes at CODING-STYLE.md / the ESLint template.
+
+**Why**: CLAUDE.md must stay a concise index (community consensus + ETH 2026 finding that bloated/over-prose rule files lower task success and raise cost). Coding rules were the one block violating the kit's own progressive-disclosure principle. Splitting them into a linter (deterministic floor — Gate 1 + post-edit-lint) and an on-demand doc (judgment ceiling) keeps CLAUDE.md lean while strengthening enforcement.
+
+**Verification**: the ruleset was run against the `ennt` reference project's real toolchain — it caught actual violations (magic numbers, object-literal casts) and the three broken rules were found by execution, not assumed. The Prettier import-sort route was verified in a throwaway project.
+
+### Five-principle coverage after v1.6
+
+| Principle | v1.5 | v1.6 addition |
+|---|---|---|
+| **Constrain** | Pre-commit gates 1–5b | Coding-style ESLint template (primary-stack) — Gate 1 enforces deterministic style rules |
+| **Inform** | Start hook + skills + exec-plans + subagent map + cadence | CLAUDE.md slimmed to an index; start hook nudges CODING-STYLE.md §2 before src/ edits |
+| **Verify** | PostToolUse lint + cadence + pre-commit-reviewer + Gate 5b | post-edit-lint now enforces the shared style ruleset, not just stack defaults |
+| **Correct** | Stop hook + kit-improve + Proc 8 Step 13 | Coding-rule gaps now route to CODING-STYLE.md / ESLint template (proc-8, kit-improve updated) |
+| **Human in loop** | All correctives advisory + `// allow:` | Preserved — §2 judgment rules advisory; type/interface left to dev intent |
+
+---
+
 ## v1.5 — Architecture fitness gate (Gate 5b)
 *Date: 2026-05-28*
 

@@ -16,13 +16,13 @@ Each feels like a reasonable exception. None are.
 | "CHECKLIST sync is obvious — skip Gate 6" | §N coverage gaps persist through Phase D |
 | "Naming is fine, reader will understand" | Future reader must reverse-engineer intent from context; cognitive load compounds |
 
-**Iron law**: No commit proposal until Step 0 complete AND gates 1-5 pass. No exceptions.
+**Iron law**: No commit proposal until Step 0 complete AND gates 1-5b pass. No exceptions.
 
 ---
 
 ## Steps
 
-### 0. Pre-DoD self-review (runs before gates 1-5)
+### 0. Pre-DoD self-review (runs before gates 1-5b)
 
 Read `git diff HEAD` (or staged diff if nothing committed yet). For each changed `src/` file, evaluate the following dimensions. **Fix issues silently before proceeding to gates.** Report only what was found and changed.
 
@@ -115,7 +115,7 @@ Inspect project root:
 - `go.mod` → `go vet ./...` / `go test ./...` / `go build ./...`
 - Missing script → mark gate `(skipped: not configured)` and continue.
 
-### 2. Run auto gates 1-5
+### 2. Run auto gates 1-5b
 
 Stop on first FAIL and surface the file/line.
 
@@ -130,6 +130,7 @@ Stop on first FAIL and surface the file/line.
   - Java: `grep -rEn '@SuppressWarnings' src/`
   - Go: skip
 - **Gate 5** No debug logs: `grep -rn 'console\.log\|print(\|dbg!\|fmt\.Println\|System\.out\.println' src/ | grep -v '// allow:'`
+- **Gate 5b** Architecture isolation: domain dirs (`src/lib/`, `src/utils/`, `src/helpers/`, `src/shared/`) must not import UI/endpoint layers (`components|pages|api|routes|views|app`). Enforced by `.githooks/pre-commit` (exit 6); bypass with `// allow:` / `# allow:` on the import line.
 
 ### 3. Manual gates 6-7
 
@@ -163,4 +164,4 @@ Manual gates:
 
 ### 5. Gate rule
 
-Do NOT propose a commit until self-review issues are resolved AND auto gates 1-5 pass.
+Do NOT propose a commit until self-review issues are resolved AND auto gates 1-5b pass.

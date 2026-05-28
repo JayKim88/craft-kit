@@ -57,7 +57,7 @@ flowchart TB
     end
 
     subgraph GUARD["🛡 Auto safety net (git-time)"]
-      HOOK[".githooks/pre-commit<br/>stack-auto · re-runs gates 1-5<br/>docs-only → auto-skip"]
+      HOOK[".githooks/pre-commit<br/>stack-auto · re-runs gates 1-5b<br/>docs-only → auto-skip"]
       CAD["scripts/cadence.sh<br/>commits/§N/CHECKLIST/D-day digest"]
     end
 
@@ -143,7 +143,7 @@ flowchart LR
 
   subgraph EXEC["Enforcement + sensors"]
     direction TB
-    HOOK[".githooks/pre-commit<br/>gates 1-5, stack-auto"]
+    HOOK[".githooks/pre-commit<br/>gates 1-5b, stack-auto"]
     CAD["scripts/cadence.sh<br/>8-line digest"]
     WRAP["wrap-up/ · per-session log"]
   end
@@ -177,7 +177,7 @@ sequenceDiagram
   U->>AI: approves commit message
   AI->>Git: git commit
   Git->>Hook: invokes hook automatically
-  Note over Hook: re-runs gates 1-5 on STAGED blobs<br/>docs-only → skip 1-3<br/>bypass: SKIP_HOOK=1 (justify in body)<br/>NEVER --no-verify
+  Note over Hook: re-runs gates 1-5b on STAGED blobs<br/>docs-only → skip 1-3<br/>bypass: SKIP_HOOK=1 (justify in body)<br/>NEVER --no-verify
   alt hook PASS
     Hook-->>Git: exit 0 → commit recorded
   else hook FAIL
@@ -245,6 +245,10 @@ craft-kit/
 │       ├── HARNESS.md         ← Design rationale (WHY this kit shape) — useful reference
 │       ├── OVERVIEW.md        ← This file (WHAT the kit does) — useful reference
 │       ├── TOOLS.md           ← Recommended dev tools: context-mode + code-review-graph
+│       ├── CODING-STYLE.md    ← Coding standard: §1 tool-enforced + §2 judgment rules
+│       ├── templates/         ← Copy-at-Phase-B configs
+│       │   ├── eslint.config.mjs ← Bucket A/B style rules (layers on eslint-config-next)
+│       │   └── .prettierrc       ← Formatter defaults
 │       ├── HISTORY.md         ← Kit version history (v0.7 → v1.x changelog)
 │       ├── improvements/      ← Kit self-improvement loop — Stop hook writes here (auto-generated)
 │       │   ├── kit-improve.md   ← Process for reviewing pending proposals (no number — not a project procedure)
@@ -261,7 +265,7 @@ craft-kit/
 │   ├── agents/             ← Subagent definitions (code-review-mapper · pre-commit-reviewer)
 │   └── skills/             ← Multi-vendor SKILL.md triggers (Codex/Cursor/Aider)
 ├── .githooks/
-│   ├── pre-commit         ← DoD gates 1-5 enforcement (stack-auto, blocks bad commits)
+│   ├── pre-commit         ← DoD gates 1-5b enforcement (stack-auto, blocks bad commits)
 │   └── post-commit        ← Exec-plan sync reminder + inline TODO scan (advisory only)
 ├── scripts/
 │   ├── cadence.sh         ← Progress digest: commits / §N / quality grades / tech-debt / stale docs / D-day

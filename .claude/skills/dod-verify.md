@@ -18,7 +18,7 @@ Run the 7-gate Definition of Done as defined in [CLAUDE.md "Procedure 1 — DoD 
 **Quick reference**:
 0. Self-review (auto-fix: simplicity / domain isolation / duplication / complexity / naming)
 0b. Spawn `pre-commit-reviewer` subagent → Correctness vs SPEC + Security (🚨 blocks DoD if found)
-1. Detect stack (node/python/rust/go/java) → 2. Run gates 1–5 (auto) → 3. Report gates 6/6b/7 (manual)
+1. Detect stack (node/python/rust/go/java) → 2. Run gates 1–5b (auto) → 3. Report gates 6/6b/7 (manual)
 4. Block commit until Step 0b is clean AND auto gates pass.
 
-**Hook integration**: The `.githooks/pre-commit` script enforces gates 1–5 at git-commit time as a safety net. Procedure 1's role is (a) reporting results in chat for visibility, (b) covering manual gates 6/6b/7 that the hook does not enforce, (c) running the optional Tier-4 auto-corrective (Procedure 1 step 3b).
+**Hook integration**: The `.githooks/pre-commit` script enforces gates 1–5b at git-commit time as a safety net. Procedure 1's role is (a) reporting results in chat for visibility, (b) covering manual gates 6/6b/7 that the hook does not enforce, (c) running the optional Tier-4 auto-corrective (Procedure 1 step 3b).

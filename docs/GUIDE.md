@@ -47,7 +47,7 @@ flowchart TD
 ```mermaid
 flowchart TD
     B1["👤 런타임 버전 고정\n(.nvmrc / .python-version / ...)"]
-    B2["👤 lint / test / build 스크립트 추가\n(package.json 또는 스택 동등물)"]
+    B2["👤 코딩스타일 템플릿 복사 + lint/test/build 스크립트 추가\n(eslint.config.mjs · .prettierrc → CODING-STYLE.md §3)"]
     B3["⚙️ git config core.hooksPath .githooks\n훅 활성화 — 최초 1회"]
     B4["👤 bash scripts/cadence.sh 실행\n'deadline placeholder' 뜨면 CLAUDE.md 채우기"]
     B5["👤 docs-only commit으로 pre-commit hook smoke test"]
@@ -56,7 +56,7 @@ flowchart TD
     B1 --> B2 --> B3 --> B4 --> B5 --> B6
 ```
 
-**→ 완료 기준**: lint/test/build 모두 PASS · cadence.sh 정상 출력 · context-mode doctor PASS · (src/ 있으면) crg build 성공
+**→ 완료 기준**: 코딩스타일 템플릿 적용(eslint/prettier) · lint/test/build 모두 PASS · cadence.sh 정상 출력 · context-mode doctor PASS · (src/ 있으면) crg build 성공
 
 ---
 
@@ -108,9 +108,9 @@ flowchart TD
         SR["0-A Correctness · 0-B Simplicity · 0-C Domain iso.\n0-D Duplication · 0-E Size · 0-F Naming · 0-G Performance\n─────────────────────────────────────────\nC·D: 자동 수정 완료 후 보고 / F: flag → 👤 결정"]
     end
 
-    subgraph ag["Auto Gates 1-5"]
+    subgraph ag["Auto Gates 1-5b"]
         direction LR
-        AG["1. Lint · 2. Tests · 3. Build · 4. No type · 5. No debug"]
+        AG["1. Lint · 2. Tests · 3. Build · 4. No type · 5. No debug · 5b. Arch iso (lib/utils)"]
     end
 
     subgraph mg["Manual Gates 6-7"]
@@ -125,7 +125,7 @@ flowchart TD
 
     subgraph hook["pre-commit hook (안전망)"]
         direction LR
-        HC["gates 1-5 재실행\nFAIL → commit 거부"]
+        HC["gates 1-5b 재실행\nFAIL → commit 거부"]
     end
 
     Post["⚙️ post-commit\nexec-plan 스텝 알림 · TODO/FIXME 스캔 · D-2 권고"]
