@@ -1,0 +1,23 @@
+{
+  "release-type": "simple",
+  "include-component-in-tag": false,
+  "changelog-sections": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "refactor", "section": "Refactors" },
+    { "type": "perf", "section": "Performance" },
+    { "type": "docs", "section": "Documentation" },
+    { "type": "test", "section": "Tests", "hidden": true },
+    { "type": "chore", "section": "Chores", "hidden": true },
+    { "type": "style", "section": "Styles", "hidden": true },
+    { "type": "ci", "section": "CI", "hidden": true },
+    { "type": "build", "section": "Build", "hidden": true }
+  ],
+  "packages": {
+    ".": {
+      "package-name": "craft-kit",
+      "changelog-path": "CHANGELOG.md",
+      "bootstrap-sha": "ab372f0e0f8bf560472d98e710877e8bf27c50e4"
+    }
+  }
+}

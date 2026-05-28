@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# commit-msg — enforce Conventional Commits.
+#
+# release-please derives the next version + CHANGELOG from commit types, so a
+# malformed subject silently produces a wrong/missing version bump. This hook
+# makes the format load-bearing rather than convention-by-discipline.
+#
+# Format:  <type>(<scope>): <subject>   (kit also appends [§N] / [§-] — see CLAUDE.md)
+# Bypass:  SKIP_HOOK=1 git commit ...   (sparingly).
+set -euo pipefail
+
+[ "${SKIP_HOOK:-0}" = "1" ] && exit 0
+
+msg_file="$1"
+# Subject = first non-comment, non-blank line.
+subject=$(grep -vE '^[[:space:]]*#' "$msg_file" | grep -vE '^[[:space:]]*$' | head -1 || true)
+
+# Exempt git-generated commits.
+case "$subject" in
+  "Merge "*|"Revert "*|"fixup! "*|"squash! "*) exit 0 ;;
+esac
+
+pattern='^(feat|fix|refactor|test|chore|docs|style|perf|build|ci|revert)(\([a-z0-9-]+\))?!?: .+'
+if ! printf '%s' "$subject" | grep -qE "$pattern"; then
+  {
+    echo "[commit-msg] ✗ Not a Conventional Commit:"
+    echo "    ${subject:-<empty>}"
+    echo "  Expected: <type>(<scope>): <subject>   e.g. feat(kit): add X [§-]"
+    echo "  types: feat fix refactor test chore docs style perf build ci revert"
+    echo "  bypass: SKIP_HOOK=1 git commit ..."
+  } >&2
+  exit 1
+fi
